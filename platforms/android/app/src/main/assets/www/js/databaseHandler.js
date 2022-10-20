@@ -1944,6 +1944,18 @@ var databaseHandler = {
                         }
                     );
                 }
+                if(empresa == "LIC"){
+                    tx.executeSql(
+                        "create table if not exists datos_generales_LIC(id_dato integer primary key,id_cedula integer,foto_inicio blob,comentario text,fecha text)",
+                        [],
+                        function(tx,results){
+                            // console.log("Se creo datos_generales correcto")
+                        },
+                        function(tx,results){
+                            console.error("Error al crear la tabla datos_generales_LIC")
+                        }
+                    );
+                }
             },
             function(error){
                 console.error("Error al crear la base de datos: " + error.message);

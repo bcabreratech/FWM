@@ -203,8 +203,8 @@
                  var app = self.$app; 
                  var OPCV = localStorage.getItem("Opcion");       
                  var Division = localStorage.getItem("Division");
-                 var NomJson = 'clientes_desc_DIPREC';
-                 var NomDescCli = "Clientes_DIPREC";
+                 var NomJson = 'clientes_desc_DIPREC';  
+                 var NomDescCli = "Clientes_DIPREC";   //Con esta var buscara los clientes de DIPREC
 
                  self.autocompleteDropdownAjax = app.autocomplete.create({
                      inputEl: '#autocomplete-dropdown-ajax',
@@ -225,10 +225,10 @@
                          autocomplete.preloaderShow();
                          // Do Ajax request to Autocomplete data
                          app.request({
-                             url: cordova.file.dataDirectory + "jsons/"+NomJson+".json", // y por cual era? XD perate culo dale shift+f6 si le distre? xd
+                             url: cordova.file.dataDirectory + "jsons/"+NomJson+".json", 
                              method: 'GET',
                              dataType: 'json',
-                             //send "query" to server. Useful in case you generate response dynamically, deja inento en el mio para acordarme xd
+                             //send "query" to server. Useful in case you generate response dynamically, 
                              data: {
                                  query: query,
                              },success: function (data) {

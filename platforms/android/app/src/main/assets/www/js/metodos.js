@@ -880,7 +880,7 @@
             function(){}
             );
         } else {
-            var NomDescCli = "Clientes_DIPREC";
+            var NomDescCli = "Clientes_DIPREC"; //Cambiar a Clientes_LIC
             if(foto_llegada != ''){
                 app.request.get(cordova.file.dataDirectory + "jsons/"+NomDescCli+".json", { IdCed: id_usuario}, function (data) {
                     var content = JSON.parse(data);
@@ -981,6 +981,70 @@
     function regresarRecorridoLIC2(){
         app.views.main.router.back('/recorridoLIC2/', {force: true, ignoreCache: true, reload: true});
     }
+    // function guardarValidLIC(){
+    //     let id_cedula = localStorage.getItem("IdCedula");
+    //     var tipo_inmueble = $("#tipo_inmueble").val();
+    //     var ubicacion = $("#ubicacion").val();
+    //     var caracteristicas_inmueble = $("#caracteristicas_inmueble").val();
+    //     var fecha = new Date();
+    //     var fecha_registro = fecha.getFullYear()+"-"+(fecha.getMonth()+1)+"-"+fecha.getDate()+" "+fecha.getHours()+":"+fecha.getMinutes()+":"+fecha.getSeconds();
+    //     var foto = $("#imagenC").val();
+    //     var page = 1;
+    //     if (foto){
+    //         if(caracteristicas_inmueble){}else{comentario='Sin Observaciones'}
+    //         databaseHandler.db.transaction(
+    //             function(tx){//id_cedula text,comentario text,foto blob,fecha text
+    //                 tx.executeSql("INSERT INTO validaAntesServ(id_cedula, observaciones, foto, fecha,tipo_tarima,no_tarimas,page) VALUES (?,?,?,?,?,?,?)",
+    //                     [id_cedula,caracteristicas_inmueble, foto, fecha_registro,tipo_inmueble, ubicacion,page],
+    //                     function(tx, results){
+    //                     swal("","Se guardaron los datos correctamente", "success");
+    //                         databaseHandler.db.transaction(
+    //                             function(tx){
+    //                                 tx.executeSql( 
+    //                                     "Select * from validaAntesServ where id_cedula = ? AND page=? ORDER BY id_evidencia DESC",
+    //                                         [id_cedula,page],
+    //                                         function(tx, results){ 
+    //                                             var item = results.rows.item(0);
+    //                                             $("#tabla_evidenciasAliatonic").append("<tr id='fila"+ item.id_evidencia +"'><td><a href='#' onclick='eliminarFilaaliatonic("+item.id_evidencia +",1,`validaAntesServ`);' style='border: none; outline:none;'><img src='img/borrar.png' width='30px' /></a></td><td><img src='"+item.foto+
+    //                                             "' width='60px' style='margin-top: 4px;'/></td><td style='text-align: center;'>" + item.observaciones
+    //                                             + "</td><td style='text-align: center;'>" + item.fecha + "</td></tr>");
+    //                                             $("#tipo_inmueble").val('');
+    //                                             $("#tipo_inmueble").val();
+    //                                             $("#caracteristicas_inmueble").css("background-color", "#FFFFFF");
+    //                                             $("#smallImage").attr("src","img/blank.png");
+    //                                             $("#photoIcon").attr("src","img/camera.svg");
+    //                                             $("#imagenC").val('');
+    //                                                 $("#message-nr").css("display", "none");
+    //                                                 $('.preloader').remove();
+    //                                                 $('.infinite-scroll-preloader').remove();
+    //                                         },
+    //                                         function(tx, error){
+    //                                             console.log("Error: " + error.message);
+    //                                             app.preloader.hide();  
+    //                                         }
+    //                                 );  
+    //                             },
+    //                                 function(error){
+    //                                     console.log("Error: " + error.message);
+    //                                 },
+    //                                 function(){}
+    //                         );                
+    //                     },
+    //                     function(tx, error){
+    //                         console.error("Error al actualizar: " + error.message);
+    //                     }
+    //                 );
+    //             },
+    //             function(error){
+    //                 console.error("Error: " + error.message);
+    //             },
+    //             function(){}
+    //         );
+    //     }else{
+    //         swal("", "La fotografía es requerida" ,"warning");
+    //     }
+    // }
+
     //LIC Fin
     //DIPREC Inicio
     function buscarClienteDIPREC(){
