@@ -107,7 +107,40 @@
 <script>
     return {
         on: {
-           
+            pageInit: function (e, page) {
+            $('.preloader').remove();
+            $('.infinite-scroll-preloader').remove();
+            var id_cedula = localStorage.getItem("IdCedula");
+            databaseHandler.db.transaction(
+                function(tx){
+                    tx.executeSql("Select * from validaLIC where id_cedula = ? AND page=? ORDER BY id_evidencia DESC", //validaAntesServ
+                    [id_cedula,1],
+                        function(tx, results){
+                            var length = results.rows.length;
+                           
+                            if(length == 0){
+                                $("#message-nr").css("display", "block");
+                            } else {
+                                $("#message-nr").css("display", "none");
+                                for(var i = 0; i< length; i++){
+                                    var item = results.rows.item(i);
+                                    $("#tabla_evidenciasLIC").append("<tr id='fila"+ item.id_evidencia +"'><td><a href='#' onclick='eliminarFilaLIC("+item.id_evidencia +",1,`validaLIC`);' style='border: none; outline:none;'><img src='img/borrar.png' width='30px' /></a></td><td><img src='"+item.foto+
+                                            "' width='60px' style='margin-top: 4px;'/></td><td style='text-align: center;'>" + item.observaciones
+                                            + "</td><td style='text-align: center;'>" + item.fecha + "</td></tr>");
+                                }  //#tabla_evidenciasAliatonic           onclick='eliminarFilaaliatonic          validaAntesServ
+                            }
+                            $('.preloader').remove();
+                            $('.infinite-scroll-preloader').remove();
+                        },
+                        function(tx, error){
+                            console.log("Error al mostrat datos: " + error.message);
+                        }
+                    );
+                },
+                function(error){},
+                function(){}
+            );
+         }
         }  
     }
 

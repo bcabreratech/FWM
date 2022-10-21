@@ -1955,6 +1955,17 @@ var databaseHandler = {
                             console.error("Error al crear la tabla datos_generales_LIC")
                         }
                     );
+                    //validacion LIC
+                    tx.executeSql(
+                        "create table if not exists validaLIC(id_evidencia integer primary key,id_cedula text,observaciones text,foto blob,fecha text, tipo_tarima text,no_tarimas integer,page text)",
+                        [],
+                        function(tx, results){
+                            // console.log("Se creo validaLIC correctamente!");
+                        },
+                        function(tx, error){
+                            console.error("Error al crear la tabla validaLIC " + error.message);
+                        }
+                    );
                 }
             },
             function(error){
