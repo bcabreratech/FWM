@@ -31009,7 +31009,7 @@ function ShowReglas(cliente,cardname,FirstName,MiddleName, LastName, Position, E
                         function (error) { },
                         function () { }
                     );
-                } else if(empresa = 'Aliatonic'){
+                } else if(empresa == "Aliatonic"){
                     if(tipo_cedula == "VisitaPacas"){
                         databaseHandler.db.transaction(
                             function(tx){
@@ -31041,39 +31041,40 @@ function ShowReglas(cliente,cardname,FirstName,MiddleName, LastName, Position, E
                             function(){}
                         );
                     }
-                } else if(empresa = 'LIC') {
+                } else if(empresa == "LIC") {
+                    //console.log(empresa,id_cedula,tipo_cedula);
                     if(tipo_cedula == "limpiezaLIC"){
-                        /*databaseHandler.db.transaction(
+                        databaseHandler.db.transaction(
                             function(tx){
                                 tx.executeSql("DELETE FROM cedulas_general WHERE id_cedula = ?",
                                     [id_cedula],
                                     function(tx, results){
-                                        databaseHandler.db.transaction(
-                                            function(tx){
-                                                tx.executeSql("DELETE FROM datos_gene_aliatonic WHERE id_cedula = ?",
-                                                    [id_cedula],
-                                                    function(tx, results){
-                                                        $("#conc" + id_cedula).remove();
-                                                    },
-                                                    function(tx, error){
-                                                        swal("Error al eliminar levantamiento servicio",error.message,"error");
-                                                    }
-                                                );
-                                            },
-                                            function(error){},
-                                            function(){}
-                                        );
+                                        $("#conc" + id_cedula).remove();   //Esto borrara la cedula de tipo limpiezaLIC
                                     },
                                     function(tx, error){
-                                        swal("Error al eliminar cedulas_general",error.message,"error");
+                                        swal("Error al eliminar cedula de LimpiezaLIC",error.message,"error");
                                     }
                                 );
                             },
                             function(error){},
                             function(){} 
-                        );  */
+                        ); 
                     }else if(tipo_cedula == "levantamientoLIC"){
-
+                        /*databaseHandler.db.transaction(
+                            function(tx){
+                                tx.executeSql("DELETE FROM cedulas_general WHERE id_cedula = ?",
+                                    [id_cedula],
+                                    function(tx, results){
+                                        $("#conc" + id_cedula).remove();   //Esto borrara la cedula de tipo levantamientoLIC
+                                    },
+                                    function(tx, error){
+                                        swal("Error al eliminar cedula de LimpiezaLIC",error.message,"error");
+                                    }
+                                );
+                            },
+                            function(error){},
+                            function(){} 
+                        ); */
                     }
                 } else {
                     if(tipo_cedula == "levantamiento"){
