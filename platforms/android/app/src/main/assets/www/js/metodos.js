@@ -940,7 +940,7 @@
         var fecha_llegada = fecha.getFullYear()+"-"+(fecha.getMonth()+1)+"-"+fecha.getDate()+" "+fecha.getHours()+":"+fecha.getMinutes()+":"+fecha.getSeconds();
         var geolocation = $("#geolocation").val();
         var id_cliente = $('#id_cliente').val();
-        var nombre_cliente = $("").val();  //#nombre_cliente
+        var nombre_cliente = $("#nombre_cliente").val();  //#nombre_cliente
         var hora_programada = $("#horario_programado").val();
         var atencion = $("#persona_recibe").val();
         var direccion = $("#direccion").val();
@@ -991,7 +991,7 @@
             function(){}
             );
         } else {
-            var NomDescCli = "Clientes_LIC"; //Cambiar a Clientes_LIC
+            //var NomDescCli = "Clientes_LIC"; //Cambiar a Clientes_LIC
             if(foto_llegada != ''){
                 /*app.request.get(cordova.file.dataDirectory + "jsons/"+NomDescCli+".json", { IdCed: id_usuario}, function (data) {
                     var content = JSON.parse(data);
@@ -1036,7 +1036,7 @@
                         swal("Cliente no encontrado", "No se tiene registro de ese cliente, Por favor sincroniza tus datos!" ,"error");
                     }
                 });*/
-                productHandler.addCedulayb(id_usuario,nombre_usuario,fecha_llegada,geolocation,id_cliente,nombre_cliente,hora_programada,estatus);
+                productHandler.addCedulaCompleta(id_usuario,nombre_usuario,fecha_llegada,geolocation,id_cliente,nombre_cliente,hora_programada,estatus);
                                 databaseHandler.db.transaction(
                                     function(tx){
                                         tx.executeSql("Select MAX(id_cedula) as Id from cedulas_general",
@@ -1131,17 +1131,17 @@
         let id_cedula = localStorage.getItem("IdCedula");
         var tipo_inmueble = $("#tipo_inmueble").val();
         var ubicacion = $("#ubicacion").val();
-        var caracteristicas_inmueble = $("#caracteristicas_inmueble").val();
+        var observaciones_text = $("#observaciones_text").val();
         var fecha = new Date();
         var fecha_registro = fecha.getFullYear()+"-"+(fecha.getMonth()+1)+"-"+fecha.getDate()+" "+fecha.getHours()+":"+fecha.getMinutes()+":"+fecha.getSeconds();
         var foto = $("#imagenC").val();
         var page = 1;
         if (foto){
-            if(caracteristicas_inmueble){}else{comentario='Sin Observaciones'}
+            if(observaciones_text){}else{comentario='Sin Observaciones'}
             databaseHandler.db.transaction(
                 function(tx){//id_cedula text,comentario text,foto blob,fecha text
                     tx.executeSql("INSERT INTO validaLIC(id_cedula, observaciones, foto, fecha,tipo_tarima,no_tarimas,page) VALUES (?,?,?,?,?,?,?)",  //validaAntesServ
-                        [id_cedula,caracteristicas_inmueble, foto, fecha_registro,tipo_inmueble, ubicacion,page],
+                        [id_cedula,observaciones_text, foto, fecha_registro,tipo_inmueble, ubicacion,page],
                         function(tx, results){
                         swal("","Se guardaron los datos correctamente", "success");
                             databaseHandler.db.transaction(
@@ -1157,7 +1157,7 @@
                                                 //#tabla_evidenciasAliatonic        onclick='eliminarFilaaliatonic        `validaAntesServ`
                                                 $("#tipo_inmueble").val('');
                                                 $("#tipo_inmueble").val();
-                                                $("#caracteristicas_inmueble").css("background-color", "#FFFFFF");
+                                                $("#observaciones_text").css("background-color", "#FFFFFF");
                                                 $("#smallImage").attr("src","img/blank.png");
                                                 $("#photoIcon").attr("src","img/camera.svg");
                                                 $("#imagenC").val('');

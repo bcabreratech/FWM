@@ -24,27 +24,34 @@
                         }
                     </style>
                     <div style="width: 90%;border-radius: 15px;margin-left: 5%;border: 0.5px solid #ECECEC;background-color: white;">
-                        <span class="span" style="font-weight: bold;width: 90%;">Cliente:</span>
+                        <span class="span" style="font-weight: bold;width: 90%;">Remitente:</span>
                         <span id="text2" style="width: 90%;margin-bottom: 0;border-bottom: 0;">
-                            <input type='text' name="nombreCliente" id="nombreCliente" class="FWM-textBox" onchange="inputLleno(this.id,this.value)"/>
+                            <input type='text' placeholder="Omar.Flores" name="nombreRemitente" id="nombreRemitente" class="FWM-textBox" onchange="inputLleno(this.id,this.value)"/>
                         </span>
-                        <span class="span" style="font-weight: bold;width: 90%;">Atención:</span>
+                        <span class="span" style="font-weight: bold;width: 90%;">Fecha:</span>
                         <span id="text2" style="width: 90%;margin-bottom: 0;border-bottom: 0;">
-                            <input type='text' name="atencion" id="atencion" class="FWM-textBox" onchange="inputLleno(this.id,this.value)"/>
+                            <input type='text' placeholder="21/Oct/2022" name="fecha" id="fecha" class="FWM-textBox" onchange="inputLleno(this.id,this.value)"/>
                         </span>
-                        <span class="span" style="font-weight: bold;width: 90%;">Dirección:</span>
+                        <span class="span" style="font-weight: bold;width: 90%;">Nombre del cliente:</span>
                         <span id="text2" style="width: 90%;margin-bottom: 0;border-bottom: 0;">
-                            <input type='text' name="direccion" id="direccion" class="FWM-textBox" onchange="inputLleno(this.id,this.value)"/>
+                            <input type='text' placeholder="Ingresar nombre" name="nombreCliente" id="nombreCliente" class="FWM-textBox" onchange="inputLleno(this.id,this.value)"/>
                         </span>
-                        <span class="span" style="font-weight: bold;width: 90%;">Teléfono:</span>
-                        <span id="text2" style="width: 90%;margin-bottom: 0px;border-bottom: 0;">
-                            <input type='text' name="telefono" id="telefono" class="FWM-textBox" onchange="inputLleno(this.id,this.value)"/>
-                        </span>
-                        <span class="span" style="font-weight: bold;width: 90%;">E-mail:</span>
-                        <span id="text2" style="width: 90%;margin-bottom: 0px;border-bottom: 0;">
-                            <input type='text' name="correo" id="correo" class="FWM-textBox" onchange="inputLleno(this.id,this.value)"/>
+                        <span class="span" style="font-weight: bold;width: 90%;">Sucursal:</span>
+                        <span id="text2" style="width: 90%;margin-bottom: 0;border-bottom: 0;">
+                            <input type='text' placeholder="CDMX" name="sucursal" id="sucursal" class="FWM-textBox" onchange="inputLleno(this.id,this.value)"/>
+                        </span>x
+                        <span class="span" style="font-weight: bold;width: 90%;">Dirección de la sucursal:</span>
+                        <span id="text2" style="width: 90%;margin-bottom: 0;border-bottom: 0;">
+                            <input type='text' placeholder="Pte 116 col Industrial Vallejo" name="direccion" id="direccion" class="FWM-textBox" onchange="inputLleno(this.id,this.value)"/>
                         </span>
                         <div class="FWM-fixing-form" style="margin-bottom: 35px;margin-left: 5%;width: 90%;">
+                            <span class="span" style="font-weight: bold;width: 100%;">Correo:</span>
+                            <span id="text2" style="width: 100%;margin-bottom: 0px;border-bottom: 0;">
+                                <input type='text' placeholder="mail@bennetts.com.mx" name="correo" id="correo" class="FWM-textBox" onchange="inputLleno(this.id,this.value)"/>
+                            </span>
+                        </div>
+                        
+                        <!-- <div class="FWM-fixing-form" style="margin-bottom: 35px;margin-left: 5%;width: 90%;">
                             <span class="span FWM-span-form">Tipo de servicio:</span>
                             <span id="text2">
                                 <select id="tipoServicio" name="tipoServicio" style="height: 50px;padding-left: 10px;font-size: 16px;font-family: 'ITC Avant Garde Gothic', sans-serif; background-color: white;border: 1px solid gray;border-radius: 8px;">
@@ -57,7 +64,7 @@
                                     <option value="6">Capacitación</option>
                                 </select>
                             </span>
-                        </div>
+                        </div> -->
                     </div>
                     <!---CAMBIOS--->    
                     <style type="text/css">
