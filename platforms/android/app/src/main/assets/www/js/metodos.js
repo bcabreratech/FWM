@@ -939,17 +939,17 @@
         var fecha = new Date();
         var fecha_llegada = fecha.getFullYear()+"-"+(fecha.getMonth()+1)+"-"+fecha.getDate()+" "+fecha.getHours()+":"+fecha.getMinutes()+":"+fecha.getSeconds();
         var geolocation = $("#geolocation").val();
-        var id_cliente = $('#id_cliente').val();
-        var nombre_cliente = $("#nombre_cliente").val();  //#nombre_cliente
+        var id_cliente = 2;  //  $('#id_cliente').val();
+        var nombre_cliente = "ClientepruebaLIC1";  // $("#nombre_cliente").val()
         var hora_programada = $("#horario_programado").val();
-        var atencion = $("#persona_recibe").val();
-        var direccion = $("#direccion").val();
-        var telefono = $("#telefono").val();
-        var correo = $("#correo").val();
+        // var atencion = $("#persona_recibe").val();
+        // var direccion = $("#direccion").val();
+        // var telefono = $("#telefono").val();
+        // var correo = $("#correo").val();
         var foto_llegada = $("#imagenC").val();
-        var documentoIngresar = $("#documento_ingresar").val();
-        var telefono = $("#telefono").val();
-        var correo = $("#correo").val();
+        // var documentoIngresar = $("#documento_ingresar").val();
+        // var telefono = $("#telefono").val();
+        // var correo = $("#correo").val();
         var estatus = 0;
         if(localStorage.getItem("IdCedula"))
         {
@@ -1036,30 +1036,33 @@
                         swal("Cliente no encontrado", "No se tiene registro de ese cliente, Por favor sincroniza tus datos!" ,"error");
                     }
                 });*/
-                productHandler.addCedulaCompleta(id_usuario,nombre_usuario,fecha_llegada,geolocation,id_cliente,nombre_cliente,hora_programada,estatus);
-                                databaseHandler.db.transaction(
-                                    function(tx){
-                                        tx.executeSql("Select MAX(id_cedula) as Id from cedulas_general",
-                                            [],
-                                            function(tx, results){
-                                                console.log(result.rows.item(0));
-                                                var item = results.rows.item(0);
-                                                localStorage.setItem("IdCedula", item.Id);
-                                                localStorage.setItem("nombreCliente", nombre_cliente);
-                                                localStorage.setItem("IdCte", id_cliente);
-                                    
-                                                app.views.main.router.navigate({name: 'menuLIC'});
-                                                app.preloader.hide();
-                                            },
-                                            function(tx, error){
-                                                console.log("Error al guardar cedula: " + error.message);
-                                                app.preloader.hide();
-                                            }
-                                        );
-                                    },
-                                    function(error){},
-                                    function(){}
-                                );
+                //productHandler.addCedulaCompleta(id_usuario,nombre_usuario,fecha_llegada,geolocation,id_cliente,nombre_cliente,hora_programada,estatus);
+                productHandler.addCedulayb(id_usuario,nombre_usuario,fecha_llegada,geolocation,id_cliente,nombre_cliente,hora_programada,estatus);
+                databaseHandler.db.transaction(
+                    function(tx){
+                        tx.executeSql("Select MAX(id_cedula) as Id from cedulas_general",
+                            [],
+                            function(tx, results){
+                                //console.log(result.rows.item(0));
+                                var item = results.rows.item(0);
+                                console.log(result.rows.item(0));
+                                localStorage.setItem("IdCedula", item.Id);
+                                localStorage.setItem("nombreCliente", nombre_cliente);
+                                localStorage.setItem("IdCte", id_cliente);
+                                localStorage.setItem("foto_llegada", foto_llegada);
+                    
+                                app.views.main.router.navigate({name: 'menuLIC'});
+                                app.preloader.hide();
+                            },
+                            function(tx, error){
+                                console.log("Error al guardar cedula: " + error.message);
+                                app.preloader.hide();
+                            }
+                        );
+                    },
+                    function(error){},
+                    function(){}
+                );
             } else {
                 swal("Falta un campo", "La fotografía es requerida para este proceso" ,"warning");
                 app.preloader.hide();
@@ -31060,7 +31063,7 @@ function ShowReglas(cliente,cardname,FirstName,MiddleName, LastName, Position, E
                             function(){} 
                         ); 
                     }else if(tipo_cedula == "levantamientoLIC"){
-                        /*databaseHandler.db.transaction(
+                        databaseHandler.db.transaction(
                             function(tx){
                                 tx.executeSql("DELETE FROM cedulas_general WHERE id_cedula = ?",
                                     [id_cedula],
@@ -31068,13 +31071,13 @@ function ShowReglas(cliente,cardname,FirstName,MiddleName, LastName, Position, E
                                         $("#conc" + id_cedula).remove();   //Esto borrara la cedula de tipo levantamientoLIC
                                     },
                                     function(tx, error){
-                                        swal("Error al eliminar cedula de LimpiezaLIC",error.message,"error");
+                                        swal("Error al eliminar cedula de LevantamientoLIC",error.message,"error");
                                     }
                                 );
                             },
                             function(error){},
                             function(){} 
-                        ); */
+                        ); 
                     }
                 } else {
                     if(tipo_cedula == "levantamiento"){

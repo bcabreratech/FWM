@@ -410,7 +410,7 @@ var productHandler={
     //Inicio LIC
     
     addLimpiezaLIC: function(id_cedula,foto_entrada,nombre_cliente,direccion,telefono,atencion,correo){
-        /*databaseHandler.db.transaction(
+        databaseHandler.db.transaction(
             function(tx){
                 tx.executeSql(
                     "insert into servicio_tecnico(id_cedula,foto_entrada,nombre_cliente,direccion,telefono,atencion,email) values(?,?,?,?,?,?,?)",
@@ -425,7 +425,7 @@ var productHandler={
             },
             function(error){},
             function(){}
-        );*/
+        );
     },
     
     //Fin LIC
