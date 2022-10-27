@@ -1069,6 +1069,10 @@
             }
         }
     }
+    function irLevantamientoLIC(){
+        
+    }
+
     function continuarCedLIC(id_cedula,tipo){
         localStorage.setItem("IdCedula",id_cedula);
         localStorage.setItem("tipoServicio", tipo);
