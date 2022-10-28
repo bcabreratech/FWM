@@ -112,6 +112,7 @@
                         $("#ruta_ci").css("display", "flex");
                         app.request.get('http://www.fwm.com.mx/app/RutaCarnes.php', { IdUsuario: id_usuario,id_empresa:id_empresa,detalle:detalle}, function (data) { 
                             if(data){
+                                
                                 localStorage.setItem("ruta", data);
                             }
                         },function (xhr) {
@@ -242,7 +243,7 @@
                                             $('#calendar-items').append(`
                                                 <li class="item-content" id="${content[e].orden_servicio}-opacity">
                                                     <div class="event-color" id="${content[e].orden_servicio}-color" style="background-color: ${color}"></div>
-                                                    <div class="item-inner" id="${content[e].orden_servicio}-click" onclick="clientSelected2('${content[e].nombreCliente}','${content[e].fecha}')">
+                                                    <div class="item-inner" id="${content[e].orden_servicio}-click" onclick="clientSelected3('${content[e].nombreCliente}','${content[e].fecha}','${content[e].orden_servicio}')">
                                                         <div class="item-title">${content[e].client_name} | <b>OS: ${content[e].orden_servicio}</b></div>
                                                         <div class="item-after">${content[e].fecha}</div>
                                                     </div>
@@ -296,7 +297,7 @@
                                             $('#calendar-items').append(`
                                                 <li class="item-content">
                                                     <div class="event-color" style="background-color: ${color}"></div>
-                                                    <div class="item-inner" onclick="clientSelected3('${content[e].nombreCliente}','${content[e].tipo_serv}','${content[e].orden_servicio}')">
+                                                    <div class="item-inner" onclick="clientSelected3_serv('${content[e].nombreCliente}','${content[e].tipo_serv}','${content[e].orden_servicio}')">
                                                         <div class="item-title">${content[e].nombreCliente} | ${content[e].orden_servicio}</div>
                                                         <div class="item-after">${content[e].fecha}</div>
                                                     </div>
@@ -442,7 +443,7 @@
                                                 $('#calendar-items').append(`
                                                     <li class="item-content">
                                                         <div class="event-color" style="background-color: ${color}"></div>
-                                                        <div class="item-inner" onclick="clientSelected3('${content[e].nombreCliente}','${content[e].tipo_serv}','${content[e].orden_servicio}')">
+                                                        <div class="item-inner" onclick="clientSelected3_serv('${content[e].nombreCliente}','${content[e].tipo_serv}','${content[e].orden_servicio}')">
                                                             <div class="item-title">${content[e].nombreCliente} | ${content[e].orden_servicio}</div>
                                                             <div class="item-after">${content[e].fecha}</div>
                                                         </div>

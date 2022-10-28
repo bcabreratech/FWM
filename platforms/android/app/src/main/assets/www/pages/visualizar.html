@@ -1554,7 +1554,7 @@
               if(DatosEquipo.length === 0) {
                 $("#message-datosEquipo").css("display", "block");
               } else {
-                for (let i = 0; i < DatosEquipo.length; i++){
+                for (let i = 1; i < 2; i++){
                   $("#tabDatosEquipo").append(`
                     <table id = "DIPREC" cellpadding="10" >
                       <tbody id="DIPRPEC-A">
@@ -2024,10 +2024,11 @@
               if (AntesMantenimiento.length === 0) {
                 $("#message-antesMantenimiento").css("display", "block");
               } else {
-                for (let i = 0; i < AntesMantenimiento.length; i++) {
+                //for (let i = 0; i < AntesMantenimiento.length ; i++) {
+                  var i = 0;
                   $("#tabAntesMatenimiento").append("<tr><td><span id='ordenServicio'>Órden del servicio:</td><td style='text-align: center;'><span id='ordenServicio'>" + AntesMantenimiento[i].orden + "</td></tr><tr><td><span id='ordenServicio'>Marca:</td><td style='text-align: center;'><span id='ordenServicio'>" + AntesMantenimiento[i].marca + "</td></tr><tr><td><span id='ordenServicio'>Modelo:</td><td style='text-align: center;'><span id='ordenServicio'>" + AntesMantenimiento[i].modelo + "</td></tr><tr><td><span id='ordenServicio'>Número de serie:</td><td style='text-align: center;'><span id='ordenServicio'>" + AntesMantenimiento[i].numeroSerie + "</td></tr><tr><td><span id='ordenServicio'>Foto del equipo:</td><td><span id='fotoObservaciones'><img src='" + AntesMantenimiento[i].fotoEquipo + "'width='140' height='120' align='center' style='margin-top: 4px; margin-bottom: 10px;'/></span></td></tr>");
                   $("#message-antesMantenimiento").css("display", "none");
-                }
+                //}
               }
               if (AntesMantenimiento.length === 0) {
                 $("#message-antesMantenimientoEvidencia").css("display", "block");

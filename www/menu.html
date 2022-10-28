@@ -39,7 +39,7 @@
 
               <img src="img/logo.png" width="80px" style="margin-top: 30px;" />
               <br>
-              <span style="margin-left: -190px; color: #00A7B5; font-weight: bold;">Versión 7.3.19</span>
+              <span style="margin-left: -190px; color: #00A7B5; font-weight: bold;">Versión 7.3.30</span>
             </div>
             <div class="list">
               <ul class="menu-left-menu">
@@ -964,6 +964,9 @@
       } else if(id_empresa == 15){
         jsonPadre.Get("http://appbennetts.com/FWM2/app/ARCHIVOSJSONS/jsonName_Proteus.json" + '?timestamp=' + Date.now());
         var directory = "jsons/jsonName_Proteus.json";
+      } else if(id_empresa == 16){
+        jsonPadre.Get("http://appbennetts.com/FWM2/app/ARCHIVOSJSONS/jsonName_SUROE2.json" + '?timestamp=' + Date.now());
+        var directory = "jsons/jsonName_SUROE2.json";
       } else if(id_empresa == 17){
         jsonPadre.Get("http://appbennetts.com/FWM2/app/ARCHIVOSJSONS/jsonName_Devlyn.json" + '?timestamp=' + Date.now());
         var directory = "jsons/jsonName_Devlyn.json";
@@ -1158,6 +1161,9 @@
       } else if(id_empresa == 15){
         jsonPadre.Get("http://appbennetts.com/FWM2/app/ARCHIVOSJSONS/jsonName_Proteus.json");
         var directory = "jsons/jsonName_Proteus.json";
+      } else if(id_empresa == 16){
+        jsonPadre.Get("http://appbennetts.com/FWM2/app/ARCHIVOSJSONS/jsonName_SUROE2.json");
+        var directory = "jsons/jsonName_SUROE2.json";
       } else if(id_empresa == 17){
         jsonPadre.Get("http://appbennetts.com/FWM2/app/ARCHIVOSJSONS/jsonName_Devlyn.json");
         var directory = "jsons/jsonName_Devlyn.json";
@@ -1806,6 +1812,280 @@
               );
             },
             function(){}
+          );
+        }else if(id_empresa == 20){
+          databaseHandler.db.transaction(
+            function(tx5){tx5.executeSql("SELECT motivo_estatus FROM logistica_bennettsL LIMIT 1",[],function(tx5, results){});},
+              function(error){ 
+                console.log('NO HAY')
+                databaseHandler.db.transaction(
+                    function(tx5){tx5.executeSql(
+                        "ALTER TABLE logistica_bennettsL ADD COLUMN motivo_estatus text",
+                          [],function(tx5, results){}
+                      );
+                    },function(error){},function(){}
+                  );
+                  databaseHandler.db.transaction(
+                    function(tx5){tx5.executeSql(
+                        "ALTER TABLE logistica_bennettsL ADD COLUMN solicitud text",
+                          [],function(tx5, results){}
+                      );
+                    },function(error){},function(){}
+                  );
+                  databaseHandler.db.transaction(
+                    function(tx5){tx5.executeSql(
+                        "ALTER TABLE logistica_bennettsL ADD COLUMN estatus text",
+                          [],function(tx5, results){}
+                      );
+                    },function(error){},function(){}
+                  );
+                },
+              function(){}
+          );
+        }else if(id_empresa == 21){
+          databaseHandler.db.transaction(
+            function(tx5){tx5.executeSql("SELECT motivo_estatus FROM logistica_bennettsL LIMIT 1",[],function(tx5, results){});},
+              function(error){ 
+                console.log('NO HAY')
+                databaseHandler.db.transaction(
+                    function(tx5){tx5.executeSql(
+                        "ALTER TABLE logistica_bennettsL ADD COLUMN motivo_estatus text",
+                          [],function(tx5, results){}
+                      );
+                    },function(error){},function(){}
+                  );
+                  databaseHandler.db.transaction(
+                    function(tx5){tx5.executeSql(
+                        "ALTER TABLE logistica_bennettsL ADD COLUMN solicitud text",
+                          [],function(tx5, results){}
+                      );
+                    },function(error){},function(){}
+                  );
+                  databaseHandler.db.transaction(
+                    function(tx5){tx5.executeSql(
+                        "ALTER TABLE logistica_bennettsL ADD COLUMN estatus text",
+                          [],function(tx5, results){}
+                      );
+                    },function(error){},function(){}
+                  );
+                },
+              function(){}
+          );
+          databaseHandler.db.transaction(
+                function(tx5){tx5.executeSql("SELECT bloque FROM cobranza LIMIT 1",[],function(tx5, results){});},
+                function(error){
+                  databaseHandler.db.transaction(
+                      function(tx5){ tx5.executeSql(
+                              "ALTER TABLE cobranza ADD COLUMN calle text;",
+                              [],function(tx5, results){}
+                          );
+                      },function(error){},function(){}
+                  );
+                  databaseHandler.db.transaction(
+                      function(tx5){ tx5.executeSql(
+                              "ALTER TABLE cobranza ADD COLUMN bloque text;",
+                              [],function(tx5, results){}
+                          );
+                      },function(error){},function(){}
+                  );
+                  databaseHandler.db.transaction(
+                      function(tx5){ tx5.executeSql(
+                              "ALTER TABLE cobranza ADD COLUMN ciudad text; ",
+                              [],function(tx5, results){}
+                          );
+                      },function(error){},function(){}
+                  );
+                  databaseHandler.db.transaction(
+                      function(tx5){ tx5.executeSql(
+                              "ALTER TABLE cobranza ADD COLUMN no_calle text;",
+                              [],function(tx5, results){}
+                          );
+                      },function(error){},function(){}
+                  );
+                  databaseHandler.db.transaction(
+                      function(tx5){ tx5.executeSql(
+                              "ALTER TABLE cobranza ADD COLUMN cp text;",
+                              [],function(tx5, results){}
+                          );
+                      },function(error){},function(){}
+                  );
+                  databaseHandler.db.transaction(
+                      function(tx5){ tx5.executeSql(
+                              "ALTER TABLE cobranza ADD COLUMN pais text;",
+                              [],function(tx5, results){}
+                          );
+                      },function(error){},function(){}
+                  );
+                  databaseHandler.db.transaction(
+                      function(tx5){ tx5.executeSql(
+                              "ALTER TABLE cobranza ADD COLUMN codigo text;",
+                              [],function(tx5, results){}
+                          );
+                      },function(error){},function(){}
+                  );
+                  databaseHandler.db.transaction(
+                      function(tx5){ tx5.executeSql(
+                              "ALTER TABLE cobranza ADD COLUMN revision_lunes text;",
+                              [],function(tx5, results){}
+                          );
+                      },function(error){},function(){}
+                  );
+                  databaseHandler.db.transaction(
+                      function(tx5){ tx5.executeSql(
+                              "ALTER TABLE cobranza ADD COLUMN revision_martes text;",
+                              [],function(tx5, results){}
+                          );
+                      },function(error){},function(){}
+                  );
+                  databaseHandler.db.transaction(
+                      function(tx5){ tx5.executeSql(
+                              "ALTER TABLE cobranza ADD COLUMN revision_miercoles text;",
+                              [],function(tx5, results){}
+                          );
+                      },function(error){},function(){}
+                  );
+                  databaseHandler.db.transaction(
+                      function(tx5){ tx5.executeSql(
+                              "ALTER TABLE cobranza ADD COLUMN revision_jueves text;",
+                              [],function(tx5, results){}
+                          );
+                      },function(error){},function(){}
+                  );
+                  databaseHandler.db.transaction(
+                      function(tx5){ tx5.executeSql(
+                              "ALTER TABLE cobranza ADD COLUMN revision_viernes text;",
+                              [],function(tx5, results){}
+                          );
+                      },function(error){},function(){}
+                  );
+                  databaseHandler.db.transaction(
+                      function(tx5){ tx5.executeSql(
+                              "ALTER TABLE cobranza ADD COLUMN contrarecibo text;",
+                              [],function(tx5, results){}
+                          );
+                      },function(error){},function(){}
+                  );
+                  databaseHandler.db.transaction(
+                      function(tx5){ tx5.executeSql(
+                              "ALTER TABLE cobranza ADD COLUMN entrada_almacen text;",
+                              [],function(tx5, results){}
+                          );
+                      },function(error){},function(){}
+                  );
+                  databaseHandler.db.transaction(
+                      function(tx5){ tx5.executeSql(
+                              "ALTER TABLE cobranza ADD COLUMN folio_mercancia text;",
+                              [],function(tx5, results){}
+                          );
+                      },function(error){},function(){}
+                  );
+                  databaseHandler.db.transaction(
+                      function(tx5){ tx5.executeSql(
+                              "ALTER TABLE cobranza ADD COLUMN id_reglas text;",
+                              [],function(tx5, results){}
+                          );
+                      },function(error){},function(){}
+                  );
+                  databaseHandler.db.transaction(
+                      function(tx5){ tx5.executeSql(
+                              "ALTER TABLE cobranza ADD COLUMN acuse_soporte text;",
+                              [],function(tx5, results){}
+                          );
+                      },function(error){},function(){}
+                  );
+                  databaseHandler.db.transaction(
+                      function(tx5){ tx5.executeSql(
+                              "ALTER TABLE cobranza ADD COLUMN firma_bennetts text;",
+                              [],function(tx5, results){}
+                          );
+                      },function(error){},function(){}
+                  );
+                  databaseHandler.db.transaction(
+                      function(tx5){ tx5.executeSql(
+                              "ALTER TABLE cobranza ADD COLUMN firma_key text;",
+                              [],function(tx5, results){}
+                          );
+                      },function(error){},function(){}
+                  );
+                  databaseHandler.db.transaction(
+                      function(tx5){ tx5.executeSql(
+                              "ALTER TABLE cobranza ADD COLUMN recibido_bennetts text;",
+                              [],function(tx5, results){}
+                          );
+                      },function(error){},function(){}
+                  );
+                  databaseHandler.db.transaction(
+                      function(tx5){ tx5.executeSql(
+                              "ALTER TABLE cobranza ADD COLUMN recibido_key text;",
+                              [],function(tx5, results){}
+                          );
+                      },function(error){},function(){}
+                  );
+                  databaseHandler.db.transaction(
+                      function(tx5){ tx5.executeSql(
+                              "ALTER TABLE cobranza ADD COLUMN orden_compra text;",
+                              [],function(tx5, results){}
+                          );
+                      },function(error){},function(){}
+                  );
+                  databaseHandler.db.transaction(
+                      function(tx5){ tx5.executeSql(
+                              "ALTER TABLE cobranza ADD COLUMN otro text;",
+                              [],function(tx5, results){}
+                          );
+                      },function(error){},function(){}
+                  );
+                  databaseHandler.db.transaction(
+                      function(tx5){ tx5.executeSql(
+                              "ALTER TABLE cobranza ADD COLUMN pago_lunes text;",
+                              [],function(tx5, results){}
+                          );
+                      },function(error){},function(){}
+                  );
+                  databaseHandler.db.transaction(
+                      function(tx5){ tx5.executeSql(
+                              "ALTER TABLE cobranza ADD COLUMN pago_martes text;",
+                              [],function(tx5, results){}
+                          );
+                      },function(error){},function(){}
+                  );
+                  databaseHandler.db.transaction(
+                      function(tx5){ tx5.executeSql(
+                              "ALTER TABLE cobranza ADD COLUMN pago_miercoles text;",
+                              [],function(tx5, results){}
+                          );
+                      },function(error){},function(){}
+                  );
+                  databaseHandler.db.transaction(
+                      function(tx5){ tx5.executeSql(
+                              "ALTER TABLE cobranza ADD COLUMN pago_jueves text;",
+                              [],function(tx5, results){}
+                          );
+                      },function(error){},function(){}
+                  );
+                  databaseHandler.db.transaction(
+                      function(tx5){ tx5.executeSql(
+                              "ALTER TABLE cobranza ADD COLUMN pago_viernes text;",
+                              [],function(tx5, results){}
+                          );
+                      },function(error){},function(){}
+                  );
+                  databaseHandler.db.transaction(
+                      function(tx5){ tx5.executeSql(
+                              "ALTER TABLE cobranza ADD COLUMN proceso_pago text;",
+                              [],function(tx5, results){}
+                          );
+                      },function(error){},function(){}
+                  );
+                  databaseHandler.db.transaction(
+                      function(tx5){ tx5.executeSql(
+                              "ALTER TABLE cobranza ADD COLUMN estado text;",
+                              [],function(tx5, results){}
+                          );
+                      },function(error){},function(){}
+                  );
+                },
+                function(){}
           );
         }
 

@@ -96,6 +96,7 @@
     return {
         on: {      
             pageInit: function () {
+
                 var fecha = new Date();
                 var fecha_salida = fecha.getDate()+"/"+(fecha.getMonth()+1)+"/"+fecha.getFullYear()+" - "+fecha.getHours()+":"+fecha.getMinutes()+":"+fecha.getSeconds();
                 $("#date").html("Tu hora de salida es: " + fecha_salida);
@@ -132,6 +133,39 @@
                     app.dialog.alert('Vaya! No tienes internet. Cuando te conectes se enviaran o descargaran los datos.', 'Aviso');
                     $('#geolocation').val('');
                 }
+
+
+                //test
+                var id_cedula = localStorage.getItem("IdCedula");
+                databaseHandler.db.transaction(
+                    function(tx){
+                        tx.executeSql(
+                            "Select * from datos_generales_diprec WHERE id_cedula = ?",
+                            [id_cedula],
+                            function(tx, results){
+                                let length = results.rows.length;
+                                if(length == 0){
+
+                                } else {
+                                    for(var i = 0; i< length; i++){
+                                        var item = results.rows.item(i);
+                                        
+                                        console.log("Esta es la firma",item.firma_cliente);
+                                        console.log("Este es el nombre del puesto", item.nombre_puesto);
+                                    }
+                                    
+                                }
+                                 
+                            },
+                            function(tx, error){
+                                console.log("Error al guardar cedula: " + error.message);
+                                app.preloader.hide();  
+                            }
+                        );  
+                    },
+                    function(error){},
+                    function(){}
+                );
             }
         }
     }

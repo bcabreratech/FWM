@@ -232,15 +232,17 @@
         on: {
             pageInit: function (e, page) {
                 var id_cedula = localStorage.getItem("IdCedula");
+                console.log('entre')
                 databaseHandler.db.transaction(
                     function(tx){
                         tx.executeSql("Select * from datos_maquinaria where id_cedula = ? ",
                         [id_cedula],
                             function(tx, results){
                                 var item = results.rows.item(0);
-                                $("#cliente").val(item.cliente);
-                                $("#encargado_turno").val(item.encargado_turno);
-                                $("#turno").val(item.turno);
+                                console.log('entre2',item.cliente)
+                                $("#cliente").text(item.cliente);
+                                $("#encargado_turno").text(item.encargado_turno);
+                                $("#turno").text(item.turno);
                             },
                             function(tx, error){
                                 console.log("Error al guardar cedula: " + error.message);
@@ -258,7 +260,7 @@
                                 var item = results.rows.item(0);
                                 var fechas = item.fecha_entrada;
                                 var fecha=fechas.split(" ");
-                                $("#Fecha").val(fecha[0]);
+                                $("#Fecha").text(fecha[0]);
                             },
                             function(tx, error){
                                 console.log("Error al guardar cedula: " + error.message);

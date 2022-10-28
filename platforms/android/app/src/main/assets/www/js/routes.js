@@ -902,78 +902,6 @@ var routes = [
       componentUrl: './pages/yamevoyAliatonic.html',
     },
     //fin aliatonic
-    //inicio LIC
-    {  
-      name: 'yallegueLIC', 
-      path: '/yallegueLIC/',
-      componentUrl: './pages/yallegueLIC.html',
-    },
-    {  
-      name: 'menuLIC', 
-      path: '/menuLIC/',
-      componentUrl: './pages/menuLIC.html',
-    },
-    {
-      name: 'recorridoLIC1', 
-      path: '/recorridoLIC1/',
-      componentUrl: './pages/recorridoLIC1.html',
-    },
-    {
-      name: 'recorridoLIC2', 
-      path: '/recorridoLIC2/',
-      componentUrl: './pages/recorridoLIC2.html',
-    },
-    {  
-      name: 'datosgeneralesLIC', 
-      path: '/datosgeneralesLIC/',
-      componentUrl: './pages/datosgeneralesLIC.html',
-    },
-    {  
-      name: 'datosgeneralesLIC2', 
-      path: '/datosgeneralesLIC2/',
-      componentUrl: './pages/datosgeneralesLIC2.html',
-    },
-    {  
-      name: 'formLIC1', 
-      path: '/formLIC1/',
-      componentUrl: './pages/formLIC1.html',
-    },
-    {  
-      name: 'formLIC2', 
-      path: '/formLIC2/',
-      componentUrl: './pages/formLIC2.html',
-    },
-    {  
-      name: 'formLIC3', 
-      path: '/formLIC3/',
-      componentUrl: './pages/formLIC3.html',
-    },
-    {  
-      name: 'formLIC1L', 
-      path: '/formLIC1L/',
-      componentUrl: './pages/formLIC1L.html',
-    },
-    {  
-      name: 'formLIC2L', 
-      path: '/formLIC2L/',
-      componentUrl: './pages/formLIC2L.html',
-    },
-    {  
-      name: 'formLIC3L', 
-      path: '/formLIC3L/',
-      componentUrl: './pages/formLIC3L.html',
-    },
-    {  
-      name: 'cierreLIC1', 
-      path: '/cierreLIC1/',
-      componentUrl: './pages/cierreLIC1.html',
-    },
-    {  
-      name: 'cierreLIC2', 
-      path: '/cierreLIC2/',
-      componentUrl: './pages/cierreLIC2.html',
-    },
-    //fin LIC
     //inicio Zona 04
     {  
       name: 'yamevoyZona04', 
@@ -1951,6 +1879,17 @@ var routes = [
       path: '/cierreDIPREC3/',
       componentUrl: './pages/cierreDIPREC3.html',
     },
+    {  
+      name: 'cierreDIPREC5', 
+      path: '/cierreDIPREC5/',
+      componentUrl: './pages/cierreDIPREC5.html',
+    },
+    {  
+      name: 'yaMeVoyInspeccionDiprec', 
+      path: '/yaMeVoyInspeccionDiprec/',
+      componentUrl: './pages/yaMeVoyInspeccionDiprec.html',
+    },
+    
     // Fin DIPREC
     //TODO INICIO SURO
     {  
@@ -2256,6 +2195,11 @@ var routes = [
       componentUrl: './pages/recorridoSUROE6.html',
     },
     {  
+      name: 'recorridoSUROE7', 
+      path: '/recorridoSUROE7/',
+      componentUrl: './pages/recorridoSUROE7.html',
+    },
+    {  
       name: 'datosgeneralesSUROE1', 
       path: '/datosgeneralesSUROE1/',
       componentUrl: './pages/datosgeneralesSUROE1.html',
@@ -2279,6 +2223,16 @@ var routes = [
       name: 'formSUROE12', 
       path: '/formSUROE12/',
       componentUrl: './pages/formSUROE12.html',
+    },
+    {  
+      name: 'formSUROE13', 
+      path: '/formSUROE13/',
+      componentUrl: './pages/formSUROE13.html',
+    },
+    {  
+      name: 'formSUROE14', 
+      path: '/formSUROE14/',
+      componentUrl: './pages/formSUROE14.html',
     },
     {  
       name: 'formSUROE1',
@@ -2339,6 +2293,16 @@ var routes = [
       name: 'cierreSUROE1',
       path: '/cierreSUROE1/',
       componentUrl: './pages/cierreSUROE1.html',
+    },
+    {  
+      name: 'cierreSUROE1Limpieza',
+      path: '/cierreSUROE1Limpieza/',
+      componentUrl: './pages/cierreSUROE1Limpieza.html',
+    },
+    {  
+      name: 'cierreSUROE1Correctiva',
+      path: '/cierreSUROE1Correctiva/',
+      componentUrl: './pages/cierreSUROE1Correctiva.html',
     },
     //Fin SURO2
     //Inicio RestaTools
@@ -2778,6 +2742,102 @@ var routes = [
       path: '/formDL4/',
       componentUrl: './pages/formDL4.html',
     },
+    {
+      name:'formDL5',
+      path: '/formDL5/',
+      componentUrl: './pages/formDL5.html',
+    },
+    {
+      name:'recorridoDL5',
+      path: '/recorridoDL5/',
+      componentUrl: './pages/recorridoDL5.html',
+    },
+    {
+      name:'recorridoDL6',
+      path: '/recorridoDL6/',
+      componentUrl: './pages/recorridoDL6.html',
+    },
+    {
+      name:'recorridoDL7',
+      path: '/recorridoDL7/',
+      componentUrl: './pages/recorridoDL7.html',
+    },
+    {
+      name:'recorridoDL8',
+      path: '/recorridoDL8/',
+      componentUrl: './pages/recorridoDL8.html',
+    },
+    {
+      name:'datosgeneralesDL5',
+      path: '/datosgeneralesDL5/',
+      componentUrl: './pages/datosgeneralesDL5.html',
+    },
+    {
+      name:'formDL6',
+      path: '/formDL6/',
+      componentUrl: './pages/formDL6.html',
+    },
+    {
+      name:'formDL7',
+      path: '/formDL7/',
+      componentUrl: './pages/formDL7.html',
+    },
+    {
+      name:'formDL8',
+      path: '/formDL8/',
+      componentUrl: './pages/formDL8.html',
+    },
+    {
+      name:'formDL9',
+      path: '/formDL9/',
+      componentUrl: './pages/formDL9.html',
+    },
+    {
+      name:'formDL10',
+      path: '/formDL10/',
+      componentUrl: './pages/formDL10.html',
+    },
+    {
+      name:'formDL11',
+      path: '/formDL11/',
+      componentUrl: './pages/formDL11.html',
+    },
+    {
+      name:'cierreDL5',
+      path: '/cierreDL5/',
+      componentUrl: './pages/cierreDL5.html',
+    },
+    {
+      name:'datosgeneralesDL6',
+      path: '/datosgeneralesDL6/',
+      componentUrl: './pages/datosgeneralesDL6.html',
+    },
+    {
+      name:'datosgeneralesDL7',
+      path: '/datosgeneralesDL7/',
+      componentUrl: './pages/datosgeneralesDL7.html',
+    },
+    {
+      name:'cierreDL6',
+      path: '/cierreDL6/',
+      componentUrl: './pages/cierreDL6.html',
+    },
+   {
+      name:'cierreDL7',
+      path: '/cierreDL7/',
+      componentUrl: './pages/cierreDL7.html',
+  },
+    {
+      name:'yamevoyDLolores',
+      path: '/yamevoyDLolores/',
+      componentUrl: './pages/yamevoyDLolores.html',
+  },
+    {
+      name:'yamevoyDLinstall',
+      path: '/yamevoyDLinstall/',
+      componentUrl: './pages/yamevoyDLinstall.html',
+    },
+
     //fin dilimpio
     {  
       name: 'yallegueSMC2', 

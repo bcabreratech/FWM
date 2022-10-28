@@ -434,7 +434,7 @@
                                     <input id="comentario_cliente" name="comentario_cliente" style="display: block;margin: 0 auto;width: 100%;border: 0;border-bottom: 1px solid rgba(0,0,0,.2);height: 35px;line-height: 45px;  margin-bottom: 10px;font-size: 1em;" placeholder="¿Porqué coloco esa calificacion?" />
                                 </div>
                                 <input type='hidden' name="geolocation" id="geolocation" placeholder='Geolocalización...' disabled="disabled"/>
-                    
+                        
                             </div>
                                 <style type="text/css">
                                     .boton-personalizado-4 {
@@ -449,6 +449,17 @@
                                         border-radius: 15px;
                                     }
                                 </style>
+                                 <label style="font-size: 15px;">Estatus</label><br />
+                                    <select class="FWM-input" name="" id="motivos_select2" onchange="estatusServicio(this.value)" style="height: 40px;">
+                                        <option value="0">Selecciona una opcion</option>
+                                        <option value="1">Realizado</option>
+                                        <option value="2">Pendiente</option>                                    
+                                    </select>
+                                <div id='motivoestatus' style="display:none ;">
+                                    <label style="font-size: 15px;">Motivo</label><br />                                  
+                                    <textarea class ="FWM-input" style="background-color: white;" id="motivoestatus2" cols="42" rows="7" onchange="inputLleno(this.id,this.value)"></textarea>
+                                 
+                                </div>                                   
                                 <div class="block grid-resizable-demo">
                                     <div class="row align-items-stretch" style="text-align: center;">
                                         <div class="col-100 medium-50" style="min-width: 50px; border-style: none;">

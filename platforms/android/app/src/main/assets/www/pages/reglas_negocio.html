@@ -178,13 +178,26 @@
                         }); 
                     }
                 });
-
+                function translator (item){
+                    var rpl = {
+                            N : 'No',
+                            Y : 'Si'
+                        }
+                    if(item === "N" || item === "Y"){
+                        return item.replace(/N|Y/, function(obj){ return rpl[obj]})
+                    }else{
+                        return item
+                    }
+                    
+                }
                 $('#autocomplete-dropdown-ajax').change(function () {
                     var cliente = $("#autocomplete-dropdown-ajax").val();
                     app.request.get(cordova.file.dataDirectory + "jsons/"+NomDescCli+".json", function (data) {
                         console.log('data',data)
                         var content2 = JSON.parse(data);
                         console.log('jsoda',content2)
+                        
+                        
                         for(var x = 0; x < content2.length; x++) {
                             if(content2[x].CardCode == cliente){
                                 if(division == 1){
@@ -192,9 +205,9 @@
                                     content2[x].Tel1, content2[x].Tel2, content2[x].Street, content2[x].StreetNo, content2[x].Building, content2[x].Block, content2[x].City, content2[x].ZipCode, content2[x].County, 
                                     content2[x].State, content2[x].U_Copias_OC, content2[x].U_Copias_FB, content2[x].U_Copias_SUA, content2[x].U_Copias_TIA, content2[x].U_Otros, content2[x].U_RecepL, 
                                     content2[x].U_RecepM, content2[x].U_RecepMi, content2[x].U_RecepJ, content2[x].U_RecepV, content2[x].U_RecepS, content2[x].U_HorariosLV, content2[x].U_HorarioS, 
-                                    content2[x].U_PEntrega, content2[x].U_MedioP, content2[x].U_TEntrega, content2[x].U_CEntrega, content2[x].U_MCita, content2[x].U_EA, content2[x].U_Folio, content2[x].U_CR, 
-                                    content2[x].U_Firma, content2[x].U_Recibido, content2[x].U_SelloCte, content2[x].U_OC, content2[x].U_ID, content2[x].U_Otro, content2[x].U_Ninguno, content2[x].U_Cofia, 
-                                    content2[x].U_Calzado, content2[x].U_U_Otros, content2[x].U_U_DesOtros);
+                                    content2[x].U_PEntrega, content2[x].U_MedioP, content2[x].U_TEntrega, content2[x].U_CEntrega, translator( content2[x].U_MCita),  translator(content2[x].U_EA),  translator(content2[x].U_Folio),  translator(content2[x].U_CR), 
+                                    translator(content2[x].U_Firma),  translator(content2[x].U_Recibido),  translator(content2[x].U_SelloCte), translator(content2[x].U_OC), content2[x].U_ID, translator(content2[x].U_Otro), translator(content2[x].U_Ninguno), translator(content2[x].U_Cofia), 
+                                    translator(content2[x].U_Calzado), translator(content2[x].U_U_Otros), translator(content2[x].U_U_DesOtros));
                                 }else if (division == 2){
                                     ShowReglas1(content2[x].CardCode, content2[x].CardName, content2[x].FirstNameServTec, content2[x].MiddleNameServTec, content2[x].LastNameServTec, 
                                         content2[x].PositionServTec, content2[x].Tel1ServTec, content2[x].Tel2ServTec, content2[x].E_MailLServTec, content2[x].StreetServTec, content2[x].StreetNoServTec, 

@@ -76,6 +76,10 @@
                                         </div>
                                     </div>
                                 </div>
+
+                                <span class="span FWM-span-form" >Observaciones:</span>
+                                <textarea class ="FWM-input" name="" id="observaciones_papeleta" cols="30" rows="10" onchange="inputLleno(this.id,this.value),act_obs_papeleta()"></textarea>
+
                             </div>
 
                         <div class="block-title FWM-subtitulo">Papeleta:</div>  
@@ -274,6 +278,7 @@
                                     let length = results.rows.length;
                                     var item = results.rows.item(0);
                                     $('#id_servidor').val(item.id_servidor);
+                                    $("#observaciones_papeleta").val(item.observaciones_papeleta);
                                 },
                                 function(tx, error){
                                     console.log("Error: " + error.message);

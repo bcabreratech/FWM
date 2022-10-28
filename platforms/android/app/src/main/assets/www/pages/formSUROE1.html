@@ -37,26 +37,26 @@
                 <div class="page-content">
 
                     <div style="text-align: center; justify-content:center; margin-right:auto; margin-left:auto; width: 99%;margin-top: 30px;">
-                        <h2 class="FWN-titulo-2">Alta de Maquinaria</h2>
+                        <h2 class="FWN-titulo-2">Alta de Maquina</h2>
     
                         <div style="text-align: left;">     
                             <div class="list FWM-fixing-form">
                                 <span class="span FWM-span-form">Sitio:</span>
                                 <input type="text" name="" id="sitio" class="FWM-input" onchange="inputLleno(this.id,this.value)">
 
-                                <span class="span FWM-span-form">Nombre del Supervisor/ Ejecutivo quien recibe:</span>
+                                <span class="span FWM-span-form">Supervisor / Ejecutivo quien recibe:</span>
                                 <input type="text" name="" id="nombre_recibe" class="FWM-input" onchange="inputLleno(this.id,this.value)">
 
-                                <span class="span FWM-span-form">Nombre de la maquinaria:</span>
-                                <input type="text" name="" id="nombre_maquina" class="FWM-input" onchange="inputLleno(this.id,this.value)">
-
-                                <span class="span FWM-span-form">N° de serie Maquinaria:</span>
+                                <span class="span FWM-span-form">Maquina:</span>
+                                <input type="text" name="" id="nombre_maquina" class="autocomplete-dropdown item-title FWM-input" >
+                                
+                                <span class="span FWM-span-form">N° de serie:</span>
                                 <input type="text" name="" id="no_serie" class="FWM-input" onchange="inputLleno(this.id,this.value)">
 
-                                <span class="span FWM-span-form">Marca de la maquinaria:</span>
+                                <span class="span FWM-span-form">Marca:</span>
                                 <input type="text" name="" id="marca" class="FWM-input" onchange="inputLleno(this.id,this.value)">
 
-                                <span class="span FWM-span-form">Modelo de la maquinaria:</span>
+                                <span class="span FWM-span-form">Modelo:</span>
                                 <input type="text" name="" id="modelo" class="FWM-input" onchange="inputLleno(this.id,this.value)">
 
                                 <span class="span FWM-span-form">Propietario del equipo:</span>
@@ -73,10 +73,10 @@
                                     <option value="2">Cliente</option>
                                 </select>
 
-                                <span class="span FWM-span-form">Tipo de maquinaria:</span>
-                                <input type="text" name="" id="tipo" class="FWM-input" onchange="inputLleno(this.id,this.value)">
+                                <!--<span class="span FWM-span-form">Tipo de maquinaria:</span>-->
+                                <input type="text" name="" id="tipo" class="FWM-input" style="display: none;" onchange="inputLleno(this.id,this.value)">
                                 
-                                <span class="span FWM-span-form">Fecha de maquinaria:</span>
+                                <span class="span FWM-span-form">Fecha de alta:</span>
                                 <input type="text" name="" id="fecha_maquina" class="FWM-input" onchange="inputLleno(this.id,this.value)" readonly>
 
                                 <div class="block grid-resizable-demo" style="margin-bottom: 80px; margin-top: 50px;">
@@ -99,14 +99,13 @@
                                                 <th class="numeric-cell" style="text-align: center;background-color: #063E7F;color: white;">Accion</th>
                                                 <th class="numeric-cell" style="text-align: center;background-color: #063E7F;color: white;">Sitio</th>
                                                 <th class="numeric-cell" style="text-align: center;background-color: #063E7F;color: white;">Nombre de quien recibe</th>
-                                                <th class="numeric-cell" style="text-align: center;background-color: #063E7F;color: white;">Nombre de la maquinaria</th>
-                                                <th class="numeric-cell" style="text-align: center;background-color: #063E7F;color: white;">Serie maquinaria</th>
-                                                <th class="numeric-cell" style="text-align: center;background-color: #063E7F;color: white;">Marca maquinaria</th>
+                                                <th class="numeric-cell" style="text-align: center;background-color: #063E7F;color: white;">Maquina</th>
+                                                <th class="numeric-cell" style="text-align: center;background-color: #063E7F;color: white;">Serie</th>
+                                                <th class="numeric-cell" style="text-align: center;background-color: #063E7F;color: white;">Marca</th>
                                                 <th class="numeric-cell" style="text-align: center;background-color: #063E7F;color: white;">Modelo</th>
                                                 <th class="numeric-cell" style="text-align: center;background-color: #063E7F;color: white;">Propietario equipo</th>
                                                 <th class="numeric-cell" style="text-align: center;background-color: #063E7F;color: white;">Propietario mmntto</th>
-                                                <th class="numeric-cell" style="text-align: center;background-color: #063E7F;color: white;">Tipo de maquinaria</th>
-                                                <th class="numeric-cell" style="text-align: center;background-color: #063E7F;color: white;">Fecha de maquinaria</th>
+                                                <th class="numeric-cell" style="text-align: center;background-color: #063E7F;color: white;">Fecha Alta</th>
                                             </tr>
                                         </thead>
                                         <tbody id="tabla_registros"></tbody>
@@ -132,6 +131,24 @@
                     var fecha_actual = fecha.getFullYear()+"-"+(fecha.getMonth()+1)+"-"+fecha.getDate();
                     $('#fecha_maquina').val(fecha_actual);
                     var id_cedula = localStorage.getItem("IdCedula");
+
+                    databaseHandler.db.transaction(
+                        function(tx){
+                            tx.executeSql("Select * from datos_maquinaria where id_cedula = ? ",
+                            [id_cedula],
+                                function(tx, results){
+                                    var item = results.rows.item(0);
+                                    $("#sitio").val(item.cliente);
+                                },
+                                function(tx, error){
+                                    console.log("Error al guardar cedula: " + error.message);
+                                }
+                            );
+                        },
+                        function(error){},
+                        function(){}
+                    );
+
                     databaseHandler.db.transaction(
                         function(tx){
                             tx.executeSql("Select * from maquinarias where id_cedula = ? ",
@@ -155,7 +172,6 @@
                                                 item.modelo + "</td><td style='text-align: center;'>" + 
                                                 item.propietario + "</td><td style='text-align: center;'>" + 
                                                 item.propietario_mmto + "</td><td style='text-align: center;'>" + 
-                                                item.tipo + "</td><td style='text-align: center;'>" + 
                                                 item.fecha_maquina + "</td></tr>"
                                             );
                                         }
@@ -169,6 +185,66 @@
                         function(error){},
                         function(){}
                     );
+                    var self = this;
+                    var app = self.$app; 
+                    var rol = localStorage.getItem("rol");
+                    var roles = rol.split("-");
+                    var empresa=roles[1];
+
+                    
+                    var NomJson = 'Maquinaria_SUROE';
+                    var NomDescCli = 'Maquinaria_SUROE';
+                    self.autocompleteDropdownAjax = app.autocomplete.create({
+                        inputEl: '#nombre_maquina',
+                        openIn: 'dropdown',
+                        preloader: true, //enable preloader
+                        valueProperty: 'nombre', //object's "value" property name
+                        textProperty:  'nombre', //object's "text" property name
+                        limit: 10, //limit to 20 results
+                        dropdownPlaceholderText: 'Seleccionar Maquina...',
+                        source: function (query, render) {
+                            var autocomplete = this;
+                            var results = [];
+                            if (query.length === 0) {
+                                render(results);
+                                return;
+                            }
+                            // Show Preloader
+                            autocomplete.preloaderShow();
+                            // Do Ajax request to Autocomplete data
+                            app.request({
+                                url: cordova.file.dataDirectory + "jsons/"+NomJson+".json", // y por cual era? XD perate culo dale shift+f6 si le distre? xd
+                                method: 'GET',
+                                dataType: 'json',
+                                //send "query" to server. Useful in case you generate response dynamically, deja inento en el mio para acordarme xd
+                                data: {
+                                    query: query,
+                                },success: function (data) {
+                                    data;
+                                    for (var i = 0; i < data.length; i++) {
+                                        if (data[i].nombre.toLowerCase().indexOf(query.toLowerCase()) >= 0) results.push(data[i]);
+                                    }
+                                    render(results); 
+                                }
+                            }); 
+                        }
+                    });
+
+                    $('#nombre_maquina').change(function () {
+                        var nombre_maquina = $("#nombre_maquina").val();
+                        app.request.get(cordova.file.dataDirectory + "jsons/"+NomDescCli+".json", function (data) {
+                            var content2 = JSON.parse(data);
+                            for(var x = 0; x < content2.length; x++) {
+                                if(content2[x].nombre == nombre_maquina){
+                                    $("#nombre_maquina").val(content2[x].nombre);
+                                    $("#no_serie").val(content2[x].no_serie);
+                                    $("#marca").val(content2[x].marca);
+                                    $("#modelo").val(content2[x].modelo);
+                                }         
+                            }
+                        });
+                    });  
+                
                 }
             }  
         }

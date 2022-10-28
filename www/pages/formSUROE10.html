@@ -16,12 +16,12 @@
       <h2 class="global-dates">Programa de Limpieza</h2>
       <div class="toolbar tabbar toolbar-bottom">
         <div class="toolbar-inner">
-          <a href="#tab-1" class="tab-link tab-link-active">Hora</a>
-          <a href="#tab-2" class="tab-link">Diario</a>
-          <a href="#tab-3" class="tab-link">Semanal</a>
-          <a href="#tab-4" class="tab-link">Quin.</a>
-          <a href="#tab-5" class="tab-link">Mensual</a>
-          <a href="#tab-6" class="tab-link">Bim.</a>
+          <a href="#tab-1" class="tab-link tab-link-active">Hora <br><span style="color: red;" id="CantHora">0</span></a>
+          <a href="#tab-2" class="tab-link">Diario  <br><span style="color: red;" id="CantDiario">0</span></a>
+          <a href="#tab-3" class="tab-link">Semanal <br><span style="color: red;" id="CantSemanal">0</span></a>
+          <a href="#tab-4" class="tab-link">Quin.<br><span style="color: red;" id="CantQuin">&nbsp;</span></a>
+          <a href="#tab-5" class="tab-link">Mensual <br><span style="color: red;" id="CantMensual">&nbsp;</span></a>
+          <a href="#tab-6" class="tab-link">Bim.<br><span style="color: red;" id="CantBim">&nbsp;</span></a>
         </div>
       </div>
       <div class="tabs-swipeable-wrap">
@@ -29,55 +29,7 @@
           <div id="tab-1" class="page-content tab tab-active" style="padding: 0;">
             <div class="block">
               <div class="list media-list">
-                <ul>
-                  <li>
-                    <label class="item-checkbox item-content">
-                      <input type="checkbox" name="demo-media-checkbox" value="1" />
-                      <i class="icon icon-checkbox"></i>
-                      <div class="item-inner">
-                        <div class="item-title-row">
-                          <div class="item-title"><strong>Area Especifica</strong>Garrafoneo,Limpieza de salas abiertas</div>
-                          <div class="item-after">08:20</div>
-                        </div>
-                        <div class="item-subtitle"><strong>Area:</strong>PB</span></div>
-                        <div class="item-subtitle">Tipo de Limpieza: <span class="badge color-blue" style="color: white;background-color: rgba(68, 134, 255, 0.795);">Normal</span></div>
-                        <div class="item-subtitle">Zona: <span class="badge color-red" style="color: white;background-color: rgba(255, 68, 68, 0.795);">Critica</span></div>
-                        <div class="item-text" style="overflow: inherit;">Colocacion de garrafones de agua en PB - Limpieza de dispensadores de agua y Salas abiertas con Multiusos Frutas Citricas</div>
-                      </div>
-                    </label>
-                  </li>
-                  <li>
-                    <label class="item-checkbox item-content">
-                      <input type="checkbox" name="demo-media-checkbox" value="1" />
-                      <i class="icon icon-checkbox"></i>
-                      <div class="item-inner">
-                        <div class="item-title-row">
-                          <div class="item-title"><strong>Area Especifica</strong>Garrafoneo,Limpieza de salas abiertas</div>
-                          <div class="item-after">08:20</div>
-                        </div>
-                        <div class="item-subtitle"><strong>Area:</strong>PB</span></div>
-                        <div class="item-subtitle">Tipo de Limpieza: <span class="badge color-blue" style="color: white;background-color: rgba(68, 134, 255, 0.795);">Normal</span></div>
-                        <div class="item-subtitle">Zona: <span class="badge color-red" style="color: white;background-color: rgba(255, 68, 68, 0.795);">Critica</span></div>
-                        <div class="item-text" style="overflow: inherit;">Colocacion de garrafones de agua en PB - Limpieza de dispensadores de agua y Salas abiertas con Multiusos Frutas Citricas</div>
-                      </div>
-                    </label>
-                  </li>
-                  <li>
-                    <label class="item-checkbox item-content">
-                      <input type="checkbox" name="demo-media-checkbox" value="1" />
-                      <i class="icon icon-checkbox"></i>
-                      <div class="item-inner">
-                        <div class="item-title-row">
-                          <div class="item-title"><strong>Area Especifica</strong>Garrafoneo,Limpieza de salas abiertas</div>
-                          <div class="item-after">08:20</div>
-                        </div>
-                        <div class="item-subtitle"><strong>Area:</strong>PB</span></div>
-                        <div class="item-subtitle">Tipo de Limpieza: <span class="badge color-blue" style="color: white;background-color: rgba(68, 134, 255, 0.795);">Normal</span></div>
-                        <div class="item-subtitle">Zona: <span class="badge color-red" style="color: white;background-color: rgba(255, 68, 68, 0.795);">Critica</span></div>
-                        <div class="item-text" style="overflow: inherit;">Colocacion de garrafones de agua en PB - Limpieza de dispensadores de agua y Salas abiertas con Multiusos Frutas Citricas</div>
-                      </div>
-                    </label>
-                  </li>
+                <ul id="hora">
                 </ul>
               </div>
             </div>
@@ -85,39 +37,7 @@
           <div id="tab-2" class="page-content tab" style="padding: 0;">
             <div class="block">
               <div class="list media-list">
-                <ul>
-                  <li>
-                    <label class="item-checkbox item-content">
-                      <input type="checkbox" name="demo-media-checkbox" value="1" />
-                      <i class="icon icon-checkbox"></i>
-                      <div class="item-inner">
-                        <div class="item-title-row">
-                          <div class="item-title"><strong>Area Especifica</strong>Garrafoneo,Limpieza de salas abiertas</div>
-                          <div class="item-after">08:20</div>
-                        </div>
-                        <div class="item-subtitle"><strong>Area:</strong>PB</span></div>
-                        <div class="item-subtitle">Tipo de Limpieza: <span class="badge color-blue" style="color: white;background-color: rgba(68, 134, 255, 0.795);">Normal</span></div>
-                        <div class="item-subtitle">Zona: <span class="badge color-red" style="color: white;background-color: rgba(255, 68, 68, 0.795);">Critica</span></div>
-                        <div class="item-text" style="overflow: inherit;">Colocacion de garrafones de agua en PB - Limpieza de dispensadores de agua y Salas abiertas con Multiusos Frutas Citricas</div>
-                      </div>
-                    </label>
-                  </li>
-                  <li>
-                    <label class="item-checkbox item-content">
-                      <input type="checkbox" name="demo-media-checkbox" value="1" />
-                      <i class="icon icon-checkbox"></i>
-                      <div class="item-inner">
-                        <div class="item-title-row">
-                          <div class="item-title"><strong>Area Especifica</strong>Garrafoneo,Limpieza de salas abiertas</div>
-                          <div class="item-after">08:20</div>
-                        </div>
-                        <div class="item-subtitle"><strong>Area:</strong>PB</span></div>
-                        <div class="item-subtitle">Tipo de Limpieza: <span class="badge color-blue" style="color: white;background-color: rgba(68, 134, 255, 0.795);">Normal</span></div>
-                        <div class="item-subtitle">Zona: <span class="badge color-red" style="color: white;background-color: rgba(255, 68, 68, 0.795);">Critica</span></div>
-                        <div class="item-text" style="overflow: inherit;">Colocacion de garrafones de agua en PB - Limpieza de dispensadores de agua y Salas abiertas con Multiusos Frutas Citricas</div>
-                      </div>
-                    </label>
-                  </li>
+                <ul id="diario">
                 </ul>
               </div>
             </div>
@@ -125,23 +45,7 @@
           <div id="tab-3" class="page-content tab" style="padding: 0;">
             <div class="block">
               <div class="list media-list">
-                <ul>
-                  <li>
-                    <label class="item-checkbox item-content">
-                      <input type="checkbox" name="demo-media-checkbox" value="1" />
-                      <i class="icon icon-checkbox"></i>
-                      <div class="item-inner">
-                        <div class="item-title-row">
-                          <div class="item-title"><strong>Area Especifica</strong>Garrafoneo,Limpieza de salas abiertas</div>
-                          <div class="item-after">08:20</div>
-                        </div>
-                        <div class="item-subtitle"><strong>Area:</strong>PB</span></div>
-                        <div class="item-subtitle">Tipo de Limpieza: <span class="badge color-blue" style="color: white;background-color: rgba(68, 134, 255, 0.795);">Normal</span></div>
-                        <div class="item-subtitle">Zona: <span class="badge color-red" style="color: white;background-color: rgba(255, 68, 68, 0.795);">Critica</span></div>
-                        <div class="item-text" style="overflow: inherit;">Colocacion de garrafones de agua en PB - Limpieza de dispensadores de agua y Salas abiertas con Multiusos Frutas Citricas</div>
-                      </div>
-                    </label>
-                  </li>
+                <ul id="semanal">
                 </ul>
               </div>
             </div>
@@ -149,22 +53,9 @@
           <div id="tab-4" class="page-content tab" style="padding: 0;">
             <div class="block">
               <div class="list media-list">
-                <ul>
+                <ul id="quincenal">
                   <li>
-                    <label class="item-checkbox item-content">
-                      <input type="checkbox" name="demo-media-checkbox" value="1" />
-                      <i class="icon icon-checkbox"></i>
-                      <div class="item-inner">
-                        <div class="item-title-row">
-                          <div class="item-title"><strong>Area Especifica</strong>Garrafoneo,Limpieza de salas abiertas</div>
-                          <div class="item-after">08:20</div>
-                        </div>
-                        <div class="item-subtitle"><strong>Area:</strong>PB</span></div>
-                        <div class="item-subtitle">Tipo de Limpieza: <span class="badge color-blue" style="color: white;background-color: rgba(68, 134, 255, 0.795);">Normal</span></div>
-                        <div class="item-subtitle">Zona: <span class="badge color-red" style="color: white;background-color: rgba(255, 68, 68, 0.795);">Critica</span></div>
-                        <div class="item-text" style="overflow: inherit;">Colocacion de garrafones de agua en PB - Limpieza de dispensadores de agua y Salas abiertas con Multiusos Frutas Citricas</div>
-                      </div>
-                    </label>
+                    
                   </li>
                 </ul>
               </div>
@@ -173,38 +64,12 @@
           <div id="tab-5" class="page-content tab" style="padding: 0;">
             <div class="block">
               <div class="list media-list">
-                <ul>
+                <ul id="mensual">
                   <li>
-                    <label class="item-checkbox item-content">
-                      <input type="checkbox" name="demo-media-checkbox" value="1" />
-                      <i class="icon icon-checkbox"></i>
-                      <div class="item-inner">
-                        <div class="item-title-row">
-                          <div class="item-title"><strong>Area Especifica</strong>Garrafoneo,Limpieza de salas abiertas</div>
-                          <div class="item-after">08:20</div>
-                        </div>
-                        <div class="item-subtitle"><strong>Area:</strong>PB</span></div>
-                        <div class="item-subtitle">Tipo de Limpieza: <span class="badge color-blue" style="color: white;background-color: rgba(68, 134, 255, 0.795);">Normal</span></div>
-                        <div class="item-subtitle">Zona: <span class="badge color-red" style="color: white;background-color: rgba(255, 68, 68, 0.795);">Critica</span></div>
-                        <div class="item-text" style="overflow: inherit;">Colocacion de garrafones de agua en PB - Limpieza de dispensadores de agua y Salas abiertas con Multiusos Frutas Citricas</div>
-                      </div>
-                    </label>
+                    
                   </li>
                   <li>
-                    <label class="item-checkbox item-content">
-                      <input type="checkbox" name="demo-media-checkbox" value="1" />
-                      <i class="icon icon-checkbox"></i>
-                      <div class="item-inner">
-                        <div class="item-title-row">
-                          <div class="item-title"><strong>Area Especifica</strong>Garrafoneo,Limpieza de salas abiertas</div>
-                          <div class="item-after">08:20</div>
-                        </div>
-                        <div class="item-subtitle"><strong>Area:</strong>PB</span></div>
-                        <div class="item-subtitle">Tipo de Limpieza: <span class="badge color-blue" style="color: white;background-color: rgba(68, 134, 255, 0.795);">Normal</span></div>
-                        <div class="item-subtitle">Zona: <span class="badge color-red" style="color: white;background-color: rgba(255, 68, 68, 0.795);">Critica</span></div>
-                        <div class="item-text" style="overflow: inherit;">Colocacion de garrafones de agua en PB - Limpieza de dispensadores de agua y Salas abiertas con Multiusos Frutas Citricas</div>
-                      </div>
-                    </label>
+                    
                   </li>
                 </ul>
               </div>
@@ -213,22 +78,9 @@
           <div id="tab-6" class="page-content tab" style="padding: 0;">
             <div class="block">
               <div class="list media-list">
-                <ul>
+                <ul id="bimestral">
                   <li>
-                    <label class="item-checkbox item-content">
-                      <input type="checkbox" name="demo-media-checkbox" value="1" />
-                      <i class="icon icon-checkbox"></i>
-                      <div class="item-inner">
-                        <div class="item-title-row">
-                          <div class="item-title"><strong>Area Especifica</strong>Garrafoneo,Limpieza de salas abiertas</div>
-                          <div class="item-after">08:20</div>
-                        </div>
-                        <div class="item-subtitle"><strong>Area:</strong>PB</span></div>
-                        <div class="item-subtitle">Tipo de Limpieza: <span class="badge color-blue" style="color: white;background-color: rgba(68, 134, 255, 0.795);">Normal</span></div>
-                        <div class="item-subtitle">Zona: <span class="badge color-red" style="color: white;background-color: rgba(255, 68, 68, 0.795);">Critica</span></div>
-                        <div class="item-text" style="overflow: inherit;">Colocacion de garrafones de agua en PB - Limpieza de dispensadores de agua y Salas abiertas con Multiusos Frutas Citricas</div>
-                      </div>
-                    </label>
+                    
                   </li>
                 </ul>
               </div>
@@ -243,7 +95,549 @@
   return {
     on: {
       pageInit: function () {
-        var id_cedula = localStorage.getItem("IdCedula");
+        var id_cedula = localStorage.getItem("IdCedula");       
+
+        var self = this;
+        var app = self.$app; 
+        var rol = localStorage.getItem("rol");
+        var roles = rol.split("-");
+        var empresa=roles[1];
+        
+        databaseHandler.db.transaction(
+          function(tx){
+              tx.executeSql("Select cliente from datos_maquinaria where id_cedula = ? ",
+              [id_cedula],
+                  function(tx, results){
+                    var item = results.rows.item(0);
+                    var sitio = item.cliente;
+                    var NomJson = 'ProgramLimp_SUROE';
+                    var NomDescCli = 'ProgramLimp_SUROE';
+                    
+                    var nombre_maquina = $("#nombre_maquina").val();
+                    app.request.get(cordova.file.dataDirectory + "jsons/"+NomDescCli+".json", function (data) {
+                        var content2 = JSON.parse(data);
+                        var program = [];
+                        for(var x = 0; x < content2.length; x++) {
+                          console.log(content2[x].sitio.toUpperCase())
+                            if(content2[x].sitio.toUpperCase() == sitio.toUpperCase() ){
+                              program.push(content2[x]);
+                            }         
+                        }
+                        
+                        var fecha = new Date();
+                        var fecha_actual = fecha.getFullYear()+"-"+(fecha.getMonth()+1)+"-"+fecha.getDate()+" "+fecha.getHours()+":"+fecha.getMinutes()+":"+fecha.getSeconds();
+                        
+                        var xhora = program.filter(item => item.Necesidad_hora == '1')
+                        var cant_diario1 = 0;
+                        xhora.forEach(item => {
+                          databaseHandler.db.transaction(
+                              function(tx){
+                                  tx.executeSql("SELECT * from ProgramLimp WHERE id_limpieza = ? and id_cedula = ?",
+                                      [item.id, id_cedula],
+                                      function(tx, results){
+                                        var length = results.rows.length;
+                                        
+                                          var item2 = results.rows.item(0);
+                                          if(item2){
+                                            var fecha_registrada = item2.fecha;
+                                            if((fecha_registrada > fecha_actual) || (!item2)){
+                                              $("#hora").append("<li>"+
+                                                    "<label class='item-checkbox item-content'>"+
+                                                      "<input type='checkbox' name='demo-media-checkbox' id='"+item.id+"' onchange='ChangeValueProgramLimp("+item.id+")' value='6' />"+
+                                                      "<i class='icon icon-checkbox'></i>"+
+                                                      "<div class='item-inner'>"+
+                                                        "<div class='item-title-row'>"+
+                                                          "<div class='item-title'><strong>Area Especifica</strong>"+item.area_especifica+" ("+item.tipo_limpieza+")</div>"+
+                                                          "<div class='item-after' >"+item.hora+"</div>"+
+                                                        "</div>"+
+                                                        "<div class='item-subtitle'><strong>Area:</strong>"+item.area_general+"</span></div>"+
+                                                        "<div class='item-subtitle'>Tipo de Limpieza: <span class='badge color-blue' style='color: white;background-color: rgba(68, 134, 255, 0.795);'>"+item.tipo_limpieza+"</span></div>"+
+                                                        "<div class='item-subtitle'>Zona: <span class='badge color-red' style='color: white;background-color: rgba(255, 68, 68, 0.795);'>"+item.zona+"</span></div>"+
+                                                        "<div class='item-text' style='overflow: scroll;'>"+item.activi_especifica+"</div>"+
+                                                      "</div>"+
+                                                    "</label>"+
+                                                  "</li>")
+                                                  cant_diario1++;
+                                                  $("#CantHora").text(cant_diario1)
+                                            }else{
+                                              $("#hora").append("<li style='background-color: green; color:white'>"+
+                                                    "<label class='item-checkbox item-content'>"+
+                                                      "<input type='checkbox' name='demo-media-checkbox' checked id='"+item.id+"' onchange='ChangeValueProgramLimp("+item.id+")' value='6' />"+
+                                                      "<i class='icon icon-checkbox'></i>"+
+                                                      "<div class='item-inner'>"+
+                                                        "<div class='item-title-row'>"+
+                                                          "<div class='item-title'><strong>Area Especifica</strong>"+item.area_especifica+" ("+item.tipo_limpieza+")</div>"+
+                                                          "<div class='item-after' style='color:white'>"+item.hora+"</div>"+
+                                                        "</div>"+
+                                                        "<div class='item-subtitle'><strong>Area:</strong>"+item.area_general+"</span></div>"+
+                                                        "<div class='item-subtitle'>Tipo de Limpieza: <span class='badge color-blue' style='color: white;background-color: rgba(68, 134, 255, 0.795);'>"+item.tipo_limpieza+"</span></div>"+
+                                                        "<div class='item-subtitle'>Zona: <span class='badge color-red' style='color: white;background-color: rgba(255, 68, 68, 0.795);'>"+item.zona+"</span></div>"+
+                                                        "<div class='item-text' style='overflow: scroll; color: white;'>"+item.activi_especifica+"</div>"+
+                                                      "</div>"+
+                                                    "</label>"+
+                                                  "</li>")
+                                            }
+                                          }else{
+                                            $("#hora").append("<li>"+
+                                                    "<label class='item-checkbox item-content'>"+
+                                                      "<input type='checkbox' name='demo-media-checkbox' id='"+item.id+"' onchange='ChangeValueProgramLimp("+item.id+")' value='6' />"+
+                                                      "<i class='icon icon-checkbox'></i>"+
+                                                      "<div class='item-inner'>"+
+                                                        "<div class='item-title-row'>"+
+                                                          "<div class='item-title'><strong>Area Especifica</strong>"+item.area_especifica+" ("+item.tipo_limpieza+")</div>"+
+                                                          "<div class='item-after' >"+item.hora+"</div>"+
+                                                        "</div>"+
+                                                        "<div class='item-subtitle'><strong>Area:</strong>"+item.area_general+"</span></div>"+
+                                                        "<div class='item-subtitle'>Tipo de Limpieza: <span class='badge color-blue' style='color: white;background-color: rgba(68, 134, 255, 0.795);'>"+item.tipo_limpieza+"</span></div>"+
+                                                        "<div class='item-subtitle'>Zona: <span class='badge color-red' style='color: white;background-color: rgba(255, 68, 68, 0.795);'>"+item.zona+"</span></div>"+
+                                                        "<div class='item-text' style='overflow: scroll;'>"+item.activi_especifica+"</div>"+
+                                                      "</div>"+
+                                                    "</label>"+
+                                                  "</li>")
+                                                  cant_diario1++;
+                                                  $("#CantHora").text(cant_diario1)
+                                          }
+                                          
+                                      },
+                                      function(tx, error){
+                                          console.log('Error:'+ error.message);
+                                      }
+                                  );
+                              },
+                              function(error){},
+                              function(){}
+                            );
+                            $("#CantHora").text(cant_diario1)
+                          }); 
+                        var fecha = new Date();
+                        var fecha_actual = fecha.getFullYear()+"-"+(fecha.getMonth()+1)+"-"+fecha.getDate()+" "+fecha.getHours()+":"+fecha.getMinutes()+":"+fecha.getSeconds();
+                        var diario = program.filter(item => item.frecuencia == 'Diario' &&  item.Necesidad_hora == '')
+                        var cant_diario2 = 0;
+                        diario.forEach(item => {
+                          
+                          databaseHandler.db.transaction(
+                              function(tx){
+                                  tx.executeSql("SELECT * from ProgramLimp WHERE id_limpieza = ? and id_cedula = ?",
+                                      [item.id, id_cedula],
+                                      function(tx, results){
+                                        var length = results.rows.length;
+                                        
+                                          var item2 = results.rows.item(0);
+                                          if(item2){
+                                            var fecha_registrada = item2.fecha;
+                                            if((fecha_registrada > fecha_actual) || (!item2)){
+                                              $("#diario").append("<li>"+
+                                                    "<label class='item-checkbox item-content'>"+
+                                                      "<input type='checkbox' name='demo-media-checkbox' id='"+item.id+"' onchange='ChangeValueProgramLimp("+item.id+")' value='6' />"+
+                                                      "<i class='icon icon-checkbox'></i>"+
+                                                      "<div class='item-inner'>"+
+                                                        "<div class='item-title-row'>"+
+                                                          "<div class='item-title'><strong>Area Especifica</strong>"+item.area_especifica+" ("+item.tipo_limpieza+")</div>"+
+                                                          "<div class='item-after' >"+item.hora+"</div>"+
+                                                        "</div>"+
+                                                        "<div class='item-subtitle'><strong>Area:</strong>"+item.area_general+"</span></div>"+
+                                                        "<div class='item-subtitle'>Tipo de Limpieza: <span class='badge color-blue' style='color: white;background-color: rgba(68, 134, 255, 0.795);'>"+item.tipo_limpieza+"</span></div>"+
+                                                        "<div class='item-subtitle'>Zona: <span class='badge color-red' style='color: white;background-color: rgba(255, 68, 68, 0.795);'>"+item.zona+"</span></div>"+
+                                                        "<div class='item-text' style='overflow: scroll;'>"+item.activi_especifica+"</div>"+
+                                                      "</div>"+
+                                                    "</label>"+
+                                                  "</li>")
+                                                  cant_diario2++;
+                                                  $("#CantDiario").text(cant_diario2)
+                                            }else{
+                                              $("#diario").append("<li style='background-color: green; color:white'>"+
+                                                    "<label class='item-checkbox item-content'>"+
+                                                      "<input type='checkbox' name='demo-media-checkbox' checked id='"+item.id+"' onchange='ChangeValueProgramLimp("+item.id+")' value='6' />"+
+                                                      "<i class='icon icon-checkbox'></i>"+
+                                                      "<div class='item-inner'>"+
+                                                        "<div class='item-title-row'>"+
+                                                          "<div class='item-title'><strong>Area Especifica</strong>"+item.area_especifica+" ("+item.tipo_limpieza+")</div>"+
+                                                          "<div class='item-after' style='color:white'>"+item.hora+"</div>"+
+                                                        "</div>"+
+                                                        "<div class='item-subtitle'><strong>Area:</strong>"+item.area_general+"</span></div>"+
+                                                        "<div class='item-subtitle'>Tipo de Limpieza: <span class='badge color-blue' style='color: white;background-color: rgba(68, 134, 255, 0.795);'>"+item.tipo_limpieza+"</span></div>"+
+                                                        "<div class='item-subtitle'>Zona: <span class='badge color-red' style='color: white;background-color: rgba(255, 68, 68, 0.795);'>"+item.zona+"</span></div>"+
+                                                        "<div class='item-text' style='overflow: scroll; color: white;'>"+item.activi_especifica+"</div>"+
+                                                      "</div>"+
+                                                    "</label>"+
+                                                  "</li>")
+                                            }
+                                          }else{
+                                            $("#diario").append("<li>"+
+                                                    "<label class='item-checkbox item-content'>"+
+                                                      "<input type='checkbox' name='demo-media-checkbox' id='"+item.id+"' onchange='ChangeValueProgramLimp("+item.id+")' value='6' />"+
+                                                      "<i class='icon icon-checkbox'></i>"+
+                                                      "<div class='item-inner'>"+
+                                                        "<div class='item-title-row'>"+
+                                                          "<div class='item-title'><strong>Area Especifica</strong>"+item.area_especifica+" ("+item.tipo_limpieza+")</div>"+
+                                                          "<div class='item-after'>"+item.hora+"</div>"+
+                                                        "</div>"+
+                                                        "<div class='item-subtitle'><strong>Area:</strong>"+item.area_general+"</span></div>"+
+                                                        "<div class='item-subtitle'>Tipo de Limpieza: <span class='badge color-blue' style='color: white;background-color: rgba(68, 134, 255, 0.795);'>"+item.tipo_limpieza+"</span></div>"+
+                                                        "<div class='item-subtitle'>Zona: <span class='badge color-red' style='color: white;background-color: rgba(255, 68, 68, 0.795);'>"+item.zona+"</span></div>"+
+                                                        "<div class='item-text' style='overflow: scroll;'>"+item.activi_especifica+"</div>"+
+                                                      "</div>"+
+                                                    "</label>"+
+                                                  "</li>")
+                                                  cant_diario2++;
+                                                  $("#CantDiario").text(cant_diario2)
+                                          }
+                                          
+                                      },
+                                      function(tx, error){
+                                          console.log('Error:'+ error.message);
+                                      }
+                                  );
+                              },
+                              function(error){},
+                              function(){}
+                          );
+                          $("#CantDiario").text(cant_diario2)
+                        });   
+                        
+                        var semanal = program.filter(item => item.frecuencia == 'Semanal' &&  item.Necesidad_hora == '')
+                        var cant_diario3 = 0;
+                        semanal.forEach(item => {
+                          databaseHandler.db.transaction(
+                              function(tx){
+                                  tx.executeSql("SELECT * from ProgramLimp WHERE id_limpieza = ? and id_cedula = ?",
+                                      [item.id, id_cedula],
+                                      function(tx, results){
+                                        var length = results.rows.length;
+                                        
+                                          var item2 = results.rows.item(0);
+                                          if(item2){
+                                            var fecha_registrada = item2.fecha;
+                                            if((fecha_registrada > fecha_actual) || (!item2)){
+                                              $("#semanal").append("<li>"+
+                                                    "<label class='item-checkbox item-content'>"+
+                                                      "<input type='checkbox' name='demo-media-checkbox' id='"+item.id+"' onchange='ChangeValueProgramLimp("+item.id+")' value='6' />"+
+                                                      "<i class='icon icon-checkbox'></i>"+
+                                                      "<div class='item-inner'>"+
+                                                        "<div class='item-title-row'>"+
+                                                          "<div class='item-title'><strong>Area Especifica</strong>"+item.area_especifica+" ("+item.tipo_limpieza+")</div>"+
+                                                          "<div class='item-after' >"+item.hora+"</div>"+
+                                                        "</div>"+
+                                                        "<div class='item-subtitle'><strong>Area:</strong>"+item.area_general+"</span></div>"+
+                                                        "<div class='item-subtitle'>Tipo de Limpieza: <span class='badge color-blue' style='color: white;background-color: rgba(68, 134, 255, 0.795);'>"+item.tipo_limpieza+"</span></div>"+
+                                                        "<div class='item-subtitle'>Zona: <span class='badge color-red' style='color: white;background-color: rgba(255, 68, 68, 0.795);'>"+item.zona+"</span></div>"+
+                                                        "<div class='item-text' style='overflow: scroll;'>"+item.activi_especifica+"</div>"+
+                                                      "</div>"+
+                                                    "</label>"+
+                                                  "</li>")
+                                                  cant_diario3++;
+                                                  $("#CantSemanal").text(cant_diario3)
+                                            }else{
+                                              $("#semanal").append("<li style='background-color: green; color:white'>"+
+                                                    "<label class='item-checkbox item-content'>"+
+                                                      "<input type='checkbox' name='demo-media-checkbox' checked id='"+item.id+"' onchange='ChangeValueProgramLimp("+item.id+")' value='6' />"+
+                                                      "<i class='icon icon-checkbox'></i>"+
+                                                      "<div class='item-inner'>"+
+                                                        "<div class='item-title-row'>"+
+                                                          "<div class='item-title'><strong>Area Especifica</strong>"+item.area_especifica+" ("+item.tipo_limpieza+")</div>"+
+                                                          "<div class='item-after' style='color:white'>"+item.hora+"</div>"+
+                                                        "</div>"+
+                                                        "<div class='item-subtitle'><strong>Area:</strong>"+item.area_general+"</span></div>"+
+                                                        "<div class='item-subtitle'>Tipo de Limpieza: <span class='badge color-blue' style='color: white;background-color: rgba(68, 134, 255, 0.795);'>"+item.tipo_limpieza+"</span></div>"+
+                                                        "<div class='item-subtitle'>Zona: <span class='badge color-red' style='color: white;background-color: rgba(255, 68, 68, 0.795);'>"+item.zona+"</span></div>"+
+                                                        "<div class='item-text' style='overflow: scroll; color: white;'>"+item.activi_especifica+"</div>"+
+                                                      "</div>"+
+                                                    "</label>"+
+                                                  "</li>")
+                                            }
+                                          }else{
+                                            $("#semanal").append("<li>"+
+                                                    "<label class='item-checkbox item-content'>"+
+                                                      "<input type='checkbox' name='demo-media-checkbox' id='"+item.id+"' onchange='ChangeValueProgramLimp("+item.id+")' value='6' />"+
+                                                      "<i class='icon icon-checkbox'></i>"+
+                                                      "<div class='item-inner'>"+
+                                                        "<div class='item-title-row'>"+
+                                                          "<div class='item-title'><strong>Area Especifica</strong>"+item.area_especifica+" ("+item.tipo_limpieza+")</div>"+
+                                                          "<div class='item-after'>"+item.hora+"</div>"+
+                                                        "</div>"+
+                                                        "<div class='item-subtitle'><strong>Area:</strong>"+item.area_general+"</span></div>"+
+                                                        "<div class='item-subtitle'>Tipo de Limpieza: <span class='badge color-blue' style='color: white;background-color: rgba(68, 134, 255, 0.795);'>"+item.tipo_limpieza+"</span></div>"+
+                                                        "<div class='item-subtitle'>Zona: <span class='badge color-red' style='color: white;background-color: rgba(255, 68, 68, 0.795);'>"+item.zona+"</span></div>"+
+                                                        "<div class='item-text' style='overflow: scroll;'>"+item.activi_especifica+"</div>"+
+                                                      "</div>"+
+                                                    "</label>"+
+                                                  "</li>")
+                                                  cant_diario3++;
+                                                  $("#CantSemanal").text(cant_diario3)
+                                          }
+                                          
+                                      },
+                                      function(tx, error){
+                                          console.log('Error:'+ error.message);
+                                      }
+                                  );
+                              },
+                              function(error){},
+                              function(){}
+                          );
+                          $("#CantSemanal").text(cant_diario3)
+                        })
+                        var quincenal = program.filter(item => item.frecuencia == 'Quincenal' &&  item.Necesidad_hora == '')
+                        var cant_diario4 = 0;
+                        quincenal.forEach(item => {
+                          databaseHandler.db.transaction(
+                              function(tx){
+                                  tx.executeSql("SELECT * from ProgramLimp WHERE id_limpieza = ? and id_cedula = ?",
+                                      [item.id, id_cedula],
+                                      function(tx, results){
+                                        var length = results.rows.length;
+                                        
+                                          var item2 = results.rows.item(0);
+                                          if(item2){
+                                            var fecha_registrada = item2.fecha;
+                                            if((fecha_registrada > fecha_actual) || (!item2)){
+                                              $("#quincenal").append("<li>"+
+                                                    "<label class='item-checkbox item-content'>"+
+                                                      "<input type='checkbox' name='demo-media-checkbox' id='"+item.id+"' onchange='ChangeValueProgramLimp("+item.id+")' value='6' />"+
+                                                      "<i class='icon icon-checkbox'></i>"+
+                                                      "<div class='item-inner'>"+
+                                                        "<div class='item-title-row'>"+
+                                                          "<div class='item-title'><strong>Area Especifica</strong>"+item.area_especifica+" ("+item.tipo_limpieza+")</div>"+
+                                                          "<div class='item-after' >"+item.hora+"</div>"+
+                                                        "</div>"+
+                                                        "<div class='item-subtitle'><strong>Area:</strong>"+item.area_general+"</span></div>"+
+                                                        "<div class='item-subtitle'>Tipo de Limpieza: <span class='badge color-blue' style='color: white;background-color: rgba(68, 134, 255, 0.795);'>"+item.tipo_limpieza+"</span></div>"+
+                                                        "<div class='item-subtitle'>Zona: <span class='badge color-red' style='color: white;background-color: rgba(255, 68, 68, 0.795);'>"+item.zona+"</span></div>"+
+                                                        "<div class='item-text' style='overflow: scroll;'>"+item.activi_especifica+"</div>"+
+                                                      "</div>"+
+                                                    "</label>"+
+                                                  "</li>")
+                                                  cant_diario4++;
+                                                  $("#CantQuin").text(cant_diario4)
+                                            }else{
+                                              $("#quincenal").append("<li style='background-color: green; color:white'>"+
+                                                    "<label class='item-checkbox item-content'>"+
+                                                      "<input type='checkbox' name='demo-media-checkbox' checked id='"+item.id+"' onchange='ChangeValueProgramLimp("+item.id+")' value='6' />"+
+                                                      "<i class='icon icon-checkbox'></i>"+
+                                                      "<div class='item-inner'>"+
+                                                        "<div class='item-title-row'>"+
+                                                          "<div class='item-title'><strong>Area Especifica</strong>"+item.area_especifica+" ("+item.tipo_limpieza+")</div>"+
+                                                          "<div class='item-after' style='color:white'>"+item.hora+"</div>"+
+                                                        "</div>"+
+                                                        "<div class='item-subtitle'><strong>Area:</strong>"+item.area_general+"</span></div>"+
+                                                        "<div class='item-subtitle'>Tipo de Limpieza: <span class='badge color-blue' style='color: white;background-color: rgba(68, 134, 255, 0.795);'>"+item.tipo_limpieza+"</span></div>"+
+                                                        "<div class='item-subtitle'>Zona: <span class='badge color-red' style='color: white;background-color: rgba(255, 68, 68, 0.795);'>"+item.zona+"</span></div>"+
+                                                        "<div class='item-text' style='overflow: scroll; color: white;'>"+item.activi_especifica+"</div>"+
+                                                      "</div>"+
+                                                    "</label>"+
+                                                  "</li>")
+                                            }
+                                          }else{
+                                            $("#quincenal").append("<li>"+
+                                                    "<label class='item-checkbox item-content'>"+
+                                                      "<input type='checkbox' name='demo-media-checkbox' id='"+item.id+"' onchange='ChangeValueProgramLimp("+item.id+")' value='6' />"+
+                                                      "<i class='icon icon-checkbox'></i>"+
+                                                      "<div class='item-inner'>"+
+                                                        "<div class='item-title-row'>"+
+                                                          "<div class='item-title'><strong>Area Especifica</strong>"+item.area_especifica+" ("+item.tipo_limpieza+")</div>"+
+                                                          "<div class='item-after'>"+item.hora+"</div>"+
+                                                        "</div>"+
+                                                        "<div class='item-subtitle'><strong>Area:</strong>"+item.area_general+"</span></div>"+
+                                                        "<div class='item-subtitle'>Tipo de Limpieza: <span class='badge color-blue' style='color: white;background-color: rgba(68, 134, 255, 0.795);'>"+item.tipo_limpieza+"</span></div>"+
+                                                        "<div class='item-subtitle'>Zona: <span class='badge color-red' style='color: white;background-color: rgba(255, 68, 68, 0.795);'>"+item.zona+"</span></div>"+
+                                                        "<div class='item-text' style='overflow: scroll;'>"+item.activi_especifica+"</div>"+
+                                                      "</div>"+
+                                                    "</label>"+
+                                                  "</li>")
+                                                  cant_diario4++;
+                                                  
+                                                  $("#CantQuin").text(cant_diario4)
+                                          }
+                                          
+                                      },
+                                      function(tx, error){
+                                          console.log('Error:'+ error.message);
+                                      }
+                                  );
+                              },
+                              function(error){},
+                              function(){}
+                          );
+                          $("#CantQuin").text(cant_diario4)
+                        })
+
+                        var mensual = program.filter(item => item.frecuencia == 'Mensual' &&  item.Necesidad_hora == '')
+                        var cant_diario5 = 0;
+                        mensual.forEach(item => {
+                          databaseHandler.db.transaction(
+                              function(tx){
+                                  tx.executeSql("SELECT * from ProgramLimp WHERE id_limpieza = ? and id_cedula = ?",
+                                      [item.id, id_cedula],
+                                      function(tx, results){
+                                        var length = results.rows.length;
+                                        
+                                          var item2 = results.rows.item(0);
+                                          if(item2){
+                                            var fecha_registrada = item2.fecha;
+                                            if((fecha_registrada > fecha_actual) || (!item2)){
+                                              $("#mensual").append("<li>"+
+                                                    "<label class='item-checkbox item-content'>"+
+                                                      "<input type='checkbox' name='demo-media-checkbox' id='"+item.id+"' onchange='ChangeValueProgramLimp("+item.id+")' value='6' />"+
+                                                      "<i class='icon icon-checkbox'></i>"+
+                                                      "<div class='item-inner'>"+
+                                                        "<div class='item-title-row'>"+
+                                                          "<div class='item-title'><strong>Area Especifica</strong>"+item.area_especifica+" ("+item.tipo_limpieza+")</div>"+
+                                                          "<div class='item-after' >"+item.hora+"</div>"+
+                                                        "</div>"+
+                                                        "<div class='item-subtitle'><strong>Area:</strong>"+item.area_general+"</span></div>"+
+                                                        "<div class='item-subtitle'>Tipo de Limpieza: <span class='badge color-blue' style='color: white;background-color: rgba(68, 134, 255, 0.795);'>"+item.tipo_limpieza+"</span></div>"+
+                                                        "<div class='item-subtitle'>Zona: <span class='badge color-red' style='color: white;background-color: rgba(255, 68, 68, 0.795);'>"+item.zona+"</span></div>"+
+                                                        "<div class='item-text' style='overflow: scroll;'>"+item.activi_especifica+"</div>"+
+                                                      "</div>"+
+                                                    "</label>"+
+                                                  "</li>")
+                                                  cant_diario5++;
+                                                  $("#CantMensual").text(cant_diario5)
+                                            }else{
+                                              $("#mensual").append("<li style='background-color: green; color:white'>"+
+                                                    "<label class='item-checkbox item-content'>"+
+                                                      "<input type='checkbox' name='demo-media-checkbox' checked id='"+item.id+"' onchange='ChangeValueProgramLimp("+item.id+")' value='6' />"+
+                                                      "<i class='icon icon-checkbox'></i>"+
+                                                      "<div class='item-inner'>"+
+                                                        "<div class='item-title-row'>"+
+                                                          "<div class='item-title'><strong>Area Especifica</strong>"+item.area_especifica+" ("+item.tipo_limpieza+")</div>"+
+                                                          "<div class='item-after' style='color:white'>"+item.hora+"</div>"+
+                                                        "</div>"+
+                                                        "<div class='item-subtitle'><strong>Area:</strong>"+item.area_general+"</span></div>"+
+                                                        "<div class='item-subtitle'>Tipo de Limpieza: <span class='badge color-blue' style='color: white;background-color: rgba(68, 134, 255, 0.795);'>"+item.tipo_limpieza+"</span></div>"+
+                                                        "<div class='item-subtitle'>Zona: <span class='badge color-red' style='color: white;background-color: rgba(255, 68, 68, 0.795);'>"+item.zona+"</span></div>"+
+                                                        "<div class='item-text' style='overflow: scroll; color: white;'>"+item.activi_especifica+"</div>"+
+                                                      "</div>"+
+                                                    "</label>"+
+                                                  "</li>")
+                                            }
+                                          }else{
+                                            $("#mensual").append("<li>"+
+                                                    "<label class='item-checkbox item-content'>"+
+                                                      "<input type='checkbox' name='demo-media-checkbox' id='"+item.id+"' onchange='ChangeValueProgramLimp("+item.id+")' value='6' />"+
+                                                      "<i class='icon icon-checkbox'></i>"+
+                                                      "<div class='item-inner'>"+
+                                                        "<div class='item-title-row'>"+
+                                                          "<div class='item-title'><strong>Area Especifica</strong>"+item.area_especifica+" ("+item.tipo_limpieza+")</div>"+
+                                                          "<div class='item-after'>"+item.hora+"</div>"+
+                                                        "</div>"+
+                                                        "<div class='item-subtitle'><strong>Area:</strong>"+item.area_general+"</span></div>"+
+                                                        "<div class='item-subtitle'>Tipo de Limpieza: <span class='badge color-blue' style='color: white;background-color: rgba(68, 134, 255, 0.795);'>"+item.tipo_limpieza+"</span></div>"+
+                                                        "<div class='item-subtitle'>Zona: <span class='badge color-red' style='color: white;background-color: rgba(255, 68, 68, 0.795);'>"+item.zona+"</span></div>"+
+                                                        "<div class='item-text' style='overflow: scroll;'>"+item.activi_especifica+"</div>"+
+                                                      "</div>"+
+                                                    "</label>"+
+                                                  "</li>")
+                                                  cant_diario5++;
+                                                
+                                                  $("#CantMensual").text(cant_diario5)
+                                          }
+                                          
+                                      },
+                                      function(tx, error){
+                                          console.log('Error:'+ error.message);
+                                      }
+                                  );
+                              },
+                              function(error){},
+                              function(){}
+                          );
+                          $("#CantMensual").text(cant_diario5)
+                        })
+                        var bimestral = program.filter(item => item.frecuencia == 'Bimestral' &&  item.Necesidad_hora == '')
+                        var cant_diarioBim = 0;
+                        bimestral.forEach(item => {
+                          databaseHandler.db.transaction(
+                              function(tx){
+                                  tx.executeSql("SELECT * from ProgramLimp WHERE id_limpieza = ? and id_cedula = ?",
+                                      [item.id, id_cedula],
+                                      function(tx, results){
+                                        var length = results.rows.length;
+                                        
+                                          var item2 = results.rows.item(0);
+                                          if(item2){
+                                            var fecha_registrada = item2.fecha;
+                                            if((fecha_registrada > fecha_actual) || (!item2)){
+                                              $("#bimestral").append("<li>"+
+                                                    "<label class='item-checkbox item-content'>"+
+                                                      "<input type='checkbox' name='demo-media-checkbox' id='"+item.id+"' onchange='ChangeValueProgramLimp("+item.id+")' value='6' />"+
+                                                      "<i class='icon icon-checkbox'></i>"+
+                                                      "<div class='item-inner'>"+
+                                                        "<div class='item-title-row'>"+
+                                                          "<div class='item-title'><strong>Area Especifica</strong>"+item.area_especifica+" ("+item.tipo_limpieza+")</div>"+
+                                                          "<div class='item-after' >"+item.hora+"</div>"+
+                                                        "</div>"+
+                                                        "<div class='item-subtitle'><strong>Area:</strong>"+item.area_general+"</span></div>"+
+                                                        "<div class='item-subtitle'>Tipo de Limpieza: <span class='badge color-blue' style='color: white;background-color: rgba(68, 134, 255, 0.795);'>"+item.tipo_limpieza+"</span></div>"+
+                                                        "<div class='item-subtitle'>Zona: <span class='badge color-red' style='color: white;background-color: rgba(255, 68, 68, 0.795);'>"+item.zona+"</span></div>"+
+                                                        "<div class='item-text' style='overflow: scroll;'>"+item.activi_especifica+"</div>"+
+                                                      "</div>"+
+                                                    "</label>"+
+                                                  "</li>")
+                                                  cant_diarioBim++;
+                                                  $("#CantBim").text(cant_diarioBim)
+                                            }else{
+                                              $("#bimestral").append("<li style='background-color: green; color:white'>"+
+                                                    "<label class='item-checkbox item-content'>"+
+                                                      "<input type='checkbox' name='demo-media-checkbox' checked id='"+item.id+"' onchange='ChangeValueProgramLimp("+item.id+")' value='6' />"+
+                                                      "<i class='icon icon-checkbox'></i>"+
+                                                      "<div class='item-inner'>"+
+                                                        "<div class='item-title-row'>"+
+                                                          "<div class='item-title'><strong>Area Especifica</strong>"+item.area_especifica+" ("+item.tipo_limpieza+")</div>"+
+                                                          "<div class='item-after' style='color:white'>"+item.hora+"</div>"+
+                                                        "</div>"+
+                                                        "<div class='item-subtitle'><strong>Area:</strong>"+item.area_general+"</span></div>"+
+                                                        "<div class='item-subtitle'>Tipo de Limpieza: <span class='badge color-blue' style='color: white;background-color: rgba(68, 134, 255, 0.795);'>"+item.tipo_limpieza+"</span></div>"+
+                                                        "<div class='item-subtitle'>Zona: <span class='badge color-red' style='color: white;background-color: rgba(255, 68, 68, 0.795);'>"+item.zona+"</span></div>"+
+                                                        "<div class='item-text' style='overflow: scroll; color: white;'>"+item.activi_especifica+"</div>"+
+                                                      "</div>"+
+                                                    "</label>"+
+                                                  "</li>")
+                                            }
+                                          }else{
+                                            $("#bimestral").append("<li>"+
+                                                    "<label class='item-checkbox item-content'>"+
+                                                      "<input type='checkbox' name='demo-media-checkbox' id='"+item.id+"' onchange='ChangeValueProgramLimp("+item.id+")' value='6' />"+
+                                                      "<i class='icon icon-checkbox'></i>"+
+                                                      "<div class='item-inner'>"+
+                                                        "<div class='item-title-row'>"+
+                                                          "<div class='item-title'><strong>Area Especifica</strong>"+item.area_especifica+" ("+item.tipo_limpieza+")</div>"+
+                                                          "<div class='item-after'>"+item.hora+"</div>"+
+                                                        "</div>"+
+                                                        "<div class='item-subtitle'><strong>Area:</strong>"+item.area_general+"</span></div>"+
+                                                        "<div class='item-subtitle'>Tipo de Limpieza: <span class='badge color-blue' style='color: white;background-color: rgba(68, 134, 255, 0.795);'>"+item.tipo_limpieza+"</span></div>"+
+                                                        "<div class='item-subtitle'>Zona: <span class='badge color-red' style='color: white;background-color: rgba(255, 68, 68, 0.795);'>"+item.zona+"</span></div>"+
+                                                        "<div class='item-text' style='overflow: scroll;'>"+item.activi_especifica+"</div>"+
+                                                      "</div>"+
+                                                    "</label>"+
+                                                  "</li>")
+                                                  cant_diarioBim++;
+                                                  console.log('cantidad', cant_diarioBim)
+                                                  $("#CantBim").text(cant_diarioBim)
+                                          }
+                                          
+                                      },
+                                      function(tx, error){
+                                          console.log('Error:'+ error.message);
+                                      }
+                                  );
+                              },
+                              function(error){},
+                              function(){}
+                          );
+                          $("#CantBim").text(cant_diarioBim)
+                        })
+                        //console.log('new array', program.filter(item => item.frecuencia == 'Diario'))
+                    });
+                  },
+                  async function(tx, error){
+                    console.log("Error al guardar cedula: " + error.message);
+                  }
+              );
+          },
+          function(error){},
+          function(){}
+        );
       }
     }
   }

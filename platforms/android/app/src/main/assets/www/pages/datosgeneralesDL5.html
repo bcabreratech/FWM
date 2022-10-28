@@ -1,0 +1,122 @@
+<style>  
+    .span{
+            margin-top: 10px;
+            height: auto;
+            line-height: 22px;
+            margin-bottom: 3px;
+            margin-left: 0;
+    }
+      body {
+            background: #F5F5F5;
+    }
+    .page {
+        background: #F5F5F5;
+    }
+</style>
+<template>
+        <div class="page" id="FWM-1">
+            <!-- Navbar -->
+            <div class="navbar" style="background-color: #063E7F;height: 52px;">
+                <div style="text-align: center;"><img src="img/logo-FWM.png" style="margin-top: 5px;" height="41.38px" alt="Logo Field"></div>
+                <div class="navbar-inner sliding" style="height: 52px;">
+                    <div class="left">
+                        <a href="#" onclick="regresarDilimpio();">
+                            <span class="nav-text-regresar" id="nav-text-regresar-function">Regresar</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <!-- Contenido Formulario -->                                
+            <div class="page-content">
+                <div style="text-align: center; justify-content:center; margin-right:auto; margin-left:auto; width: 99%;margin-top: 30px;">
+                    <h2 class="FWN-titulo-2">Datos Generales</h2>
+                    <div style="text-align: left;">     
+                        <div class="list FWM-fixing-form" id="datos_form"> 
+                            <span class="span FWM-span-form">Nombre comercial:</span>
+                                <input type='text' id="cliente" name="Nombre comercial" class="FWM-input" style="background-color: white; font-family: 'ITC Avant Garde Gothic', sans-serif;" onchange="inputLleno(this.id,this.value)" readonly/>
+                            <span class="span FWM-span-form">Nombre de la persona de Contacto:</span>
+                                <input type='text' id="nombre_contacto" class="FWM-input" name="Nombre de la persona de Contacto" style="background-color: white; font-family: 'ITC Avant Garde Gothic', sans-serif;" onchange="inputLleno(this.id,this.value)"/>
+                            <span class="span FWM-span-form">Correo:</span>
+                                <input type='text' id="correo" name="Correo" class="FWM-input" style="font-family: 'ITC Avant Garde Gothic', sans-serif; background-color: white;" onchange="inputLleno(this.id,this.value)"/>
+                            <span class="span FWM-span-form">Telefono:</span>
+                                <input type='tel' id="telefono" name="Telefono" class="FWM-input" style="font-family: 'ITC Avant Garde Gothic', sans-serif; background-color: white;" onchange="inputLleno(this.id,this.value)"/>
+                                <span class="span FWM-span-form">Dirección:</span>
+                                <input type='text' id="direccion" name="Direccion" class="FWM-input"
+                                    style="background-color: white; font-family: 'ITC Avant Garde Gothic', sans-serif;" onchange="inputLleno(this.id,this.value)" />
+                            <span class="span FWM-span-form">Ciudad:</span>
+                                <input type='text' id="Ciudad" class="FWM-input" name="Ciudad" style="background-color: white; font-family: 'ITC Avant Garde Gothic', sans-serif;" onchange="inputLleno(this.id,this.value)"/>
+                            <span class="span FWM-span-form">Responsable del area:</span>
+                                <input type='text' id="Responsable" name="Responsable" class="FWM-input" style="background-color: white;font-family: 'ITC Avant Garde Gothic', sans-serif;" onchange="inputLleno(this.id,this.value)"/>
+                            <span class="span FWM-span-form">Horario de servicio:</span>
+                                <input type='time' id="Horario" name="Horario" class="FWM-input"
+                                    style="background-color: white; font-family: 'ITC Avant Garde Gothic', sans-serif;" onchange="inputLleno(this.id,this.value)" />
+                                <span class="span FWM-span-form">Territorio:</span>
+                                <input type='text' id="Territorio" name="Territorio" class="FWM-input"
+                                    style="background-color: white; font-family: 'ITC Avant Garde Gothic', sans-serif;" onchange="inputLleno(this.id,this.value)" />
+                            <!-- <span class="span FWM-span-form">Fecha:</span>
+                                <input type='date' id="Fecha" class="FWM-input" name="Fecha" style="background-color: white; font-family: 'ITC Avant Garde Gothic', sans-serif;"
+                                    onchange="inputLleno(this.id,this.value)"  readonly/> -->
+                            <span class="span FWM-span-form" >Maquina (Marca/Modelo):</span>
+                                <input type='text' id="Maquina" name="Maquina" class="FWM-input" style="background-color: white; font-family: 'ITC Avant Garde Gothic', sans-serif;" onchange="inputLleno(this.id,this.value)"/>
+                           </div>
+
+                        <div class="block grid-resizable-demo" style="margin-bottom: 70px; margin-top: 50px;">
+                            <div class="row align-items-stretch" style="text-align: center;">
+                                <div class="col-100 medium-50" style="min-width: 50px; border-style: none;">
+                                    <span class="resize-handler"></span>
+                                    <a href="#" onclick="guardarDatosDL5();" style="background-color: #063E7F;" class="boton-equipo">Guardar Datos</a>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <!-- Fin contenido formulario -->
+                <fwm></fwm>
+            </div>
+        </div>
+</template>
+<script>
+return {
+        on: {      
+            pageInit: function () {
+                var id_usuario = localStorage.getItem("id_usuario");
+                var id_cedula = localStorage.getItem("IdCedula");        
+
+                databaseHandler.db.transaction(
+                    function(tx){
+                        tx.executeSql(
+                            "Select * from DatosentregasDL WHERE id_cedula = ?",
+                                [id_cedula],
+                                function(tx, results){
+                                let length = results.rows.length;
+                                    for(var i = 0; i< length; i++){
+                                        var item = results.rows.item(i);
+                                        console.log('itemDG->',item)
+                                        $("#cliente").val(item.nombre_cliente);
+                                        $("#nombre_contacto").val(item.nombre_contacto);
+                                        $("#correo").val(item.correo);
+                                        $("#telefono").val(item.telefono);
+                                        $("#Fecha").val(item.fecha);
+                                        $("#direccion").val(item.direccion);
+                                        $("#Ciudad").val(item.ciudad);
+                                        $("#Responsable").val(item.responsable);
+                                        $("#Horario").val(item.horario);
+                                        $("#Territorio").val(item.territorio);
+                                        $("#Maquina").val(item.maquina);
+                                    }
+                                },
+                            function(tx, error){
+                                console.log("Error: " + error.message);
+                                app.preloader.hide();  
+                            }
+                        );  
+                    },
+                        function(error){},
+                        function(){}
+                );
+            }
+        }
+    }
+
+</script>

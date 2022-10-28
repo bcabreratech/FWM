@@ -1,0 +1,157 @@
+<style>
+    .FWM-textBox{
+        width: 100%; 
+        padding-left: 3px; 
+        font-size: 15px; 
+        height: 37px; 
+        font-family: 'ITC Avant Garde Gothic', sans-serif; 
+        background-color: white; 
+        border-radius: 8px; 
+        border: 1px solid gray;
+    }
+    input[type=text]{
+        background-color: white;
+        font-family: 'ITC Avant Garde Gothic', sans-serif;
+        padding-top: 5px;
+    }   
+    .span{
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+    </style>
+    <template>
+        <div class="view view-main view-init safe-areas">
+            <div class="page" id="FWM-1">
+                <!-- Navbar -->
+                <div class="navbar" style="background-color: #063E7F;height: 52px;">
+                    <div style="text-align: center;"><img src="img/logo-FWM.png" style="margin-top: 5px;" height="41.38px" alt="Logo Field"></div>
+                    <div class="navbar-inner sliding" style="height: 52px;">
+                        <div class="left">
+                            <a href="#" onclick="regresarMaquinariaSuro2();">
+                                <span class="nav-text-regresar" id="nav-text-regresar-function">Regresar</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <!-- Contenido Formulario -->                                
+                <div class="page-content">
+
+                    <div style="text-align: center; justify-content:center; margin-right:auto; margin-left:auto; width: 99%;margin-top: 30px;">
+                        <h2 class="FWN-titulo-2">Limpieza Correctiva</h2>
+                        <div style="text-align: left;">     
+                            <div class="list FWM-fixing-form">
+                                <!--<span class="span FWM-span-form">ID usuario:</span>-->
+        
+                                <span class="span FWM-span-form">Solicitud:</span>
+                                <input type="text" name="" id="solic" class="FWM-input" onchange="inputLleno(this.id,this.value)">
+                                <span class="span FWM-span-form">Observaciones:</span>
+                                <input type="text" name="" id="obs" class="FWM-input" onchange="inputLleno(this.id,this.value)">
+                            </div>
+                        </div>
+                        <div class="block-title FWM-subtitulo" style="margin-left: 0px;">Historial:</div>  
+                        <div class="card data-table" style="margin-left: 10px; margin-right: 10px; margin-bottom: 120px;">
+                            <div class="infinite-scroll-content">
+                                <table>
+                                    <thead>
+                                        <tr>                                                
+                                            <th class="numeric-cell" style="text-align: center;background-color: #063E7F;color: white;">Solicitud</th>
+                                            <th class="numeric-cell" style="text-align: center;background-color: #063E7F;color: white;">Observaciones</th>
+                                            <th class="numeric-cell" style="text-align: center;background-color: #063E7F;color: white;">Fecha y hora Solicitud</th>
+                                            <th class="numeric-cell" style="text-align: center;background-color: #063E7F;color: white;">Fecha y hora atendida</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="tabla_registros">
+                                        <tr>
+                                            <td>Limpiar pasamanos</td>
+                                            <td>Limpiar para una prueba</td>
+                                            <td>2022-9-7 11:22:20</td>
+                                            <td> <input type="datetime" name="" id="datehrs" class="FWM-input"></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <div class="sentencia preloader color-grey infinite-scroll-preloader"></div>
+                                <div id="message-nr" style="width: 100%;text-align: center;font-family: 'ITC Avant Garde Gothic', sans-serif;font-size: 16px;" style="display: none;">
+                                    
+                                </div>
+                            </div>
+
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </template>
+    <script>
+        return {
+            on: {
+                pageInit: function (e, page) {
+                    $('.preloader').remove();
+                    $('.infinite-scroll-preloader').remove();
+                    var id_cedula = localStorage.getItem("IdCedula");
+                    var fecha = new Date();
+                    var fecha = fecha.getFullYear()+"-"+(fecha.getMonth()+1)+"-"+fecha.getDate();
+
+                    var self = this;
+                    var app = self.$app; 
+                    var rol = localStorage.getItem("rol");
+                    var roles = rol.split("-");
+                    var empresa=roles[1];
+
+                    
+                    var NomJson = 'Maquinaria_SUROE';
+                    var NomDescCli = 'Maquinaria_SUROE';
+                    self.autocompleteDropdownAjax = app.autocomplete.create({
+                        inputEl: '#nombre_maquina',
+                        openIn: 'dropdown',
+                        preloader: true, //enable preloader
+                        valueProperty: 'nombre', //object's "value" property name
+                        textProperty:  'nombre', //object's "text" property name
+                        limit: 10, //limit to 20 results
+                        dropdownPlaceholderText: 'Seleccionar Maquina...',
+                        source: function (query, render) {
+                            var autocomplete = this;
+                            var results = [];
+                            if (query.length === 0) {
+                                render(results);
+                                return;
+                            }
+                            // Show Preloader
+                            autocomplete.preloaderShow();
+                            // Do Ajax request to Autocomplete data
+                            app.request({
+                                url: cordova.file.dataDirectory + "jsons/"+NomJson+".json", // y por cual era? XD perate culo dale shift+f6 si le distre? xd
+                                method: 'GET',
+                                dataType: 'json',
+                                //send "query" to server. Useful in case you generate response dynamically, deja inento en el mio para acordarme xd
+                                data: {
+                                    query: query,
+                                },success: function (data) {
+                                    data;
+                                    for (var i = 0; i < data.length; i++) {
+                                        if (data[i].nombre.toLowerCase().indexOf(query.toLowerCase()) >= 0) results.push(data[i]);
+                                    }
+                                    render(results); 
+                                }
+                            }); 
+                        }
+                    });
+
+                    $('#nombre_maquina').change(function () {
+                        var nombre_maquina = $("#nombre_maquina").val();
+                        app.request.get(cordova.file.dataDirectory + "jsons/"+NomDescCli+".json", function (data) {
+                            var content2 = JSON.parse(data);
+                            for(var x = 0; x < content2.length; x++) {
+                                if(content2[x].nombre == nombre_maquina){
+                                    $("#nombre_maquina").val(content2[x].nombre);
+                                    $("#no_serie").val(content2[x].no_serie);
+                                   
+                                }         
+                            }
+                        });
+                    });
+                    
+                }
+            }  
+        }
+    </script>

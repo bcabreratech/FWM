@@ -114,6 +114,10 @@
                         }
                     </style>
                     <div style="width: 90%;border-radius: 15px;margin-left: 5%;border: 0.5px solid #ECECEC;background-color: white;padding-bottom: 15px;margin-bottom: 40px;">
+                        <span class="span" style="font-weight: bold;width: 90%;padding-top: 25px;">N° de factura /o solicitud:</span>
+                        <span id="text2" style="width: 90%;margin-bottom: 0;border-bottom: 0;">
+                            <input type='text' id="nosolicitud" class="FWM-textBox" onchange="inputLleno(this.id,this.value)" />
+                        </span>
                         <span class="span" style="font-weight: bold;width: 90%;padding-top: 25px;">No. Cliente:</span>
                         <span id="text2" style="width: 90%;margin-bottom: 0;border-bottom: 0;">
                             <input type='text' id="nocliente" class="FWM-textBox" onchange="inputLleno(this.id,this.value)" readonly/>
@@ -195,6 +199,7 @@
                                 $("#correo").val(item.correo);
                                 $("#telefono_1").val(item.telefono_1);
                                 $("#telefono_2").val(item.telefono_2);
+                                $("#nosolicitud").val(item.solicitud);
                             },
                             function(tx, error){
                                 console.log("Error al mostar datos: " + error.message);

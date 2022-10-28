@@ -49,7 +49,7 @@
 <script>
   return {
     on: {
-        pageInit: function (e, page) {
+      pageInit: function (e, page) {
           var cliente = localStorage.getItem("id_cliente");
           var usuario = localStorage.getItem("id_usuario");
           var id_empresa = localStorage.getItem("id_empresa");
@@ -57,6 +57,7 @@
           var month = localStorage.getItem("month_detalle");
           var day = localStorage.getItem("day_detalle");
           var rol = localStorage.getItem("rol");
+          var orden = localStorage.getItem("orden_servicio");
           var detalle = 3;
           window.localStorage.removeItem("id_cliente");
           window.localStorage.removeItem("year_detalle");
@@ -75,9 +76,13 @@
               var facturas = facturas1.replaceAll('"', '._.');
             }else{
               var content = JSON.parse(data);
+              // console.log('CONT',content)
             }
             for(var e=0; e < content.length; e++){
               if(id_empresa == 3){
+                // console.log('content[e].order_service ',content[e].order_service );
+                // console.log('orden',orden);
+                if(content[e].order_service == orden){
                   if(content[e].type_service){
                     visit_type = `
                       <li>
@@ -290,6 +295,7 @@
                           </div>
                       </div>
                   </div><hr>`);
+                }
               } else if(id_empresa == 1){
                 $('#visitsContainer').append(`
                   <div class="list">
@@ -549,6 +555,10 @@
               } else if(id_empresa == 14){
                 if(content[e].category == "visitaDilimpio"){
                   var tipo_servicio = "Visita Servicio";
+                } else if(content[e].category == "Mantenimiento"){
+                  var tipo_servicio = "Mantenimiento de botones";
+                } else if(content[e].category == "Control"){
+                  var tipo_servicio = "Control de olores";
                 } else {
                   var tipo_servicio = content[e].category;
                 }
@@ -651,8 +661,19 @@
                         </div>
                       </a>
                     </li>
-                    </ul>
-                    <div class="block grid-resizable-demo">
+                  </ul>`);
+                if(content[e].category == "Control" || content[e].category == "Instalacion" || content[e].category == 'Desinstalacion' || content[e].category == 'Mantenimiento'){
+                  $('#visitsContainer').append(`<div class="block grid-resizable-demo">
+                        <div class="row align-items-stretch" style="text-align: center;">
+                            <div class="col-100 medium-50" style="min-width: 50px; border-style: none;">
+                                <span class="resize-handler"></span>
+                                <a href="#" onclick="startFromProgramDILIMPIO2('${content[e].id_visita}','${content[e].id_cliente}','${content[e].nombre_comercial}','${content[e].contact_name}','${content[e].fecha + " " + content[e].inico}','${content[e].telefono}','${content[e].correo}','${content[e].category}','${content[e].LGS}','${content[e].O2}','${content[e].H2}','${content[e].VIBE}','${content[e].Odocontrol_SPRAY}','${content[e].despachador_higienico}','${content[e].despachador_toalla}','${content[e].dispensador_jabon}','${content[e].dosificador_quimico}','${content[e].sistema_olores}','${content[e].dosificador_biodigestor}','${content[e].dosificador_Nova}','${content[e].dosificador_prodose}','${content[e].boton_1galon}','${content[e].boton_4galon}','${content[e].dosificador_lavandaeria}','${content[e].trampa_grasa}');" class="boton-personalizado-4">Iniciar Cedula</a>   
+                            </div>
+                        </div>
+                    </div>
+                  </div><hr>`);
+                }else{
+                  $('#visitsContainer').append(`<div class="block grid-resizable-demo">
                         <div class="row align-items-stretch" style="text-align: center;">
                             <div class="col-100 medium-50" style="min-width: 50px; border-style: none;">
                                 <span class="resize-handler"></span>
@@ -661,6 +682,7 @@
                         </div>
                     </div>
                   </div><hr>`);
+                }
               } else if(id_empresa == 19){
                 if(content[e].ruta_documento === null){
                   var ruta_documento = "";

@@ -1,6 +1,6 @@
     var IdUsuario = localStorage.getItem("IdUsuario");
     $("#IdUsuario").val(IdUsuario);
-    //Borrar variables de sesión y regresarregresar a el Log-in
+    //Borrar variables de sesión y regresar a el Log-in
     function logaout(){
         window.localStorage.clear();
         window.location.href = "index.html";
@@ -820,412 +820,7 @@
         );
     }
     //Bennetts Fin
-    //LIC Inicio
-    function buscarClienteLICD(){
-        app.preloader.show('blue');
-        var id_usuario = localStorage.getItem("id_usuario");
-        var nombre_usuario = localStorage.getItem("nombre") + " " + localStorage.getItem("apellido_paterno");
-        var fecha = new Date();
-        var fecha_llegada = fecha.getFullYear()+"-"+(fecha.getMonth()+1)+"-"+fecha.getDate()+" "+fecha.getHours()+":"+fecha.getMinutes()+":"+fecha.getSeconds();
-        var geolocation = $("#geolocation").val();
-        var id_cliente = $('#id_cliente').val();
-        var nombre_cliente = $("#nombre_cliente").val();
-        var hora_programada = $("#horario_programado").val();
-        var atencion = $("#persona_recibe").val();
-        var direccion = $("#direccion").val();
-        var telefono = $("#telefono").val();
-        var correo = $("#correo").val();
-        var foto_llegada = $("#imagenC").val();
-        var documentoIngresar = $("#documento_ingresar").val();
-        var telefono = $("#telefono").val();
-        var correo = $("#correo").val();
-        var estatus = 0;
-        if(localStorage.getItem("IdCedula"))
-        {
-            app.preloader.hide();
-            var cedula = localStorage.getItem("IdCedula");
-            databaseHandler.db.transaction(
-                function(tx){
-                    tx.executeSql("SELECT * FROM cedulas_general WHERE id_cedula = ?",
-                        [cedula],
-                        function(tx5, results){
-                            var item = results.rows.item(0);
-                            if(nombre_cliente != item.nombre_cliente || foto_llegada != localStorage.getItem("foto_llegada")){
-                                databaseHandler.db.transaction(
-                                    function(tx){
-                                        tx.executeSql("UPDATE cedulas_general SET id_usuario = ?,nombre_usuario = ?,fecha_entrada = ?,geolocalizacion_entrada = ?,id_cliente = ?,nombre_cliente = ?,horario_programado = ? WHERE id_cedula = ?",
-                                            [id_usuario,nombre_usuario,fecha_llegada,geolocation,id_cliente,nombre_cliente,hora_programada,cedula],
-                                            function(tx, results){
-                                                app.views.main.router.navigate({name: 'recorrido1'});
-                                            },
-                                            function(tx, error){
-                                                console.log("Error al guardar cedula: " + error.message);
-                                                app.preloader.hide();
-                                            }
-                                        );
-                                    },
-                                    function(error){},
-                                    function(){}
-                                );
-                            } else {
-                                app.views.main.router.navigate({name: 'recorrido1'});
-                            }
-                        },
-                        function(tx5, error){
-                            console.error("Error al consultar bandeja de salida: " + error.message);
-                        }
-                    );
-                },
-            function(error){},
-            function(){}
-            );
-        } else {
-            var NomDescCli = "Clientes_DIPREC";
-            if(foto_llegada != ''){
-                app.request.get(cordova.file.dataDirectory + "jsons/"+NomDescCli+".json", { IdCed: id_usuario}, function (data) {
-                    var content = JSON.parse(data);
-                    var aux = 0;
-                    for(var i=0; i < content.length; i++){
-                        for (var i = 0; i < content.length; i++) {
-                            if(content[i].IdCte == id_cliente){
-                                aux = 1;
-                                productHandler.addCedulayb(id_usuario,nombre_usuario,fecha_llegada,geolocation,id_cliente,nombre_cliente,hora_programada,estatus);
-                                databaseHandler.db.transaction(
-                                    function(tx){
-                                        tx.executeSql("Select MAX(id_cedula) as Id from cedulas_general",
-                                            [],
-                                            function(tx, results){
-                                                var item = results.rows.item(0);
-                                                localStorage.setItem("IdCedula", item.Id);
-                                                localStorage.setItem("nombreCliente", nombre_cliente);
-                                                localStorage.setItem("IdCte", id_cliente);
-                                                localStorage.setItem("foto_llegada", foto_llegada);
-                                                localStorage.setItem("atencion", atencion);
-                                                localStorage.setItem("direccion", direccion);
-                                                localStorage.setItem("documentoIngresar", documentoIngresar);
-                                                localStorage.setItem("telefono", telefono);
-                                                localStorage.setItem("correo", correo);
-                                                app.views.main.router.navigate({name: 'menuLIC'});
-                                                app.preloader.hide();
-                                            },
-                                            function(tx, error){
-                                                console.log("Error al guardar cedula: " + error.message);
-                                                app.preloader.hide();
-                                            }
-                                        );
-                                    },
-                                    function(error){},
-                                    function(){}
-                                );
-                            }
-                        }
-                    }
-                    if(aux == 0){
-                        app.preloader.hide();
-                        swal("Cliente no encontrado", "No se tiene registro de ese cliente, Por favor sincroniza tus datos!" ,"error");
-                    }
-                });
-            } else {
-                swal("Falta un campo", "La fotografía es requerida para este proceso" ,"warning");
-                app.preloader.hide();
-            }
-        }
-    }
-
-    function buscarClienteLIC(){
-        app.preloader.show('blue');
-        var id_usuario = localStorage.getItem("id_usuario");
-        var nombre_usuario = localStorage.getItem("nombre") + " " + localStorage.getItem("apellido_paterno");
-        var fecha = new Date();
-        var fecha_llegada = fecha.getFullYear()+"-"+(fecha.getMonth()+1)+"-"+fecha.getDate()+" "+fecha.getHours()+":"+fecha.getMinutes()+":"+fecha.getSeconds();
-        var geolocation = $("#geolocation").val();
-        var id_cliente = 2;  //  $('#id_cliente').val();
-        var nombre_cliente = "ClientepruebaLIC1";  // $("#nombre_cliente").val()
-        var hora_programada = $("#horario_programado").val();
-        // var atencion = $("#persona_recibe").val();
-        // var direccion = $("#direccion").val();
-        // var telefono = $("#telefono").val();
-        // var correo = $("#correo").val();
-        var foto_llegada = $("#imagenC").val();
-        // var documentoIngresar = $("#documento_ingresar").val();
-        // var telefono = $("#telefono").val();
-        // var correo = $("#correo").val();
-        var estatus = 0;
-        if(localStorage.getItem("IdCedula"))
-        {
-            app.preloader.hide();
-            var cedula = localStorage.getItem("IdCedula");
-            databaseHandler.db.transaction(
-                function(tx){
-                    tx.executeSql("SELECT * FROM cedulas_general WHERE id_cedula = ?",
-                        [cedula],
-                        function(tx5, results){
-                            var item = results.rows.item(0);
-                            if(nombre_cliente != item.nombre_cliente || foto_llegada != localStorage.getItem("foto_llegada")){
-                                databaseHandler.db.transaction(
-                                    function(tx){
-                                        tx.executeSql("UPDATE cedulas_general SET id_usuario = ?,nombre_usuario = ?,fecha_entrada = ?,geolocalizacion_entrada = ?,id_cliente = ?,nombre_cliente = ?,horario_programado = ? WHERE id_cedula = ?",
-                                            [id_usuario,nombre_usuario,fecha_llegada,geolocation,id_cliente,nombre_cliente,hora_programada,cedula],
-                                            function(tx, results){
-                                                app.views.main.router.navigate({name: 'recorrido1'});
-                                            },
-                                            function(tx, error){
-                                                console.log("Error al guardar cedula: " + error.message);
-                                                app.preloader.hide();
-                                            }
-                                        );
-                                    },
-                                    function(error){},
-                                    function(){}
-                                );
-                            } else {
-                                app.views.main.router.navigate({name: 'recorrido1'});
-                            }
-                        },
-                        function(tx5, error){
-                            console.error("Error al consultar bandeja de salida: " + error.message);
-                        }
-                    );
-                },
-            function(error){},
-            function(){}
-            );
-        } else {
-            //var NomDescCli = "Clientes_LIC"; //Cambiar a Clientes_LIC
-            if(foto_llegada != ''){
-                /*app.request.get(cordova.file.dataDirectory + "jsons/"+NomDescCli+".json", { IdCed: id_usuario}, function (data) {
-                    var content = JSON.parse(data);
-                    var aux = 0;
-                    for(var i=0; i < content.length; i++){
-                        for (var i = 0; i < content.length; i++) {
-                            if(content[i].IdCte == id_cliente){
-                                aux = 1;
-                                productHandler.addCedulayb(id_usuario,nombre_usuario,fecha_llegada,geolocation,id_cliente,nombre_cliente,hora_programada,estatus);
-                                databaseHandler.db.transaction(
-                                    function(tx){
-                                        tx.executeSql("Select MAX(id_cedula) as Id from cedulas_general",
-                                            [],
-                                            function(tx, results){
-                                                var item = results.rows.item(0);
-                                                localStorage.setItem("IdCedula", item.Id);
-                                                localStorage.setItem("nombreCliente", nombre_cliente);
-                                                localStorage.setItem("IdCte", id_cliente);
-                                                localStorage.setItem("foto_llegada", foto_llegada);
-                                                localStorage.setItem("atencion", atencion);
-                                                localStorage.setItem("direccion", direccion);
-                                                localStorage.setItem("documentoIngresar", documentoIngresar);
-                                                localStorage.setItem("telefono", telefono);
-                                                localStorage.setItem("correo", correo);
-                                                app.views.main.router.navigate({name: 'menuLIC'});
-                                                app.preloader.hide();
-                                            },
-                                            function(tx, error){
-                                                console.log("Error al guardar cedula: " + error.message);
-                                                app.preloader.hide();
-                                            }
-                                        );
-                                    },
-                                    function(error){},
-                                    function(){}
-                                );
-                            }
-                        }
-                    }
-                    if(aux == 0){
-                        app.preloader.hide();
-                        swal("Cliente no encontrado", "No se tiene registro de ese cliente, Por favor sincroniza tus datos!" ,"error");
-                    }
-                });*/
-                //productHandler.addCedulaCompleta(id_usuario,nombre_usuario,fecha_llegada,geolocation,id_cliente,nombre_cliente,hora_programada,estatus);
-                productHandler.addCedulayb(id_usuario,nombre_usuario,fecha_llegada,geolocation,id_cliente,nombre_cliente,hora_programada,estatus);
-                databaseHandler.db.transaction(
-                    function(tx){
-                        tx.executeSql("Select MAX(id_cedula) as Id from cedulas_general",
-                            [],
-                            function(tx, results){
-                                //console.log(result.rows.item(0));
-                                var item = results.rows.item(0);
-                                console.log(result.rows.item(0));
-                                localStorage.setItem("IdCedula", item.Id);
-                                localStorage.setItem("nombreCliente", nombre_cliente);
-                                localStorage.setItem("IdCte", id_cliente);
-                                localStorage.setItem("foto_llegada", foto_llegada);
-                    
-                                app.views.main.router.navigate({name: 'menuLIC'});
-                                app.preloader.hide();
-                            },
-                            function(tx, error){
-                                console.log("Error al guardar cedula: " + error.message);
-                                app.preloader.hide();
-                            }
-                        );
-                    },
-                    function(error){},
-                    function(){}
-                );
-            } else {
-                swal("Falta un campo", "La fotografía es requerida para este proceso" ,"warning");
-                app.preloader.hide();
-            }
-        }
-    }
-    function irLevantamientoLIC(){
-        
-    }
-
-    function continuarCedLIC(id_cedula,tipo){
-        localStorage.setItem("IdCedula",id_cedula);
-        localStorage.setItem("tipoServicio", tipo);
-        localStorage.setItem("Opcion", '1');
-        if(tipo == 1){
-            app.views.main.router.navigate({ name: 'recorridoLIC1'});
-        }else if(tipo == 2){
-            app.views.main.router.navigate({ name: 'recorridoLIC2'});
-        }
-    }
-    function generarLimpiezaLIC(){
-        let id_cedula = localStorage.getItem("IdCedula");
-        let foto_llegada = localStorage.getItem("foto_llegada");
-        let tipoCedula = "limpiezaLIC";
-        databaseHandler.db.transaction(
-            function(tx){
-                 tx.executeSql("UPDATE cedulas_general SET tipo_cedula = ? WHERE id_cedula = ?",
-                     [tipoCedula,id_cedula],
-                     function(tx, results){
-                         localStorage.setItem("TipoVisita", tipoCedula);
-                         //productHandler.addCedulaCompleta:(id_cedula,foto_llegada);
-                         app.views.main.router.navigate({name: 'recorridoLIC1'});
-                     },
-                     function(tx, error){
-                         console.error("Error al actualizar el tipo de cedula: " + error.message);
-                     }
-                 );
-            },
-            function(error){},
-            function(){}
-        );
-    }
-    function generarLevantamientoLIC(){
-        let id_cedula = localStorage.getItem("IdCedula");
-        let foto_llegada = localStorage.getItem("foto_llegada");
-        let tipoCedula = "levantamientoLIC";
-        databaseHandler.db.transaction(
-            function(tx){
-                 tx.executeSql("UPDATE cedulas_general SET tipo_cedula = ? WHERE id_cedula = ?",
-                     [tipoCedula,id_cedula],
-                     function(tx, results){
-                         localStorage.setItem("TipoVisita", tipoCedula);
-                         //productHandler.addLevantamientoDiprec(id_cedula,foto_llegada);
-                         app.views.main.router.navigate({name: 'recorridoLIC2'});
-                     },
-                     function(tx, error){
-                         console.error("Error al actualizar el tipo de cedula: " + error.message);
-                     }
-                 );
-            },
-            function(error){},
-            function(){}
-        );
-    }
-    function regresarRecorridoLIC1(){
-        app.views.main.router.back('/recorridoLIC1/', {force: true, ignoreCache: true, reload: true});
-    }
-    function regresarRecorridoLIC2(){
-        app.views.main.router.back('/recorridoLIC2/', {force: true, ignoreCache: true, reload: true});
-    }
-    //Para hacer lo de las fotos
-    function guardarValidLIC(){
-        let id_cedula = localStorage.getItem("IdCedula");
-        var tipo_inmueble = $("#tipo_inmueble").val();
-        var ubicacion = $("#ubicacion").val();
-        var observaciones_text = $("#observaciones_text").val();
-        var fecha = new Date();
-        var fecha_registro = fecha.getFullYear()+"-"+(fecha.getMonth()+1)+"-"+fecha.getDate()+" "+fecha.getHours()+":"+fecha.getMinutes()+":"+fecha.getSeconds();
-        var foto = $("#imagenC").val();
-        var page = 1;
-        if (foto){
-            if(observaciones_text){}else{comentario='Sin Observaciones'}
-            databaseHandler.db.transaction(
-                function(tx){//id_cedula text,comentario text,foto blob,fecha text
-                    tx.executeSql("INSERT INTO validaLIC(id_cedula, observaciones, foto, fecha,tipo_tarima,no_tarimas,page) VALUES (?,?,?,?,?,?,?)",  //validaAntesServ
-                        [id_cedula,observaciones_text, foto, fecha_registro,tipo_inmueble, ubicacion,page],
-                        function(tx, results){
-                        swal("","Se guardaron los datos correctamente", "success");
-                            databaseHandler.db.transaction(
-                                function(tx){
-                                    tx.executeSql( 
-                                        "Select * from validaLIC where id_cedula = ? AND page=? ORDER BY id_evidencia DESC",  //validaAntesServ
-                                            [id_cedula,page],
-                                            function(tx, results){ 
-                                                var item = results.rows.item(0);
-                                                $("#tabla_evidenciasLIC").append("<tr id='fila"+ item.id_evidencia +"'><td><a href='#' onclick='eliminarFilaLIC("+item.id_evidencia +",1,`validaLIC`);' style='border: none; outline:none;'><img src='img/borrar.png' width='30px' /></a></td><td><img src='"+item.foto+
-                                                "' width='60px' style='margin-top: 4px;'/></td><td style='text-align: center;'>" + item.observaciones
-                                                + "</td><td style='text-align: center;'>" + item.fecha + "</td></tr>");
-                                                //#tabla_evidenciasAliatonic        onclick='eliminarFilaaliatonic        `validaAntesServ`
-                                                $("#tipo_inmueble").val('');
-                                                $("#tipo_inmueble").val();
-                                                $("#observaciones_text").css("background-color", "#FFFFFF");
-                                                $("#smallImage").attr("src","img/blank.png");
-                                                $("#photoIcon").attr("src","img/camera.svg");
-                                                $("#imagenC").val('');
-                                                    $("#message-nr").css("display", "none");
-                                                    $('.preloader').remove();
-                                                    $('.infinite-scroll-preloader').remove();
-                                            },
-                                            function(tx, error){
-                                                console.log("Error: " + error.message);
-                                                app.preloader.hide();  
-                                            }
-                                    );  
-                                },
-                                    function(error){
-                                        console.log("Error: " + error.message);
-                                    },
-                                    function(){}
-                            );                
-                        },
-                        function(tx, error){
-                            console.error("Error al actualizar: " + error.message);
-                        }
-                    );
-                },
-                function(error){
-                    console.error("Error: " + error.message);
-                },
-                function(){}
-            );
-        }else{
-            swal("", "La fotografía es requerida" ,"warning");
-        }
-    }
-
-    function eliminarFilaLIC(index, opc,tabla){
-        if(opc == 1) {
-            databaseHandler.db.transaction(
-                function(tx){
-                    tx.executeSql(
-                        "DELETE FROM "+ tabla +" WHERE id_evidencia = ?",
-                        [index],
-                        function(tx, results){
-                             swal("","El registro se elimino satisfactoriamente","success");
-                             $("#fila" + index).remove();
-                        },
-                        function(tx, error){
-                            swal("Error al eliminar registro",error.message,"error");
-                        }
-                    );
-                },
-                function(error){},
-                function(){}
-            );
-        }
-    }
-
-
-
-    //LIC Fin
     //DIPREC Inicio
-
     function buscarClienteDIPREC(){
         app.preloader.show('blue');
         var id_usuario = localStorage.getItem("id_usuario");
@@ -2307,6 +1902,7 @@
             function(){}
         );
     }
+
     function guardarCierreReporteDIPREC(){
         if($("#NombreFirma").val() == "" || $("#signate").val() == "" || $("#eval").val() == "" || $("#puesto").val() == ""){
             swal("","Todos los campos son obligatorios","warning");
@@ -3537,11 +3133,11 @@
                     [tipoCedula,id_cedula],
                     function(tx, results){
                         localStorage.setItem("TipoVisita", tipoCedula);
-                        //productHandler.addMinutaCoordinador(id_cedula,foto_llegada);
+                        productHandler.addSeguridadHigiene(id_cedula,foto_llegada);
                         app.views.main.router.navigate({name: 'recorridoDIPREC5'});
                     },
                     function(tx, error){
-                        console.error("Error al actualizar el tipo de cedula: " + error.message);
+                        console.error("Error al actualizar el tipo de cedula hse 5.5: " + error.message);
                     }
                 );
             },
@@ -3598,11 +3194,13 @@
         }
     }
     function maspresiones(){
+        var id1 = 2;
+        var id2 = 3;
         $("#presiones").append(`
             <div style="display: flex;justify-content: space-around;margin-bottom: 15px;">
-                <label class="text-divided-check">Salida<input type="number" id="16-33-input" name="Punto-110" class="multiple-input-divided-check" onchange="inputLleno(this.id,this.value);"></label>
-                <label class="text-divided-check">Presión<input type="number" id="16-33-input" name="Punto-110" class="multiple-input-divided-check" onchange="inputLleno(this.id,this.value);"></label>
-                <label class="text-divided-check">&nbsp;<input type="number" class="multiple-input-divided-check" style="border: 1px white !important;" readonly></label>
+            <label class="text-divided-check">Salida<input type="number" id="input-7-6-${id1++}" name="input-7_7_6_1" class="multiple-input-divided-check" onchange="inputLleno(this.id,this.value);guardaCheckDiprec(this.id,11)"></label>
+            <label class="text-divided-check">Presión<input type="number" id="input-7-6-${id2++}" name="input-7_7_6_2" class="multiple-input-divided-check" onchange="inputLleno(this.id,this.value);guardaCheckDiprec(this.id,11)"></label>
+            <label class="text-divided-check" style="display: flex;vertical-align: middle;justify-content: space-between;min-width: 33%;margin: auto;margin-top: 10px;">
             </div>
         `);
     }
@@ -3634,10 +3232,10 @@
                     tx.executeSql("UPDATE datos_generales_diprec SET proyecto = ?, pedido = ?, fecha = ?, referencia = ?, proyectos = ?, vendedor = ?, mombre = ?, razon_social = ?, direccion = ?, telefono = ?, rfc = ?, atencion = ?, puesto = ? WHERE id_cedula = ?",
                         [proyecto, pedido, fecha, referencia, proyectos, vendedor, mombre, razon_social, direccion, telefono, rfc, atencion, puesto,id_cedula],
                         function(tx, results){
-                            console.log('res',results);
+                            console.log('resultado',results);
                             databaseHandler.db.transaction(
                                 function(tx){
-                                    console.log(proyecto ,id_cedula)
+                                    console.log("Nombre proyecto: ",proyecto, "Id cedula: " ,id_cedula)
                                     tx.executeSql("UPDATE cedulas_general SET nombre_cliente = ? WHERE id_cedula = ?",
                                         [proyecto ,id_cedula],
                                         function(tx, results){
@@ -3681,12 +3279,72 @@
             swal("","Debes llenar estos campos para poder guardar: "+quita_coma,"warning");
         }
     }
+
+    function guardarDatosGeneralesHSE(){
+        var values = get_datos_completos();
+        var quita_coma = values.response;
+        var valido = values.valido;
+        if (valido) {
+            var id_cedula = localStorage.getItem("IdCedula");
+            var nombreCliente = $("#nombreCliente").val();
+            var nombreInspecciona = $("#nombreInspecciona").val();
+            var tipoInspeccion = $("#tipoInspeccion").val();
+            var codigo = $("#codigo").val();
+            var ubicacion = $("#ubicacion").val();
+            var responsableEquipo = $("#responsableEquipo").val();
+
+            databaseHandler.db.transaction(
+                function(tx){
+                    tx.executeSql("UPDATE datos_generales_hse SET nombre_inspecciona = ?, tipo_inspeccion = ?, codigo = ?, ubicacion = ?, responsable_equipo = ? WHERE id_cedula = ?",
+                        [nombreInspecciona, tipoInspeccion, codigo, ubicacion, responsableEquipo,id_cedula],
+                        function(tx, results){
+                            console.log('resultado',results);
+                            databaseHandler.db.transaction(
+                                function(tx){
+                                    console.log("Nombre cliente: ",nombreCliente, "Id cedula: " ,id_cedula)
+                                    tx.executeSql("UPDATE cedulas_general SET nombre_cliente = ? WHERE id_cedula = ?",
+                                        [nombreCliente ,id_cedula],
+                                        function(tx, results){
+                                            swal("","Guardado correctamente","success");
+                                            $('#nombre_inspecciona').css("background-color", "#ffffff");
+                                            $('#tipo_inspeccion').css("background-color", "#ffffff");
+                                            $('#codigo').css("background-color", "#ffffff");
+                                            $('#ubicacion').css("background-color", "#ffffff");
+                                            $('#responsable_equipo').css("background-color", "#ffffff");
+                                        },
+                                        function(tx, error){
+                                            console.error("Error al guardar datos generales hse 1.1: " + error.message);
+                                        }
+                                    );
+                                },
+                                function(error){
+                                    console.error("Error al guardar datos generales hse 2.2: " + error.message);
+                                },
+                                function(){}
+                            );
+                        },
+                        function(tx, error){
+                            console.error("Error al guardar datos generales hse 3.3: " + error.message);
+                        }
+                    );
+                },
+                function(error){
+                    console.error("Error al guardar datos generales hse 4.4: " + error.message);
+                },
+                function(){}
+            );
+        }else{
+            swal("","Debes llenar estos campos para poder guardar: "+quita_coma,"warning");
+        }
+    }
+
     function guardarEvidenciaDiprec(recorrido){
         var id_cedula = localStorage.getItem("IdCedula");
         var comentario = $("#comentario").val();
         var foto = $("#imagenC").val();
         var area = $("#area").val();
         var fecha = new Date();
+        var boton = $(".galeria span").text();   
         var fechas = fecha.getFullYear()+"-"+(fecha.getMonth()+1)+"-"+fecha.getDate()+" "+fecha.getHours()+":"+fecha.getMinutes()+":"+fecha.getSeconds();
         if(area == 0){
             swal("","Debes seleccionar una área", "warning");
@@ -3748,6 +3406,7 @@
             },
             function(){}
         );
+        $("#textInput").text("Seleccione");
     }
     function guardaCheckDiprec(id,fase){
         var campo = $("#"+id);
@@ -3826,6 +3485,7 @@
             function(error){console.log("Error: " + error.message);},function(){}
         );
     }
+
     function guardarCierreLevantamientoDIPREC(){
         if($("#NombreFirma").val() == ""){
             swal("","Debes indicar el nombre de la persona que te recibe","warning");
@@ -3870,6 +3530,50 @@
             function(){}
         );
     }
+
+    function guardarCierreLiberacionDIPREC(){
+        if($("#NombreFirma").val() == ""){
+            swal("","El nombre de quien recibe es obligatorio","warning");
+            return false;
+        }
+        var id_cedula = localStorage.getItem("IdCedula");
+        var nombrefirma = $("#NombreFirma").val();
+        var firmaCliente = $("#signate").val();
+        var nombrePuesto = $("#nombre_puesto").val();
+        var fecha = new Date();
+        var fecha_firma = fecha.getFullYear()+"-"+(fecha.getMonth()+1)+"-"+fecha.getDate()+" "+fecha.getHours()+":"+fecha.getMinutes()+":"+fecha.getSeconds();
+        databaseHandler.db.transaction(
+            function(tx){
+                tx.executeSql("UPDATE datos_generales_diprec SET firma_cliente = ?, fecha_cliente = ?, nombre_puesto = ? WHERE id_cedula = ?",
+                    [firmaCliente,fecha_firma,nombrePuesto,id_cedula],
+                    function(tx, results){
+                        databaseHandler.db.transaction(
+                            function(tx){
+                                tx.executeSql("UPDATE cedulas_general SET nombre_evalua = ? WHERE id_cedula = ?",
+                                    [nombrefirma,id_cedula],
+                                    function(tx, results){
+                                        swal("","Guardado correctamente","success");
+                                        app.views.main.router.back('/yamevoyLevantaDiprec/', {force: true, ignoreCache: true, reload: true});
+                                    },
+                                    function(tx, error){
+                                        console.error("Error al guardar cierre cedulas: " + error.message);
+                                    }
+                                );
+                            },
+                            function(error){},
+                            function(){}
+                        );
+                    },
+                    function(tx, error){
+                        console.error("Error al guardar cierre datos: " + error.message);
+                    }
+                );
+            },
+            function(error){},
+            function(){}
+        );
+    }
+
     function terminarLevantaDIPREC(){
         if($('#imagenC').val() == ""){
             swal("","La fotografia es obligatoria","warning");
@@ -3911,7 +3615,404 @@
             function(){}
         );
     }
-    //DIPREC FIN
+
+    // TERCER RECORRIDO DIPREC SEGURIDAD E HIGIENE
+    // Función para obtener el tipo de componente
+    function guardaSelectDiprec(id,fase){
+        var campo = $("#"+id);
+        var pregunta = $(campo).attr("name"); 
+        
+        if($(campo).get(0).tagName == 'INPUT'){
+            if($(campo).get(0).type == 'radio'){
+                if(id.includes("1")){
+                    var val = "1";
+                }else{
+                    var val = "0";
+                }
+                guardaSelectDiprec1(val,pregunta,"radio",fase,id);
+            }else if($(campo).get(0).type == 'checkbox'){
+                if( $(campo).prop("checked") == true){
+                    var val = "1";
+                }else{
+                    var val = "0";
+                }
+                guardaSelectDiprec1(val,id,"checkbox",fase,id);
+            }else{
+                var val = $(campo).val();
+                var tipo = $(campo).get(0).tagName;
+                guardaSelectDiprec1(val,id,tipo,fase,id);
+            }
+        }else{
+            var tipo = $(campo).get(0).tagName;
+            var val = $(campo).val();
+            guardaSelectDiprec1(val,id,tipo,fase,id);
+        }
+    }
+
+    // Función para insertar o actualizar la información en la tabla de check
+    function guardaSelectDiprec1(valor,pregunta,tipo,fase,id){
+        var id_cedula = localStorage.getItem("IdCedula");
+        databaseHandler.db.transaction(
+            function(tx){
+                tx.executeSql("Select * from checklist_seguridad_higiene where id_cedula = ? AND pregunta = ? AND fase = ?",
+                    [id_cedula,pregunta,fase],
+                    function(tx, results){
+                        if(results.rows.length == 0){
+                            databaseHandler.db.transaction(
+                                function(tx){
+                                    tx.executeSql("INSERT INTO checklist_seguridad_higiene(id_cedula, pregunta ,valor, fase, tipo, id) VALUES (?,?,?,?,?,?)",
+                                        [id_cedula, pregunta, valor, fase, tipo, id],
+                                        function(tx, results){
+                                            console.log('Inserta');
+                                            //swal("", "Datos actualizados correctamente", "success");
+                                        },
+                                        function(tx, error){
+                                            swal("Error al guardar",error.message,"error");
+                                            app.preloader.hide();
+                                        }
+                                    );
+                                },function(error){},function(){}
+                            );
+                        } else {
+                            databaseHandler.db.transaction(
+                                function(tx){
+                                    tx.executeSql("UPDATE checklist_seguridad_higiene SET valor = ?, id = ? WHERE id_cedula = ? AND pregunta = ? AND fase = ?",
+                                        [valor,id,id_cedula,pregunta,fase],
+                                        function(tx, results){
+                                            console.log('update hse');
+                                            //swal("", "Datos actualizados correctamente", "success");
+                                        },
+                                        function(tx, error){
+                                            swal("Error al guardar",error.message,"error");
+                                            app.preloader.hide();
+                                        }
+                                    );
+                                },function(error){},function(){}
+                            );
+                        }
+                    },
+                    function(tx, error){console.log("Error: " + error.message);}
+                );
+            },
+            function(error){console.log("Error: " + error.message);},function(){}
+        );
+    }
+
+    // Función que sirve para actualizar los datos generales del modulo seguridad e higiene
+    function guardarDatosGeneralesHSE(){
+        var values = get_datos_completos();
+        var quita_coma = values.response;
+        var valido = values.valido;
+        if (valido) {
+            var id_cedula = localStorage.getItem("IdCedula");
+            var nombreCliente = $("#nombreCliente").val();
+            var nombreInspecciona = $("#nombreInspecciona").val();
+            var tipoInspeccion = $("#tipoInspeccion").val();
+            var codigo = $("#codigo").val();
+            var ubicacion = $("#ubicacion").val();
+            var responsableEquipo = $("#responsableEquipo").val();
+
+            databaseHandler.db.transaction(
+                function(tx){
+                    tx.executeSql("UPDATE datos_generales_hse SET nombre_inspecciona = ?, tipo_inspeccion = ?, codigo = ?, ubicacion = ?, responsable_equipo = ? WHERE id_cedula = ?",
+                        [nombreInspecciona, tipoInspeccion, codigo, ubicacion, responsableEquipo,id_cedula],
+                        function(tx, results){
+                            databaseHandler.db.transaction(
+                                function(tx){
+                                    tx.executeSql("UPDATE cedulas_general SET nombre_cliente = ? WHERE id_cedula = ?",
+                                        [nombreCliente ,id_cedula],
+                                        function(tx, results){
+                                            swal("","Guardado correctamente","success");
+                                            $('#nombreInspecciona').css("background-color", "#ffffff");
+                                            $('#tipoInspeccion').css("background-color", "#ffffff");
+                                            $('#codigo').css("background-color", "#ffffff");
+                                            $('#ubicacion').css("background-color", "#ffffff");
+                                            $('#responsableEquipo').css("background-color", "#ffffff");
+                                        },
+                                        function(tx, error){
+                                            console.error("Error al guardar datos generales 1: " + error.message);
+                                        }
+                                    );
+                                },
+                                function(error){
+                                    console.error("Error al guardar datos generales 2: " + error.message);
+                                },
+                                function(){}
+                            );
+                        },
+                        function(tx, error){
+                            console.error("Error al guardar datos generales 3: " + error.message);
+                        }
+                    );
+                },
+                function(error){
+                    console.error("Error al guardar datos generales 4: " + error.message);
+                },
+                function(){}
+            );
+        }else{
+            swal("","Debes llenar estos campos para poder guardar: "+quita_coma,"warning");
+        }
+    }
+
+    // Función para pintar los select de acuerdo al valor seleccionado
+    function fnCheckSelect(val, id, nombre){
+        
+        if (val==0){
+            document.getElementById(id).style.setProperty('background-color', '#fff', 'important');
+            document.getElementById(id).style.setProperty('color', '#212121', 'important');
+        }else if(val==1){
+            document.getElementById(id).style.setProperty('background-color', '#2BEB00', 'important');
+            document.getElementById(id).style.setProperty('color', '#212121', 'important');
+        }else if(val==2){
+            document.getElementById(id).style.setProperty('background-color', 'yellow', 'important');
+            document.getElementById(id).style.setProperty('color', '#212121', 'important');
+            fnTomaEvidenciaHSE(nombre);
+        }else if(val==3){
+            document.getElementById(id).style.setProperty('background-color', 'red', 'important');
+            document.getElementById(id).style.setProperty('color', 'white', 'important');
+            fnTomaEvidenciaHSE(nombre);
+        }else if(val==4){
+            document.getElementById(id).style.setProperty('background-color', 'gray', 'important');
+            document.getElementById(id).style.setProperty('color', 'white', 'important');
+            fnTomaEvidenciaHSE(nombre);
+        }else if(val==5){
+            document.getElementById(id).style.setProperty('background-color', '#EAEAEA', 'important');
+            document.getElementById(id).style.setProperty('color', '#212121', 'important');
+        }
+    }
+
+    // Muestra tipo modal para capturar las fotos de cada tipo de inspección
+    function fnTomaEvidenciaHSE(nombre){
+        var popEvidencia = app.popup.create({
+            content: `
+            <div class="sheet-modal my-sheet" id="sheet-modal" name="sheet">
+            <div class="toolbar">
+                <div class="toolbar-inner">
+                    <div class="left"></div>
+                    <div class="right"><a class="link" id="close_sheet" href="#">Cerrar</a></div>
+                </div>
+            </div>
+            <div class="sheet-modal-inner">
+                <div class="block">
+                    <h3 class="FWN-titulo-2">Agregar Evidencia Condicion</h3>
+                    <form class="list FWM-fixing-form"> 
+                        <input type="hidden" id="inputEvidencia" value=`+nombre+`>
+                        <input type="hidden" id="pasa" value="0">
+                        <span class="span FWM-span-form">Observaciones:</span>
+                        <textarea class ="FWM-input" id="comentario" name="comentario"  cols="30" rows="10" onchange="inputLleno(this.id,this.value)"></textarea>
+                        <span class="span FWM-span-form">Foto:</span>
+                            <div class="FWM-photo-container">
+                                <div class="border-capture">
+                                    <a onclick="capturePhoto();">
+                                        <img class="FWM-photo" src="img/camera.svg" id="photoIcon" width="45px" style="margin-left: 50px;"/>
+                                    </a>
+                                </div>
+                                <img class="FWM-photo-hide" id="smallImage" src=""/>
+                                <input type="hidden" id="imagenC" name="imagenC"/>
+                            </div>
+                            <br>
+                        <div class="block grid-resizable-demo" style="margin-bottom: 70px;">
+                            <div class="row align-items-stretch" style="text-align: center;">
+                                <div class="col-100 medium-50" style="min-width: 50px; border-style: none;">
+                                    <span class="resize-handler"></span>
+                                    <a href="#" onclick="guardarEvidenciaHSE(3);" style="background-color: #063E7F;" class="boton-equipo">Guardar</a>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>`,
+        swipeToClose:false,
+        closeByOutsideClick:false,
+        closeByBackdropClick:false,
+        closeOnEscape:false,
+                on: {
+                    open: function (popup) {
+    
+                        $('#close_sheet').click(function () {
+                            if($('#pasa').val()!= 0){
+                                app.sheet.close('#sheet-modal');
+                            }else{
+                                swal({
+                                    title: "Aviso",
+                                    text: "Aún no agregas una evidencia, ¿Estas seguro que deseas regresar?",
+                                    icon: "warning",
+                                    buttons: true,
+                                    dangerMode: false,
+                                }).then((willGoBack) => {
+                                    if (willGoBack){
+                                        app.sheet.close('#sheet-modal');
+                                    } else {}
+                                });
+                            }
+                        });
+                    },
+                }
+        });
+        popEvidencia.open();
+    }
+    
+    // Función para guardar las fotografías de la inspección
+    function guardarEvidenciaHSE(recorrido){
+        var id_cedula = localStorage.getItem("IdCedula");
+        var comentario = $("#comentario").val();
+        var foto = $("#imagenC").val();
+        var area = $("#inputEvidencia").val();
+        var fecha = new Date();  
+        var fechas = fecha.getFullYear()+"-"+(fecha.getMonth()+1)+"-"+fecha.getDate()+" "+fecha.getHours()+":"+fecha.getMinutes()+":"+fecha.getSeconds();
+        if(area == 0){
+            swal("","Debes seleccionar una área", "warning");
+            return false;
+        }
+        if(!foto){
+            swal("","Debes tomar una foto", "warning");
+            return false;
+        }
+        if(!comentario){
+            comentario = 'Sin Comentarios';
+        }
+        databaseHandler.db.transaction(
+            function(tx){
+                tx.executeSql("INSERT INTO foto_evidencia_seguridad_higiene(id_cedula, comentario, foto, area, recorrido, fecha) VALUES (?,?,?,?,?,?)",
+                    [id_cedula,comentario,foto,area,recorrido,fechas],
+                    function(tx, results){
+                    $("#pasa").val(1);
+                    swal("","Se guardaron los datos correctamente", "success");
+                        databaseHandler.db.transaction(
+                            function(tx){
+                                tx.executeSql(
+                                    "Select * from foto_evidencia_seguridad_higiene where id_cedula = ? ORDER BY id_evidencia DESC",
+                                        [id_cedula],
+                                        function(tx, results){
+                                            var item = results.rows.item(0);
+                                            $("#tabla_evidencias").append("<tr id='fila"+ item.id_evidencia +"'><td><a href='#' onclick='eliminarFilaDIPREC("+item.id_evidencia +",7);' style='border: none; outline:none;'><img src='img/borrar.png' width='30px' /></a></td><td style='text-align: center;'>" + 
+                                            item.area + "</td><td><img src='"+item.foto+
+                                            "' width='60px' style='margin-top: 4px;'/></td><td style='text-align: center;'>" + item.comentario
+                                            + "</td><td style='text-align: center;'>" + item.fecha + "</td></tr>");
+                                            $("#area").val(0)
+                                            $("#comentario").val('');
+                                            $("#comentario").css("background-color", "#FFFFFF");
+                                            $("#smallImage").attr("src","img/blank.png");
+                                            $("#photoIcon").attr("src","img/camera.svg");
+                                            $("#imagenC").val('');
+                                                $("#message-nr").css("display", "none");
+                                                $('.preloader').remove();
+                                                $('.infinite-scroll-preloader').remove();
+                                        },
+                                        function(tx, error){
+                                            console.log("Error: " + error.message);
+                                            app.preloader.hide();
+                                        }
+                                );
+                            },
+                                function(error){
+                                    console.log("Error: " + error.message);
+                                },
+                                function(){}
+                        );
+                    },
+                    function(tx, error){
+                        console.error("Error al actualizar: " + error.message);
+                    }
+                );
+            },
+            function(error){
+                console.error("Error: " + error.message);
+            },
+            function(){}
+        );
+    }
+
+    // Funcion para terminar la cedula de seguridad e higiene
+    function guardarCierreInspeccionDIPREC(){
+        if($("#NombreFirma").val() == ""){
+            swal("","El nombre de quien recibe es obligatorio","warning");
+            return false;
+        }
+        var id_cedula = localStorage.getItem("IdCedula");
+        var nombrefirma = $("#NombreFirma").val();
+        var firmaCliente = $("#signate").val();
+        var fecha = new Date();
+        var fecha_firma = fecha.getFullYear()+"-"+(fecha.getMonth()+1)+"-"+fecha.getDate()+" "+fecha.getHours()+":"+fecha.getMinutes()+":"+fecha.getSeconds();
+        databaseHandler.db.transaction(
+            function(tx){
+                tx.executeSql("UPDATE datos_generales_hse SET firma_cliente = ?, fecha_cliente = ? WHERE id_cedula = ?",
+                    [firmaCliente,fecha_firma,id_cedula],
+                    function(tx, results){
+                        databaseHandler.db.transaction(
+                            function(tx){
+                                tx.executeSql("UPDATE cedulas_general SET nombre_evalua = ? WHERE id_cedula = ?",
+                                    [nombrefirma,id_cedula],
+                                    function(tx, results){
+                                        swal("","Guardado correctamente","success");
+                                        app.views.main.router.back('/yaMeVoyInspeccionDiprec/', {force: true, ignoreCache: true, reload: true});
+                                    },
+                                    function(tx, error){
+                                        console.error("Error al guardar cierre cedulas: " + error.message);
+                                    }
+                                );
+                            },
+                            function(error){},
+                            function(){}
+                        );
+                    },
+                    function(tx, error){
+                        console.error("Error al guardar cierre datos: " + error.message);
+                    }
+                );
+            },
+            function(error){},
+            function(){}
+        );
+    }
+
+    // Funcion para terminar la inspeccion
+    function fnTerminarInspeccionDiprec(){
+        if($('#imagenC').val() == ""){
+            swal("","La fotografia es obligatoria","warning");
+            return false;
+        }
+        var id_cedula = localStorage.getItem("IdCedula");
+        var foto_salida = $('#imagenC').val();
+        var fecha = new Date();
+        var fecha_salida = fecha.getFullYear()+"-"+(fecha.getMonth()+1)+"-"+fecha.getDate()+" "+fecha.getHours()+":"+fecha.getMinutes()+":"+fecha.getSeconds();
+        var ubicacion_salida = $('#geolocation').val();
+        var estatus = 1;
+        databaseHandler.db.transaction(
+            function(tx){
+                tx.executeSql("UPDATE datos_generales_hse SET foto_salida  = ? WHERE id_cedula = ?",
+                    [foto_salida,id_cedula],
+                    function(tx, results){
+                        databaseHandler.db.transaction(
+                            function(tx){
+                                tx.executeSql("UPDATE cedulas_general SET fecha_salida  = ?,geolocalizacion_salida = ?,estatus = ? WHERE id_cedula = ?",
+                                    [fecha_salida,ubicacion_salida,estatus,id_cedula],
+                                    function(tx, results){
+                                        window.location.href = "./menu.html";
+                                    },
+                                    function(tx, error){
+                                        swal("Error al guardar",error.message,"error");
+                                    }
+                                );
+                            },
+                            function(error){},
+                            function(){}
+                        );
+                    },
+                    function(tx, error){
+                        swal("Error al guardar",error.message,"error");
+                    }
+                );
+            },
+            function(error){},
+            function(){}
+        );
+    }
+
+    // -#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_ DIPREC FIN _#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#-
+
     //Inicio MerGroup
     function startFromProgramMer(id_visita,proyecto,sucursal,numero_orden,contratista,type_proyect,category,region,tower,id_cliente){
         localStorage.setItem("id_visita",id_visita);
@@ -4449,7 +4550,7 @@
                 function () { }
             );
         }
-        function regresarRecorridoregresarRecorridoPL1(){
+        function regresarRecorridoPL1(){
             app.views.main.router.back('/recorridoPL1/', {force: true, ignoreCache: true, reload: true});
         }
         function guardarDGPL() {
@@ -7595,7 +7696,7 @@
         }else{
             if (falla && como_encontro && volt && amp && wc && tierra_fisica){
                 swal("","Datos Guardados correctamente","success");
-                app.views.main.router.back('/formformServ2/', {force: true, ignoreCache: true, reload: true});
+                app.views.main.router.back('/formServ2/', {force: true, ignoreCache: true, reload: true});
             }else{
                 swal("", "Todos los campos son requeridos" ,"warning");
             }
@@ -7827,7 +7928,7 @@
         //     swal("","Debes tomar la fotografía del sello para poder continuar","warning");
         //     return false;
         // }
-        var foto_sello = $("#imagenC").val();
+        var foto_sello = $("#imagenC1").val();
         var id_cedula = localStorage.getItem("IdCedula");
         var nombrefirma = $("#NombreFirma").val();
         var firma_cliente = $("#signate").val();
@@ -11488,6 +11589,7 @@
                                         } else {}
                                     });
                                 }else{
+                                    var observaciones_papeleta = $("#observaciones_papeleta").val();
                                     for(var i = 0; i< length; i++){
                                         var item7 = results.rows.item(i);
                                         papeleta[i] = {'Valor':i,
@@ -11499,6 +11601,7 @@
                                         'numero_parte':item7.numero_parte,
                                         'prioridad':item7.prioridad,
                                         'motivo_pr':item7.motivo_pr,
+                                        'observaciones_papeleta':observaciones_papeleta,
                                         'id_cedula':id_servidor,
                                         'fecha_envio':fecha_envio};
                                     }
@@ -12104,10 +12207,32 @@
         }
         Sumahoras();
     }
-    function clientSelected3(clientName,tipo_serv,orden_servicio){
+    function clientSelected3_serv(clientName,tipo_serv,orden_servicio){
         localStorage.setItem("orden_servicio",orden_servicio);
         localStorage.setItem("category",tipo_serv);
         app.views.main.router.navigate({name: 'calendar-page-serv'});
+    }
+    function act_obs_papeleta(){
+        var id_cedula = localStorage.getItem("IdCedula");
+        var observaciones_papeleta = $("#observaciones_papeleta").val();
+        databaseHandler.db.transaction(
+            function(tx){
+                tx.executeSql("UPDATE visita_servInd SET observaciones_papeleta = ? WHERE id_cedula = ?",
+                    [observaciones_papeleta, id_cedula],
+                    function(tx, results){
+                        swal("","Comentario actualizado correctamente.","success");
+                        $('#observaciones_papeleta').css("background-color", "#ffffff");
+                    },
+                    function(tx, error){
+                        console.error("Error al guardar entrega: " + error.message);
+                    }
+                );
+            },
+            function(error){
+                console.error("Error al guardar entrega: " + error.message);
+            },
+            function(){}
+        );
     }
     //Fin ServInd
     // Inicio MT
@@ -13283,12 +13408,14 @@
     }
     function generarRutaCI(){
         var data = localStorage.getItem("ruta");
+       
         if(data!= 'null'){ }else{
             swal("", "Aún no tienes ruta asignada para el día de hoy", "warning");
             return false;
         }
         var ruta = JSON.parse(data);
         var totalReg = ruta.length;
+        console.log("tamaño de ruta:",totalReg)
         var id_usuario = localStorage.getItem("id_usuario");
         var nombre_usuario = localStorage.getItem("nombre") + " " + localStorage.getItem("apellido_paterno");
         var fecha = new Date();
@@ -13328,6 +13455,7 @@
                                                 var sihayvisitas = false;
                                                 productHandler.addDatosCIRuta(id_cedula,foto_entrada,id_cliente,nombre_cliente,nombre_usuario);
                                                 for(i = 0;i <= totalReg-1;i++){
+                                                    console.log("r->",ruta[i].vuelta ," Ru->",vueltas)
                                                     if(ruta[i].vuelta == vueltas){
                                                         sihayvisitas = true;
                                                         var nombre_comercial = ruta[i].nombre_comercial;
@@ -14121,6 +14249,32 @@
             );
         } else {
             swal("","Debes llenar estos campos para poder guardar: "+quita_coma,"warning");
+        }
+    }
+    function get_datos_completos(){
+        var campos;
+        var trae_los_campos_sin_llennar='';
+        campos = document.querySelectorAll('#datos_form input.obligatorio');
+        var valido = true;
+    
+        [].slice.call(campos).forEach(function(campo) {
+            if (campo.value.trim() === '') {
+                valido = false;
+                trae_los_campos_sin_llennar = trae_los_campos_sin_llennar + ", "+$(campo).attr("name");
+            }
+        });
+        if (valido) {
+            return {
+                valido: valido,
+                reponse: "1"
+            };
+        } else {
+            const str = trae_los_campos_sin_llennar;
+            const quita_coma = str.slice(1)
+            return {
+                valido: valido,
+                response: quita_coma
+            };
         }
     }
     function irCierreVentasCI(){
@@ -17234,42 +17388,42 @@
         var id_cedula = localStorage.getItem("IdCedula");
         var fecha = new Date();
         var fecha_firma = fecha.getFullYear() + "-" + (fecha.getMonth() + 1) + "-" + fecha.getDate() + " " + fecha.getHours() + ":" + fecha.getMinutes() + ":" + fecha.getSeconds();
-          databaseHandler.db.transaction(
+        databaseHandler.db.transaction(
             function (tx) {
-              tx.executeSql(
+            tx.executeSql(
                 "UPDATE cobranza SET firma_cliente = ?, fecha_cliente = ? WHERE id_cedula = ?",
                 [firmaCliente, fecha_firma,id_cedula],
                 function (tx, results) {
-                  databaseHandler.db.transaction(
+                databaseHandler.db.transaction(
                     function (tx) {
-                      tx.executeSql(
+                    tx.executeSql(
                         "UPDATE cedulas_general SET nombre_evalua = ?,calificacion = ?,comentario_cliente = ? WHERE id_cedula = ?",
                         [nombrefirma,calificacion,comentarioCliente,id_cedula],
                         function (tx, results) {
-                          swal("", "Guardado correctamente", "success");
-                          app.views.main.router.back("/yamevoyBennetts2-1/", {
+                        swal("", "Guardado correctamente", "success");
+                        app.views.main.router.back("/yamevoyBennetts2-1/", {
                             force: true,
                             ignoreCache: true,
                             reload: true,
-                          });
+                        });
                         },
                         function (tx, error) {
-                          console.error("Error al guardar cierre: " + error.message);
+                        console.error("Error al guardar cierre: " + error.message);
                         }
-                      );
+                    );
                     },
                     function (error) {},
                     function () {}
-                  );
+                );
                 },
                 function (tx, error) {
-                  console.error("Error al guardar cierre: " + error.message);
+                console.error("Error al guardar cierre: " + error.message);
                 }
-              );
+            );
             },
             function (error) {},
             function () {}
-          );
+        );
     }
     function terminarServicioBennetts21(){
         if($('#imagenC').val() == ""){
@@ -18629,10 +18783,11 @@
             var correo = $("#correo").val();
             var telefono_1 = $("#telefono_1").val();
             var telefono_2 = $("#telefono_2").val();
+            var solicitud = $("#nosolicitud").val();
             databaseHandler.db.transaction(
                 function(tx){
-                    tx.executeSql("UPDATE logistica_bennettsL SET nombre_recibe = ?,segundo_nombre = ?,apellido = ?,puesto = ?,correo = ?,telefono_1 = ?,telefono_2 = ? WHERE id_cedula = ?",
-                        [nombre_recibe,segundo_nombre,apellido,puesto,correo,telefono_1,telefono_2,id_cedula],
+                    tx.executeSql("UPDATE logistica_bennettsL SET nombre_recibe = ?,segundo_nombre = ?,apellido = ?,puesto = ?,correo = ?,telefono_1 = ?,telefono_2 = ? , solicitud = ? WHERE id_cedula = ?",
+                        [nombre_recibe,segundo_nombre,apellido,puesto,correo,telefono_1,telefono_2,solicitud,id_cedula],
                         function(tx, results){
                             $("#nombre_recibe").css("background-color", "#FFFFFF");
                             $("#segundo_nombre").css("background-color", "#FFFFFF");
@@ -18657,6 +18812,14 @@
             swal("","Te faltaron algunos campos por llenar: "+newStr,"warning");
         }
     }
+    function estatusServicio(valor){
+        if(valor == 2){
+            $('#motivoestatus').css("display", "block");
+        }else{
+            $('#motivoestatus').css("display", "none");  
+        }
+    }
+    
     function guardaBennettsLLogis2(){
         let id_cedula = localStorage.getItem("IdCedula");
         var campos, valido;
@@ -19303,6 +19466,9 @@
             }
             var motivos1 = $("#motivos_select").val();
             var motivos2 = $("#motivos_input").val();
+            var estatus = $("#motivos_select2").val();
+            var motivoestatus = $("#motivoestatus2").val();
+            
 
             var fecha = new Date();
             var fecha_firma = fecha.getFullYear()+"-"+(fecha.getMonth()+1)+"-"+fecha.getDate()+" "+fecha.getHours()+":"+fecha.getMinutes()+":"+fecha.getSeconds();
@@ -19310,8 +19476,8 @@
             var id_cedula = localStorage.getItem("IdCedula");
             databaseHandler.db.transaction(
                 function(tx){
-                    tx.executeSql("UPDATE logistica_bennettsL SET motivo = ?, motivo_desc = ?, fecha_cliente = ? WHERE id_cedula = ?",
-                        [motivos1, motivos2, fecha_firma, id_cedula],
+                    tx.executeSql("UPDATE logistica_bennettsL SET motivo = ?, motivo_estatus = ?, motivo_desc = ?, fecha_cliente = ?,estatus = ? WHERE id_cedula = ?",
+                        [motivos1, motivoestatus, motivos2, fecha_firma,estatus,id_cedula],
                         function(tx, results){
                             databaseHandler.db.transaction(
                                 function(tx){
@@ -31016,7 +31182,7 @@ function ShowReglas(cliente,cardname,FirstName,MiddleName, LastName, Position, E
                         function (error) { },
                         function () { }
                     );
-                } else if(empresa == "Aliatonic"){
+                } else if(empresa = 'Aliatonic'){
                     if(tipo_cedula == "VisitaPacas"){
                         databaseHandler.db.transaction(
                             function(tx){
@@ -31047,41 +31213,6 @@ function ShowReglas(cliente,cardname,FirstName,MiddleName, LastName, Position, E
                             function(error){},
                             function(){}
                         );
-                    }
-                } else if(empresa == "LIC") {
-                    //console.log(empresa,id_cedula,tipo_cedula);
-                    if(tipo_cedula == "limpiezaLIC"){
-                        databaseHandler.db.transaction(
-                            function(tx){
-                                tx.executeSql("DELETE FROM cedulas_general WHERE id_cedula = ?",
-                                    [id_cedula],
-                                    function(tx, results){
-                                        $("#conc" + id_cedula).remove();   //Esto borrara la cedula de tipo limpiezaLIC
-                                    },
-                                    function(tx, error){
-                                        swal("Error al eliminar cedula de LimpiezaLIC",error.message,"error");
-                                    }
-                                );
-                            },
-                            function(error){},
-                            function(){} 
-                        ); 
-                    }else if(tipo_cedula == "levantamientoLIC"){
-                        databaseHandler.db.transaction(
-                            function(tx){
-                                tx.executeSql("DELETE FROM cedulas_general WHERE id_cedula = ?",
-                                    [id_cedula],
-                                    function(tx, results){
-                                        $("#conc" + id_cedula).remove();   //Esto borrara la cedula de tipo levantamientoLIC
-                                    },
-                                    function(tx, error){
-                                        swal("Error al eliminar cedula de LevantamientoLIC",error.message,"error");
-                                    }
-                                );
-                            },
-                            function(error){},
-                            function(){} 
-                        ); 
                     }
                 } else {
                     if(tipo_cedula == "levantamiento"){
@@ -33153,7 +33284,7 @@ function ShowReglas(cliente,cardname,FirstName,MiddleName, LastName, Position, E
         var datos = new Array();
         var id_usuario = localStorage.getItem("id_usuario");
         var id_empresa = localStorage.getItem("id_empresa");
-        var versionapp = '7.3.19';
+        var versionapp = '7.3.30';
         datos[0] = {'id_usuario':id_usuario,'id_empresa':id_empresa,'tipo_cedula':tipo_cedula,'versionapp':versionapp};
         $.ajax({
             type: "POST",
@@ -33166,7 +33297,7 @@ function ShowReglas(cliente,cardname,FirstName,MiddleName, LastName, Position, E
             error: function(){
                 console.log("Error en la comunicacion con el servidor");
             }
-        });bu
+        });
         swal("Enviando!", "Puedes serguir usando la aplicación!", "success");
         var empresa = localStorage.getItem("nombre_empresa");
         if(empresa == "SMC"){
@@ -33196,7 +33327,7 @@ function ShowReglas(cliente,cardname,FirstName,MiddleName, LastName, Position, E
             var fecha_envio = fecha.getFullYear()+"-"+(fecha.getMonth()+1)+"-"+fecha.getDate()+" "+fecha.getHours()+":"+fecha.getMinutes()+":"+fecha.getSeconds();
             databaseHandler.db.transaction(
                 function(tx){
-                    tx.executeSql("SELECT * FROM cedulas_general WHERE id_cedula = ?",
+                    tx.executeSql("SELECT * FROM cedulas_general WHERE id_cedula = ? and estatus != 3",
                         [id_cedula],
                         function(tx, results){
                             var length = results.rows.length;
@@ -34094,7 +34225,7 @@ function ShowReglas(cliente,cardname,FirstName,MiddleName, LastName, Position, E
                                                                     'colonia':item3.colonia,'ciudad':item3.ciudad,'cp':item3.cp,'alcadia':item3.alcadia,'estado':item3.estado,'acceso_proveedor':item3.acceso_proveedor,'OC':item3.OC,'OC_copias':item3.OC_copias,'factura':item3.factura,'factura_copias':item3.factura_copias,'SUA':item3.SUA,'SUA_copias':item3.SUA_copias,'TIA':item3.TIA,'TIA_copias':item3.TIA_copias,'otro_doc':item3.otro_doc,'otro_doc_copias':item3.otro_doc_copias,
                                                                     'permiso':item3.permiso,'correo1':item3.correo1,'correo1_campo':item3.correo1_campo,'medio1':item3.medio1,'medio1_campo':item3.medio1_campo,'otro_med1':item3.otro_med1,'otro_med1_campo':item3.otro_med1_campo,'dias_solicitud':item3.dias_solicitud,'cita':item3.cita,'correo2':item3.correo2,'correo2_campo':item3.correo2_campo,'medio2':item3.medio2,'medio2_campo':item3.medio2_campo,'otro_med2':item3.otro_med2,'otro_med2_campo':item3.otro_med2_campo,'dias_anticipacion':item3.dias_anticipacion,'entrada_almacen':item3.entrada_almacen,'folio_recepcion':item3.folio_recepcion,'contra_recibo':item3.contra_recibo,'firma_sello':item3.firma_sello,
                                                                     'recibido_factura':item3.recibido_factura,'persona_autorizada':item3.persona_autorizada,'sello_cliente':item3.sello_cliente,'oc3':item3.oc3,'id3':item3.id3,'otro3':item3.otro3,'ninguno':item3.ninguno,'cofia':item3.cofia,'zapato_seguridad':item3.zapato_seguridad,'chaleco':item3.chaleco,'otro4':item3.otro4,'otros_requisitos':item3.otros_requisitos,'dias':item3.dias,'horas_I':item3.horas_I,'horas_F':item3.horas_F,'horasS_I':item3.horasS_I,'horasS_F':item3.horasS_F,
-                                                                    'motivo':item3.motivo,'motivo_desc':item3.motivo_desc,'devoluciones':item3.devoluciones,'motivo_devolucion':item3.motivo_devolucion,'devolucion_desc':item3.devolucion_desc};
+                                                                    'motivo':item3.motivo,'motivo_desc':item3.motivo_desc,'devoluciones':item3.devoluciones,'motivo_devolucion':item3.motivo_devolucion,'devolucion_desc':item3.devolucion_desc,'estatus':item3.estatus, 'motivoestatus':item3.motivo_estatus, 'solicitud':item3.solicitud};
                                                                 }
                                                                 $.ajax({
                                                                     type: "POST",
@@ -34995,7 +35126,7 @@ function ShowReglas(cliente,cardname,FirstName,MiddleName, LastName, Position, E
                 function(error){},
                 function(){}
             );
-        } else if(empresa == "Dilimpio"){
+        }else if(empresa == "Dilimpio"){
             var datosCedulaGeneral = new Array();
             var cedulageneral = 0;
             var datosDL = new Array();
@@ -35008,6 +35139,19 @@ function ShowReglas(cliente,cardname,FirstName,MiddleName, LastName, Position, E
             var pedidosDL2 = new Array();
             var datosentregasDL = new Array();
             var entregasDL = new Array();
+
+            
+            var estadoequipo = new Array();
+            var dginstalacion = new Array();
+            var dgolores = new Array();
+            var evidencias_equipo = new Array();
+            var estadowc = new Array();
+            var equiposdosificadores = new Array();
+            var dosificadoresquimicos = new Array();
+            var inventario_producto = new Array();
+            var equipo_comision = new Array();
+            var dosificadores_lavanderia = new Array();
+            var resultados_lavado = new Array();
 
             var fecha = new Date();
             var fecha_envio = fecha.getFullYear()+"-"+(fecha.getMonth()+1)+"-"+fecha.getDate()+" "+fecha.getHours()+":"+fecha.getMinutes()+":"+fecha.getSeconds();
@@ -35038,7 +35182,577 @@ function ShowReglas(cliente,cardname,FirstName,MiddleName, LastName, Position, E
                                 'comentario_cliente':item.comentario_cliente,
                                 'fecha_envio':fecha_envio};
                             }
-                            if(tipo == "Entregas"){
+                            console.log('TIPO DE CEDULA',tipo);
+                            console.log('datosCedulaGeneral',datosCedulaGeneral);
+                            if(tipo == 'Control'){
+                                databaseHandler.db.transaction( 
+                                    function (tx) {
+                                        tx.executeSql("SELECT * FROM DatosentregasDL WHERE id_cedula = ?",
+                                            [id_cedula],
+                                            function (tx, results) {
+                                                var length = results.rows.length;
+                                                var fecha = new Date();
+                                                var fecha_envio = fecha.getFullYear() + "-" + (fecha.getMonth() + 1) + "-" + fecha.getDate() + " " + fecha.getHours() + ":" + fecha.getMinutes() + ":" + fecha.getSeconds();
+                                                for (var i = 0; i < length; i++) {
+                                                    var item2 = results.rows.item(i);
+                                                    datosentregasDL[i] = {
+                                                        'Valor': i,
+                                                        'foto_inicio': item2.foto_inicio,
+                                                        'id_cliente': item2.id_cliente,
+                                                        'nombre_cliente': item2.nombre_cliente,
+                                                        'nombre_contacto': item2.nombre_contacto,
+                                                        'correo': item2.correo,
+                                                        'telefono': item2.telefono,
+                                                        'id_visita': item2.id_visita,
+                                                        'firma_cliente': item2.firma_cliente,
+                                                        'foto_salida': item2.foto_salida,
+                                                        'hora_entrada': item2.hora_entrada,
+                                                        'hora_salida': item2.hora_salida,
+                                                        'colaborador': item2.colaborador,
+                                                        'direccion': item2.direccion,
+                                                        'ciudad': item2.ciudad,
+                                                        'responsable': item2.responsable,
+                                                        'territorio': item2.territorio,
+                                                        'maquina': item2.maquina,
+                                                        'horario' : item2.horario
+                                                    };                                                   
+                                                    
+                                                }
+                                                console.log('DE-Control',datosentregasDL);
+                                                databaseHandler.db.transaction( 
+                                                    function (tx) {
+                                                        tx.executeSql("SELECT * FROM evidencias_equipo_comision  WHERE id_cedula = ?",
+                                                            [id_cedula],
+                                                            function (tx, results) {
+                                                                var length = results.rows.length;
+                                                                var fecha = new Date();
+                                                                var fecha_envio = fecha.getFullYear() + "-" + (fecha.getMonth() + 1) + "-" + fecha.getDate() + " " + fecha.getHours() + ":" + fecha.getMinutes() + ":" + fecha.getSeconds();
+                                                                for (var i = 0; i < length; i++) {
+                                                                    var item3 = results.rows.item(i);
+                                                                    evidencias_equipo[i] = {
+                                                                        'Valor': i,
+                                                                        'id_evidencia': item3.id_evidencia,
+                                                                        'id_cedula': item3.id_cedula,
+                                                                        'foto': item3.foto,
+                                                                        'equipo': item3.equipo,
+                                                                        'quimico': item3.quimico,
+                                                                        'fecha': item3.fecha,
+                                                                        'comentarios': item3.comentarios,
+                                                                        'fase': item3.fase,
+                                                                        'condiciones_equipo': item3.condiciones_equipo
+                                                                    }                                                                    
+                                                                }
+                                                                console.log('DE-evidencias_equipo_comision',evidencias_equipo);
+                                                                databaseHandler.db.transaction( 
+                                                                    function (tx) {
+                                                                        tx.executeSql("SELECT * FROM  equipo_comision WHERE id_cedula = ?",
+                                                                            [id_cedula],
+                                                                            function (tx, results) {
+                                                                                var length = results.rows.length;
+                                                                                var fecha = new Date();
+                                                                                var fecha_envio = fecha.getFullYear() + "-" + (fecha.getMonth() + 1) + "-" + fecha.getDate() + " " + fecha.getHours() + ":" + fecha.getMinutes() + ":" + fecha.getSeconds();
+                                                                                for (var i = 0; i < length; i++) {
+                                                                                    var item4 = results.rows.item(i);
+                                                                                    equipo_comision[i] = {
+                                                                                        'Valor': i,
+                                                                                        'equipo': item4.equipo,
+                                                                                        'cantidad': item4.cantidad,
+                                                                                        'reporte': item4.reporte
+                                
+                                                                                    };
+                                                                                }
+                                                                                console.log('DE-equipo_comision',equipo_comision);
+                                                                                $.ajax({
+                                                                                    type: "POST",
+                                                                                    async : true,
+                                                                                    url: "http://www.appbennetts.com/FWM2/app/guardarDLControl.php",
+                                                                                    dataType: 'html',
+                                                                                    data: {'datosCedulaGeneral': JSON.stringify(datosCedulaGeneral),
+                                                                                    'datosentregasDL': JSON.stringify(datosentregasDL),
+                                                                                    'evidencias_equipo': JSON.stringify(evidencias_equipo),
+                                                                                    'equipo_comision': JSON.stringify(equipo_comision)
+                                                                                    },
+                                                                                    success: function(respuesta){
+                                                                                        var respu1 = respuesta.split("._.");
+                                                                                        var dat1 = respu1[0];
+                                                                                        var dat2 = respu1[1];
+                                                                                        if(dat1 == "CEDULA"){
+                                                                                            if(dat2 > 0){
+                                                                                                databaseHandler.db.transaction(
+                                                                                                    function(tx7){
+                                                                                                        tx7.executeSql(
+                                                                                                            "UPDATE cedulas_general SET estatus = 3 WHERE id_cedula = ?",
+                                                                                                            [id_cedula],
+                                                                                                            function(tx7, results){
+                                                                                                                localStorage.setItem("sendFlag", 0);
+                                                                                                                swal("Enviado!", "Ya se envio tu visita!", "success");
+                                                                                                            }
+                                                                                                        );
+                                                                                                    }
+                                                                                                );
+                                                                                            }
+                                                                                        } else {
+                                                                                            AlmacenarError(respuesta);
+                                                                                        }
+                                                                                    },
+                                                                                    error: function(){
+                                                                                        console.log(respuesta);
+                                                                                        console.log("Error en la comunicacion");
+                                                                                    }
+                                                                                });
+
+
+                                                                            },
+                                                                            function(tx, error){
+                                                                                console.log("Error al consultar fotos sanitizacion: " +error.message);
+                                                                            }
+                                                                        );
+                                                                    },
+                                                                    function(error){},
+                                                                    function(){}
+                                                                );
+                                                            },
+                                                            function(tx, error){
+                                                                console.log("Error al consultar fotos sanitizacion: " +error.message);
+                                                            }
+                                                        );
+                                                    },
+                                                    function(error){},
+                                                    function(){}
+                                                );
+                                            },
+                                            function(tx, error){
+                                                console.log("Error al consultar fotos sanitizacion: " +error.message);
+                                            }
+                                        );
+                                    },
+                                    function(error){},
+                                    function(){}
+                                );
+
+                            }else if(tipo == 'Instalacion' || tipo == 'Desinstalacion'){
+                                databaseHandler.db.transaction( 
+                                    function (tx) {
+                                        tx.executeSql("SELECT * FROM DatosentregasDL WHERE id_cedula = ?",
+                                            [id_cedula],
+                                            function (tx, results) {
+                                                var length = results.rows.length;
+                                                var fecha = new Date();
+                                                var fecha_envio = fecha.getFullYear() + "-" + (fecha.getMonth() + 1) + "-" + fecha.getDate() + " " + fecha.getHours() + ":" + fecha.getMinutes() + ":" + fecha.getSeconds();
+                                                for (var i = 0; i < length; i++) {
+                                                    var item2 = results.rows.item(i);
+                                                    datosentregasDL[i] = {
+                                                        'Valor': i,
+                                                        'foto_inicio': item2.foto_inicio,
+                                                        'id_cliente': item2.id_cliente,
+                                                        'nombre_cliente': item2.nombre_cliente,
+                                                        'nombre_contacto': item2.nombre_contacto,
+                                                        'correo': item2.correo,
+                                                        'telefono': item2.telefono,
+                                                        'id_visita': item2.id_visita,
+                                                        'firma_cliente': item2.firma_cliente,
+                                                        'foto_salida': item2.foto_salida,
+                                                        'hora_entrada': item2.hora_entrada,
+                                                        'hora_salida': item2.hora_salida,
+                                                        'colaborador': item2.colaborador,
+                                                        'direccion': item2.direccion,
+                                                        'ciudad': item2.ciudad,
+                                                        'responsable': item2.responsable,
+                                                        'territorio': item2.territorio,
+                                                        'maquina': item2.maquina,
+                                                        'horario' : item2.horario
+                                                    };
+                                                   
+                                                }
+                                                console.log('DE-DEANDIN',datosentregasDL);
+                                                databaseHandler.db.transaction( 
+                                                    function (tx) {
+                                                        tx.executeSql("SELECT * FROM evidencias_equipo_comision  WHERE id_cedula = ?",
+                                                            [id_cedula],
+                                                            function (tx, results) {
+                                                                var length = results.rows.length;
+                                                                var fecha = new Date();
+                                                                var fecha_envio = fecha.getFullYear() + "-" + (fecha.getMonth() + 1) + "-" + fecha.getDate() + " " + fecha.getHours() + ":" + fecha.getMinutes() + ":" + fecha.getSeconds();
+                                                                for (var i = 0; i < length; i++) {
+                                                                    var item3 = results.rows.item(i);
+                                                                    evidencias_equipo[i] = {
+                                                                        'Valor': i,
+                                                                        'id_evidencia': item3.id_evidencia,
+                                                                        'id_cedula': item3.id_cedula,
+                                                                        'foto': item3.foto,
+                                                                        'equipo': item3.equipo,
+                                                                        'quimico': item3.quimico,
+                                                                        'fecha': item3.fecha,
+                                                                        'comentarios': item3.comentarios,
+                                                                        'fase': item3.fase,
+                                                                        'condiciones_equipo': item3.condiciones_equipo
+                                                                    }                                                                    
+                                                                }
+                                                                console.log('DE-evidencias_equipo_comision',evidencias_equipo);
+                                                                databaseHandler.db.transaction( 
+                                                                    function (tx) {
+                                                                        tx.executeSql("SELECT * FROM  equipo_comision WHERE id_cedula = ?",
+                                                                            [id_cedula],
+                                                                            function (tx, results) {
+                                                                                var length = results.rows.length;
+                                                                                var fecha = new Date();
+                                                                                var fecha_envio = fecha.getFullYear() + "-" + (fecha.getMonth() + 1) + "-" + fecha.getDate() + " " + fecha.getHours() + ":" + fecha.getMinutes() + ":" + fecha.getSeconds();
+                                                                                for (var i = 0; i < length; i++) {
+                                                                                    var item4 = results.rows.item(i);
+                                                                                    equipo_comision[i] = {
+                                                                                        'Valor': i,
+                                                                                        'equipo': item4.equipo,
+                                                                                        'cantidad': item4.cantidad,
+                                                                                        'reporte': item4.reporte
+                                
+                                                                                    };
+                                                                                }
+                                                                                console.log('DE-equipo_comision',equipo_comision);
+                                                                                $.ajax({
+                                                                                    type: "POST",
+                                                                                    async : true,
+                                                                                    url: "http://www.appbennetts.com/FWM2/app/guardarDLInstall.php",
+                                                                                    dataType: 'html',
+                                                                                    data: {'datosCedulaGeneral': JSON.stringify(datosCedulaGeneral),
+                                                                                    'datosentregasDL': JSON.stringify(datosentregasDL),
+                                                                                    'evidencias_equipo': JSON.stringify(evidencias_equipo),
+                                                                                    'equipo_comision': JSON.stringify(equipo_comision)
+                                                                                    },
+                                                                                    success: function(respuesta){
+                                                                                        var respu1 = respuesta.split("._.");
+                                                                                        var dat1 = respu1[0];
+                                                                                        var dat2 = respu1[1];
+                                                                                        if(dat1 == "CEDULA"){
+                                                                                            if(dat2 > 0){
+                                                                                                databaseHandler.db.transaction(
+                                                                                                    function(tx7){
+                                                                                                        tx7.executeSql(
+                                                                                                            "UPDATE cedulas_general SET estatus = 3 WHERE id_cedula = ?",
+                                                                                                            [id_cedula],
+                                                                                                            function(tx7, results){
+                                                                                                                localStorage.setItem("sendFlag", 0);
+                                                                                                                swal("Enviado!", "Ya se envio tu visita!", "success");
+                                                                                                            }
+                                                                                                        );
+                                                                                                    }
+                                                                                                );
+                                                                                            }
+                                                                                        } else {
+                                                                                            AlmacenarError(respuesta);
+                                                                                        }
+                                                                                    },
+                                                                                    error: function(){
+                                                                                        console.log(respuesta);
+                                                                                        console.log("Error en la comunicacion");
+                                                                                    }
+                                                                                });
+
+
+                                                                            },
+                                                                            function(tx, error){
+                                                                                console.log("Error al consultar fotos sanitizacion: " +error.message);
+                                                                            }
+                                                                        );
+                                                                    },
+                                                                    function(error){},
+                                                                    function(){}
+                                                                );
+                                                            },
+                                                            function(tx, error){
+                                                                console.log("Error al consultar fotos sanitizacion: " +error.message);
+                                                            }
+                                                        );
+                                                    },
+                                                    function(error){},
+                                                    function(){}
+                                                );
+
+                                            },
+                                            function(tx, error){
+                                                console.log("Error al consultar fotos sanitizacion: " +error.message);
+                                            }
+                                        );
+                                    },
+                                    function(error){},
+                                    function(){}
+                                );
+                            }else if(tipo =='Mantenimiento'){
+                                databaseHandler.db.transaction( 
+                                    function (tx) {
+                                        tx.executeSql("SELECT * FROM DatosentregasDL WHERE id_cedula = ?",
+                                            [id_cedula],
+                                            function (tx, results) {
+                                                var length = results.rows.length;
+                                                var fecha = new Date();
+                                                var fecha_envio = fecha.getFullYear() + "-" + (fecha.getMonth() + 1) + "-" + fecha.getDate() + " " + fecha.getHours() + ":" + fecha.getMinutes() + ":" + fecha.getSeconds();
+                                                for (var i = 0; i < length; i++) {
+                                                    var item2 = results.rows.item(i);
+                                                    datosentregasDL[i] = {
+                                                        'Valor': i,
+                                                        'foto_inicio': item2.foto_inicio,
+                                                        'id_cliente': item2.id_cliente,
+                                                        'nombre_cliente': item2.nombre_cliente,
+                                                        'nombre_contacto': item2.nombre_contacto,
+                                                        'correo': item2.correo,
+                                                        'telefono': item2.telefono,
+                                                        'id_visita': item2.id_visita,
+                                                        'firma_cliente': item2.firma_cliente,
+                                                        'foto_salida': item2.foto_salida,
+                                                        'hora_entrada': item2.hora_entrada,
+                                                        'hora_salida': item2.hora_salida,
+                                                        'colaborador': item2.colaborador,
+                                                        'direccion': item2.direccion,
+                                                        'ciudad': item2.ciudad,
+                                                        'responsable': item2.responsable,
+                                                        'territorio': item2.territorio,
+                                                        'maquina': item2.maquina,
+                                                        'horario' : item2.horario
+                                                    };                                                    
+                                                }
+                                                console.log('DE-MAN',datosentregasDL);
+                                                databaseHandler.db.transaction( 
+                                                    function (tx) {
+                                                        tx.executeSql("SELECT * FROM evidencias_equipo_comision  WHERE id_cedula = ?",
+                                                            [id_cedula],
+                                                            function (tx, results) {
+                                                                var length = results.rows.length;
+                                                                var fecha = new Date();
+                                                                var fecha_envio = fecha.getFullYear() + "-" + (fecha.getMonth() + 1) + "-" + fecha.getDate() + " " + fecha.getHours() + ":" + fecha.getMinutes() + ":" + fecha.getSeconds();
+                                                                for (var i = 0; i < length; i++) {
+                                                                    var item3 = results.rows.item(i);
+                                                                    evidencias_equipo[i] = {
+                                                                        'Valor': i,
+                                                                        'id_evidencia': item3.id_evidencia,
+                                                                        'id_cedula': item3.id_cedula,
+                                                                        'foto': item3.foto,
+                                                                        'equipo': item3.equipo,
+                                                                        'quimico': item3.quimico,
+                                                                        'fecha': item3.fecha,
+                                                                        'comentarios': item3.comentarios,
+                                                                        'fase': item3.fase,
+                                                                        'condiciones_equipo': item3.condiciones_equipo
+                                                                    }                                                                    
+                                                                }
+                                                                console.log('DE-evidencias_equipo_comision',evidencias_equipo);
+                                                                databaseHandler.db.transaction( 
+                                                                    function (tx) {
+                                                                        tx.executeSql("SELECT * FROM  equipo_comision WHERE id_cedula = ?",
+                                                                            [id_cedula],
+                                                                            function (tx, results) {
+                                                                                var length = results.rows.length;
+                                                                                var fecha = new Date();
+                                                                                var fecha_envio = fecha.getFullYear() + "-" + (fecha.getMonth() + 1) + "-" + fecha.getDate() + " " + fecha.getHours() + ":" + fecha.getMinutes() + ":" + fecha.getSeconds();
+                                                                                for (var i = 0; i < length; i++) {
+                                                                                    var item4 = results.rows.item(i);
+                                                                                    equipo_comision[i] = {
+                                                                                        'Valor': i,
+                                                                                        'equipo': item4.equipo,
+                                                                                        'cantidad': item4.cantidad,
+                                                                                        'reporte': item4.reporte
+                                
+                                                                                    };
+                                                                                }
+                                                                                console.log('DE-equipo_comision',equipo_comision);
+                                                                                databaseHandler.db.transaction( 
+                                                                                    function (tx) {
+                                                                                        tx.executeSql("SELECT * FROM inventario_productos WHERE id_cedula = ?",
+                                                                                            [id_cedula],
+                                                                                            function (tx, results) {
+                                                                                                var length = results.rows.length;
+                                                                                                var fecha = new Date();
+                                                                                                var fecha_envio = fecha.getFullYear() + "-" + (fecha.getMonth() + 1) + "-" + fecha.getDate() + " " + fecha.getHours() + ":" + fecha.getMinutes() + ":" + fecha.getSeconds();
+                                                                                                for (var i = 0; i < length; i++) {
+                                                                                                    var item5 = results.rows.item(i);
+                                                                                                    inventario_producto[i] = {'Valor':i,
+                                                                    
+                                                                                                    'id_producto': item5.id_producto,
+                                                                                                    'id_cedula': item5.id_cedula ,
+                                                                                                    'nombre_producto': item5.nombre_producto, 
+                                                                                                    'presentacion': item5.presentacion, 
+                                                                                                    'existencia_dos': item5.existencia_dos, 
+                                                                                                    'existencia_alm': item5.existencia_alm, 
+                                                                                                    'comentarios': item5.comentarios 
+                                                                                                    
+                                                                                                        };                                                                                                    
+                                                                                                }
+                                                                                                console.log('DE-inventario_producto',inventario_producto);
+                                                                                                databaseHandler.db.transaction( 
+                                                                                                    function (tx) {
+                                                                                                        tx.executeSql("SELECT * FROM dosificadores_lavanderia  WHERE id_cedula = ?",
+                                                                                                            [id_cedula],
+                                                                                                            function (tx, results) {
+                                                                                                                var length = results.rows.length;
+                                                                                                                var fecha = new Date();
+                                                                                                                var fecha_envio = fecha.getFullYear() + "-" + (fecha.getMonth() + 1) + "-" + fecha.getDate() + " " + fecha.getHours() + ":" + fecha.getMinutes() + ":" + fecha.getSeconds();
+                                                                                                                for (var i = 0; i < length; i++) {
+                                                                                                                    var item6 = results.rows.item(i);
+                                                                                                                    dosificadores_lavanderia[i] = {
+                                                                                                                        'Valor': i,
+                                                                                                                        'dureza_agua':  item6.dureza_agua,
+                                                                                                                        'solidos': item6.solidos,
+                                                                                                                        // 'cloro': item6.cloro,
+                                                                                                                        'detergente':item6.detergente,
+                                                                                                                        'secante':item6.secante,
+                                                                                                                        'tempe_agua': item6.tempe_agua,
+                                                                                                                        'lavad_rdio': item6.lavad_rdio,
+                                                                                                                        'temp_prelav': item6.temp_prelav,
+                                                                                                                        'temp_lava': item6.temp_lava,
+                                                                                                                        'temp_enju': item6.temp_enju,
+                                                                                                                        'canastillas': item6.canastillas,
+                                                                                                                        'lav_rdio2': item6.lav_rdio2                                                                
+                                                                                                                    };
+                                                                                                                    
+                                                                                                                }
+                                                                                                                console.log('DE-dosificadores_lavanderia',dosificadores_lavanderia);
+                                                                                                                databaseHandler.db.transaction( 
+                                                                                                                    function (tx) {
+                                                                                                                        tx.executeSql("SELECT * FROM resultados_lavado WHERE id_cedula = ?",
+                                                                                                                            [id_cedula],
+                                                                                                                            function (tx, results) {
+                                                                                                                                var length = results.rows.length;
+                                                                                                                                var fecha = new Date();
+                                                                                                                                var fecha_envio = fecha.getFullYear() + "-" + (fecha.getMonth() + 1) + "-" + fecha.getDate() + " " + fecha.getHours() + ":" + fecha.getMinutes() + ":" + fecha.getSeconds();
+                                                                                                                                for (var i = 0; i < length; i++) {
+                                                                                                                                    var item7 = results.rows.item(i);
+                                                                                                                                    resultados_lavado[i] = {
+                                                                                                                                        'Valor': i,
+                                                                                                                                        'apariencia' : item7.apariencia,
+                                                                                                                                        'rango' : item7.rango,
+                                                                                                                                        'olor' : item7.olor,
+                                                                                                                                        'estatico' : item7.estatico,
+                                                                                                                                        'suavidad' : item7.suavidad,
+                                                                                                                                        'remocion_mancha' : item7.remocion_mancha,
+                                                                                                                                        'hierro' : item7.hierro,
+                                                                                                                                        'cloro' : item7.cloro,
+                                                                                                                                        'pH' : item7.pH,
+                                                                                                                                        'efecto_cebra' : item7.efecto_cebra,
+                                                                                                                                        'efecto_piling' : item7.efecto_piling,
+                                                                                                                                        'temperatura' : item7.temperatura,
+                                                                                                                                        'niveles_agua' : item7.niveles_agua,
+                                                                                                                                        'extraccion' : item7.extraccion,
+                                                                                                                                        'drenajes' : item7.drenajes,
+                                                                                                                                        'rotacion' : item7.rotacion,
+                                                                                                                                        'incrustacion' : item7.incrustacion,
+                                                                                                                                        'manual_auto' : item7.manual_auto,
+                                                                                                                                        'capacidad_lavadora' : item7.capacidad_lavadora,
+                                                                                                                                        'cartulinas_la' : item7.cartulinas_la,
+                                                                                                                                        'formulas_lav' : item7.formulas_lav,
+                                                                                                                                        'clasi_ropa' : item7.clasi_ropa,
+                                                                                                                                        'peso_ropa' : item7.peso_ropa,
+                                                                                                                                        'cargado_agua' : item7.cargado_agua,
+                                                                                                                                        'tiempo_secado' : item7.tiempo_secado,
+                                                                                                                                        'filtro_secadora' : item7.filtro_secadora,
+                                                                                                                                        'manglesitem' : item7.manglesitem,
+                                                                                                                                        'othersitem' : item7.othersitem,
+                                                                                                                                        'pregunta1' : item7.pregunta1,
+                                                                                                                                        'pregunta2' : item7.pregunta2,
+                                                                                                                                        'pregunta3' : item7.pregunta3       
+                                                                                                                                       
+                                                                                
+                                                                                                                                    };
+                                                                                                                                   
+                                                                                                                                }
+                                                                                                                                console.log('DE-resultados_lavado',resultados_lavado);
+                                                                                                                                $.ajax({
+                                                                                                                                    type: "POST",
+                                                                                                                                    async : true,
+                                                                                                                                    url: "http://www.appbennetts.com/FWM2/app/guardarDLbotones.php",
+                                                                                                                                    dataType: 'html',
+                                                                                                                                    data: {'datosCedulaGeneral': JSON.stringify(datosCedulaGeneral),
+                                                                                                                                    'datosentregasDL': JSON.stringify(datosentregasDL),
+                                                                                                                                    'evidencias_equipo': JSON.stringify(evidencias_equipo),
+                                                                                                                                    'equipo_comision': JSON.stringify(equipo_comision),
+                                                                                                                                    'inventario_producto': JSON.stringify(inventario_producto),
+                                                                                                                                    'dosificadores_lavanderia': JSON.stringify(dosificadores_lavanderia),
+                                                                                                                                    'resultados_lavado': JSON.stringify(resultados_lavado)
+
+                                                                                                                                    },
+                                                                                                                                    success: function(respuesta){
+                                                                                                                                        var respu1 = respuesta.split("._.");
+                                                                                                                                        var dat1 = respu1[0];
+                                                                                                                                        var dat2 = respu1[1];
+                                                                                                                                        if(dat1 == "CEDULA"){
+                                                                                                                                            if(dat2 > 0){
+                                                                                                                                                databaseHandler.db.transaction(
+                                                                                                                                                    function(tx7){
+                                                                                                                                                        tx7.executeSql(
+                                                                                                                                                            "UPDATE cedulas_general SET estatus = 3 WHERE id_cedula = ?",
+                                                                                                                                                            [id_cedula],
+                                                                                                                                                            function(tx7, results){
+                                                                                                                                                                localStorage.setItem("sendFlag", 0);
+                                                                                                                                                                swal("Enviado!", "Ya se envio tu visita!", "success");
+                                                                                                                                                            }
+                                                                                                                                                        );
+                                                                                                                                                    }
+                                                                                                                                                );
+                                                                                                                                            }
+                                                                                                                                        } else {
+                                                                                                                                            AlmacenarError(respuesta);
+                                                                                                                                        }
+                                                                                                                                    },
+                                                                                                                                    error: function(){
+                                                                                                                                        console.log(respuesta);
+                                                                                                                                        console.log("Error en la comunicacion");
+                                                                                                                                    }
+                                                                                                                                });
+                                                
+                                                                                                                            },
+                                                                                                                            function(tx, error){
+                                                                                                                                console.log("Error al consultar fotos resultados_lavado: " +error.message);
+                                                                                                                            }
+                                                                                                                        );
+                                                                                                                    },
+                                                                                                                    function(error){},
+                                                                                                                    function(){}
+                                                                                                                ); 
+                                                                                                            },
+                                                                                                            function(tx, error){
+                                                                                                                console.log("Error al consultar fotos sanitizacion: " +error.message);
+                                                                                                            }
+                                                                                                        );
+                                                                                                    },
+                                                                                                    function(error){},
+                                                                                                    function(){}
+                                                                                                );
+                                                                                            },
+                                                                                            function(tx, error){
+                                                                                                console.log("Error al consultar fotos sanitizacion: " +error.message);
+                                                                                            }
+                                                                                        );
+                                                                                    },
+                                                                                    function(error){},
+                                                                                    function(){}
+                                                                                );
+
+
+                                                                            },
+                                                                            function(tx, error){
+                                                                                console.log("Error al consultar fotos sanitizacion: " +error.message);
+                                                                            }
+                                                                        );
+                                                                    },
+                                                                    function(error){},
+                                                                    function(){}
+                                                                );
+                                                            },
+                                                            function(tx, error){
+                                                                console.log("Error al consultar fotos sanitizacion: " +error.message);
+                                                            }
+                                                        );
+                                                    },
+                                                    function(error){},
+                                                    function(){}
+                                                );
+                                            },
+                                            function(tx, error){
+                                                console.log("Error al consultar fotos sanitizacion: " +error.message);
+                                            }
+                                        );
+                                    },
+                                    function(error){},
+                                    function(){}
+                                );
+                            }else if(tipo == "Entregas"){
                                 databaseHandler.db.transaction(
                                     function(tx){
                                         tx.executeSql("SELECT * FROM DatosentregasDL WHERE id_cedula = ?",
@@ -37698,13 +38412,135 @@ function ShowReglas(cliente,cardname,FirstName,MiddleName, LastName, Position, E
                                                                                         'puesto':item2.puesto,
                                                                                         'foto_entrada':item2.foto_entrada,
                                                                                         'fecha_cliente':item2.fecha_cliente,
-                                                                                        'foto_salida':item2.foto_salida
+                                                                                        'foto_salida':item2.foto_salida,
+                                                                                        'firma_cliente':item2.firma_cliente,
+                                                                                        'nombre_puesto':item2.nombre_puesto,
                                                                                     };
-                                                                                }
+                                                                                }console.log(datosCoordinador,"Datos");
                                                                                 $.ajax({
                                                                                     type: "POST",
                                                                                     async : true,
                                                                                     url: "http://www.appbennetts.com/FWM2/app/guardarDIPREClevanta.php",
+                                                                                    dataType: 'html',
+                                                                                    data: {'datosCedulaGeneral': JSON.stringify(datosCedulaGeneral),
+                                                                                        'datos_generales_diprec': JSON.stringify(datosCoordinador),
+                                                                                        'evidencias_diprec': JSON.stringify(zonasCoordinador),
+                                                                                        'checklist_diprec': JSON.stringify(equiposCoordinador)
+                                                                                    },
+                                                                                    success: function(respuesta){
+                                                                                        var respu1 = respuesta.split("._.");
+                                                                                        var dat1 = respu1[0];
+                                                                                        var dat2 = respu1[1];
+                                                                                        if(dat1 == "CEDULA"){
+                                                                                            if(dat2 > 0){
+                                                                                                databaseHandler.db.transaction(
+                                                                                                    function(tx7){
+                                                                                                        tx7.executeSql(
+                                                                                                            "UPDATE cedulas_general SET estatus = 3 WHERE id_cedula = ?",
+                                                                                                            [id_cedula],
+                                                                                                            function(tx7, results){
+                                                                                                                localStorage.setItem("sendFlag", 0);
+                                                                                                                swal("Enviado!", "Ya se envio tu visita!", "success");
+                                                                                                            }
+                                                                                                        );
+                                                                                                    }
+                                                                                                );
+                                                                                            }
+                                                                                        } else {
+                                                                                            //AlmacenarError(respuesta);
+                                                                                        }
+                                                                                    },
+                                                                                    error: function(){
+                                                                                        console.log("Error en la comunicacion");
+                                                                                    }
+                                                                                });
+                                
+                                                                            },
+                                                                            function(tx, error){
+                                                                                console.log("Error al consultar fotos sanitizacion: " +error.message);
+                                                                            }
+                                                                        );
+                                                                    },
+                                                                    function(error){},
+                                                                    function(){}
+                                                                );
+                                                            },
+                                                            function(tx, error){
+                                                                console.log("Error al consultar fotos sanitizacion: " +error.message);
+                                                            }
+                                                        );
+                                                    },
+                                                    function(error){},
+                                                    function(){}
+                                                );
+                                            },
+                                            function(tx, error){
+                                                console.log("Error al consultar fotos sanitizacion: " +error.message);
+                                            }
+                                        );
+                                    },
+                                    function(error){},
+                                    function(){}
+                                );
+                            }
+                            // Enviar datos del tercer recorrido de seguridad e higiene
+                            if(tipo == "checklist_inspeccion" ){
+                                
+                                databaseHandler.db.transaction(
+                                    function(tx){
+                                        tx.executeSql("SELECT * from checklist_seguridad_higiene WHERE id_cedula = ?",
+                                            [id_cedula],
+                                            function(tx, results){
+                                                var length = results.rows.length;
+                                                for(var i = 0; i< length; i++){
+                                                    var item4 = results.rows.item(i);
+                                                    equiposCoordinador[i] = {'Valor':i,
+                                                    'fase': item4.fase,
+                                                    'pregunta': item4.pregunta,
+                                                    'id': item4.id,
+                                                    'valor': item4.valor,
+                                                    'tipo': item4.tipo};
+                                                }console.log(equiposCoordinador,"Checklist");
+                                                databaseHandler.db.transaction(
+                                                    function(tx){
+                                                        tx.executeSql("SELECT * from foto_evidencia_seguridad_higiene WHERE id_cedula = ?",
+                                                            [id_cedula],
+                                                            function(tx, results){
+                                                                var length = results.rows.length;
+                                                                for(var i = 0; i< length; i++){
+                                                                    var item3 = results.rows.item(i);
+                                                                    zonasCoordinador[i] = {'Valor':i,
+                                                                        'comentario': item3.comentario,
+                                                                        'area': item3.area,
+                                                                        'recorrido': item3.recorrido,
+                                                                        'fecha': item3.fecha,
+                                                                        'foto': item3.foto
+                                                                    };
+                                                                }console.log(zonasCoordinador,"Fotos");
+                                                                databaseHandler.db.transaction(
+                                                                    function(tx){
+                                                                        tx.executeSql("SELECT * FROM datos_generales_hse WHERE id_cedula = ?",
+                                                                            [id_cedula],
+                                                                            function(tx, results){
+                                                                                var length = results.rows.length;
+                                                                                for(var i = 0; i< length; i++){
+                                                                                    var item2 = results.rows.item(i);
+                                                                                    datosCoordinador[i] = {'Valor':i,
+                                                                                    'nombre_inspecciona':item2.nombre_inspecciona,
+                                                                                    'tipo_inspeccion': item2.tipo_inspeccion,
+                                                                                    'codigo':item2.codigo,
+                                                                                    'ubicacion':item2.ubicacion,
+                                                                                    'responsable_equipo':item2.responsable_equipo,
+                                                                                    'foto_entrada':item2.foto_entrada,
+                                                                                    'foto_salida':item2.foto_salida,
+                                                                                    'fecha_cliente':item2.fecha_cliente,
+                                                                                    'firma_cliente':item2.firma_cliente,
+                                                                                    };
+                                                                                }console.log(datosCoordinador,"Datos");
+                                                                                $.ajax({
+                                                                                    type: "POST",
+                                                                                    async : true,
+                                                                                    url: "http://www.appbennetts.com/FWM2/app/guardarDiprecInspeccion.php",
                                                                                     dataType: 'html',
                                                                                     data: {'datosCedulaGeneral': JSON.stringify(datosCedulaGeneral),
                                                                                         'datos_generales_diprec': JSON.stringify(datosCoordinador),
@@ -38250,6 +39086,200 @@ function ShowReglas(cliente,cardname,FirstName,MiddleName, LastName, Position, E
                                     function(){}
                                 );
 
+                            }
+
+                        },
+                        function(tx, error){
+                            console.log("Error al consultar datos generales: " + error.message);
+                        }
+                    );
+                },
+                function(error){},
+                function(){}
+            );
+        } else if(empresa == "SURO2"){
+            var datosCedulaGeneral = new Array();
+            var maquinarias = new Array();
+            var consumibles = new Array();
+            var ticket = new Array();
+            var corecciones = new Array();
+            var evidenciaRecorrido = new Array();
+            var Fotos_SURO = new Array();
+            var visita = new Array();
+            var encuesta = new Array();
+            var visitaB = new Array();
+            var seguimiento =new Array();
+
+            var fecha = new Date();
+            var fecha_envio = fecha.getFullYear()+"-"+(fecha.getMonth()+1)+"-"+fecha.getDate()+" "+fecha.getHours()+":"+fecha.getMinutes()+":"+fecha.getSeconds();
+            databaseHandler.db.transaction(
+                function(tx){
+                    tx.executeSql("SELECT * FROM cedulas_general WHERE id_cedula = ?",
+                        [id_cedula],
+                        function(tx, results){
+                            var length = results.rows.length;
+                            for(var i = 0; i< length; i++){
+                                var item = results.rows.item(i);
+                                tipo = item.tipo_cedula;
+                                datosCedulaGeneral[i] = {'Valor':i,'id_cedula':item.id_cedula,'tipo_cedula':item.tipo_cedula,'id_usuario':item.id_usuario,'nombre_usuario':item.nombre_usuario,'fecha_entrada':item.fecha_entrada,'geolocalizacion_entrada': item.geolocalizacion_entrada,'id_cliente': item.id_cliente,'nombre_cliente': item.nombre_cliente,'horario_programado': item.horario_programado,'calificacion': item.calificacion,'fecha_salida':item.fecha_salida,'geolocalizacion_salida':item.geolocalizacion_salida,'nombre_evalua':item.nombre_evalua,'comentario_cliente':item.comentario_cliente,'fecha_envio':fecha_envio};
+                            }
+                            if(tipo == "Maquinaria"){
+                                databaseHandler.db.transaction(
+                                    function(tx){
+                                        tx.executeSql("SELECT * FROM maquinarias WHERE id_cedula = ?",
+                                            [id_cedula],
+                                            function(tx, results){
+                                                var length = results.rows.length;
+                                                var fecha = new Date();
+                                                var fecha_envio = fecha.getFullYear()+"-"+(fecha.getMonth()+1)+"-"+fecha.getDate()+" "+fecha.getHours()+":"+fecha.getMinutes()+":"+fecha.getSeconds();
+                                                for(var i = 0; i< length; i++){
+                                                    var item2 = results.rows.item(i);
+                                                    maquinarias[i] = {
+                                                        'Valor':i,
+                                                        'nombre_recibe':item2.nombre_recibe,
+                                                        'nombre_maquina':item2.nombre_maquina,
+                                                        'no_serie':item2.no_serie,
+                                                        'marca':item2.marca,
+                                                        'modelo':item2.modelo,
+                                                        'propietario':item2.propietario,
+                                                        'propietario_mmto':item2.propietario_mmto,
+                                                        'tipo':item2.tipo,
+                                                        'fecha_maquina':item2.fecha_maquina
+                                                    };
+                                                }
+                                                databaseHandler.db.transaction(
+                                                    function(tx){
+                                                        tx.executeSql("SELECT * from consumibles WHERE id_cedula = ?",
+                                                            [id_cedula],
+                                                            function(tx, results){
+                                                                var length = results.rows.length;
+                                                                for(var i = 0; i< length; i++){
+                                                                    var item3 = results.rows.item(i);
+                                                                    consumibles[i] = {
+                                                                        'Valor':i,
+                                                                        'nombre_maquina': item3.nombre_maquina,
+                                                                        'modelo_maquina': item3.modelo_maquina,
+                                                                        'consumible': item3.consumible
+                                                                    };
+                                                                }
+                                                                databaseHandler.db.transaction(
+                                                                    function(tx){
+                                                                        tx.executeSql("SELECT * from ticket WHERE id_cedula = ?",
+                                                                            [id_cedula],
+                                                                            function(tx, results){
+                                                                                var length = results.rows.length;
+                                                                                for(var i = 0; i< length; i++){
+                                                                                    var item3 = results.rows.item(i);
+                                                                                    ticket[i] = {
+                                                                                        'Valor':i,
+                                                                                        'id_usuario': item3.id_usuario,
+                                                                                        'nombre_maquina': item3.nombre_maquina,
+                                                                                        'no_serie': item3.no_serie,
+                                                                                        'folio': item3.folio,
+                                                                                        'comentarios': item3.comentarios,
+                                                                                        'tipo_ticket': item3.tipo_ticket,
+                                                                                        'id_ticket': item3.id_ticket,
+                                                                                        'foto_ticke': item3.foto_ticke,
+                                                                                        'fecha_registro': item3.fecha_registro
+                                                                                    };
+                                                                                }
+                                                                                databaseHandler.db.transaction(
+                                                                                    function(tx){
+                                                                                        tx.executeSql("SELECT *  from corecciones WHERE id_cedula = ?",
+                                                                                            [id_cedula],
+                                                                                            function(tx, results){
+                                                                                                var length = results.rows.length;
+                                                                                                for(var i = 0; i< length; i++){
+                                                                                                    var item3 = results.rows.item(i);
+                                                                                                    corecciones[i] = {
+                                                                                                        'Valor':i,
+                                                                                                        'accion': item3.accion,
+                                                                                                        'estatus': item3.estatus,
+                                                                                                        'id_ticket': item3.id_ticket,
+                                                                                                        'fecha': item3.fecha,
+                                                                                                        'folio_mmto': item3.folio_mmto,
+                                                                                                        'nombre_entrega': item3.nombre_entrega,
+                                                                                                        'consumibles': item3.consumibles,
+                                                                                                        'costo_reparacion': item3.costo_reparacion,
+                                                                                                        'recomendaciones': item3.recomendaciones,
+                                                                                                    };
+                                                                                                }
+                                                                                                $.ajax({
+                                                                                                    type: "POST",
+                                                                                                    async : true,
+                                                                                                    url: "http://www.appbennetts.com/FWM2/app/guardarMaquinariaSURO2.php",
+                                                                                                    dataType: 'html',
+                                                                                                    data: {
+                                                                                                        'datosCedulaGeneral': JSON.stringify(datosCedulaGeneral),
+                                                                                                        'maquinarias': JSON.stringify(maquinarias),
+                                                                                                        'consumibles': JSON.stringify(consumibles),
+                                                                                                        'ticket': JSON.stringify(ticket),
+                                                                                                        'corecciones': JSON.stringify(corecciones)
+                                                                                                    },
+                                                                                                    success: function(respuesta){
+                                                                                                        var respu1 = respuesta.split("._.");
+                                                                                                        var dat1 = respu1[0];
+                                                                                                        var dat2 = respu1[1];
+                                                                                                        if(dat1 == "CEDULA"){
+                                                                                                            if(dat2 > 0){
+                                                                                                                databaseHandler.db.transaction(
+                                                                                                                    function(tx7){
+                                                                                                                        tx7.executeSql(
+                                                                                                                            "UPDATE cedulas_general SET estatus = 3 WHERE id_cedula = ?",
+                                                                                                                            [id_cedula],
+                                                                                                                            function(tx7, results){
+                                                                                                                                localStorage.setItem("sendFlag", 0);
+                                                                                                                                swal("Enviado!", "Ya se envio tu visita!", "success");
+                                                                                                                            }
+                                                                                                                        );
+                                                                                                                    }
+                                                                                                                );
+                                                                                                            }
+                                                                                                        } else {
+                                                                                                            AlmacenarError(respuesta);
+                                                                                                        }
+                                                                                                    },
+                                                                                                    error: function(xhr, status, error) {
+                                                                                                        var err = eval("(" + xhr.responseText + ")");
+                                                                                                        AlmacenarError("Error en el envio desde la app:" + err.Message);
+                                                                                                    }
+                                                                                                });
+                                                                                            },
+                                                                                            function(tx, error){
+                                                                                                console.log("Error al consultar fotos sanitizacion: " +error.message);
+                                                                                            }
+                                                                                        );
+                                                                                    },
+                                                                                    function(error){},
+                                                                                    function(){}
+                                                                                );
+                                                                            },
+                                                                            function(tx, error){
+                                                                                console.log("Error al consultar fotos sanitizacion: " +error.message);
+                                                                            }
+                                                                        );
+                                                                    },
+                                                                    function(error){},
+                                                                    function(){}
+                                                                );
+                                                            },
+                                                            function(tx, error){
+                                                                console.log("Error al consultar fotos sanitizacion: " +error.message);
+                                                            }
+                                                        );
+                                                    },
+                                                    function(error){},
+                                                    function(){}
+                                                );
+                                            },
+                                            function(tx, error){
+                                                console.log("Error al consultar sanitizacion: " + error.message);
+                                            }
+                                        );
+                                    },
+                                    function(error){},
+                                    function(){}
+                                );
                             }
 
                         },
@@ -40669,7 +41699,7 @@ function ShowReglas(cliente,cardname,FirstName,MiddleName, LastName, Position, E
                                                                                 $.ajax({
                                                                                     type: "POST",
                                                                                     async : true,
-                                                                                    url: "https://www.fwm.com.mx/app/guardarCobranzaBennetts2.php",
+                                                                                    url: "https://www.fwm.com.mx/app/guardarCobranzaBennetts2-1.php",
                                                                                     dataType: 'html',
                                                                                     data: {'datosCedulaGeneral': JSON.stringify(datosCedulaGeneral),
                                                                                     'cobranza': JSON.stringify(cobranza),
@@ -44891,7 +45921,7 @@ function ShowReglas(cliente,cardname,FirstName,MiddleName, LastName, Position, E
         var horario_programado = fecha_llegada;
         var foto_llegada = $("#imagenC").val();
         var nombre_cliente = $("#cliente-Field").val();
-        var encargado = 'encargado test';
+        var encargado = '';
         var turno = 'Vespertino';
         var estatus = 0;
         if(foto_llegada != ''){
@@ -44929,6 +45959,81 @@ function ShowReglas(cliente,cardname,FirstName,MiddleName, LastName, Position, E
             app.preloader.hide();
         }
     }
+    function generarEntregaTurnoSURO2(){
+        let id_cedula = localStorage.getItem("IdCedula");
+        let nombre_cliente = localStorage.getItem("nombreCliente");
+        let foto_llegada = localStorage.getItem("foto_llegada");
+        let encargado = localStorage.getItem("encargado");
+        let turno = localStorage.getItem("turno");
+        let tipoCedula = "EntregaTurno";
+        localStorage.setItem("Opcion", '4');
+        databaseHandler.db.transaction(
+            function(tx){
+                tx.executeSql("UPDATE cedulas_general SET tipo_cedula = ? WHERE id_cedula = ?",
+                    [tipoCedula,id_cedula],
+                    function(tx, results){
+                        productHandler.addMaquinariaSuro2(id_cedula,foto_llegada,nombre_cliente,encargado,turno);
+                        app.views.main.router.back('/recorridoSUROE4/', {force: true, ignoreCache: true, reload: true});
+                    },
+                    function(tx, error){
+                        console.error("Error al actualizar el tipo de cedula: " + error.message);
+                    }
+                );
+            },
+            function(error){},
+            function(){}
+        );
+    }
+    function generarProgramaLimpiezaSURO2(){
+        let id_cedula = localStorage.getItem("IdCedula");
+        let nombre_cliente = localStorage.getItem("nombreCliente");
+        let foto_llegada = localStorage.getItem("foto_llegada");
+        let encargado = localStorage.getItem("encargado");
+        let turno = localStorage.getItem("turno");
+        let tipoCedula = "ProgramaLimpieza";
+        localStorage.setItem("Opcion", '5');
+        databaseHandler.db.transaction(
+            function(tx){
+                tx.executeSql("UPDATE cedulas_general SET tipo_cedula = ? WHERE id_cedula = ?",
+                    [tipoCedula,id_cedula],
+                    function(tx, results){
+                        productHandler.addMaquinariaSuro2(id_cedula,foto_llegada,nombre_cliente,encargado,turno);
+                        app.views.main.router.back('/recorridoSUROE5/', {force: true, ignoreCache: true, reload: true});
+                    },
+                    function(tx, error){
+                        console.error("Error al actualizar el tipo de cedula: " + error.message);
+                    }
+                );
+            },
+            function(error){},
+            function(){}
+        );
+    }
+    function generarLimpiezaSURO2(){
+        let id_cedula = localStorage.getItem("IdCedula");
+        let nombre_cliente = localStorage.getItem("nombreCliente");
+        let foto_llegada = localStorage.getItem("foto_llegada");
+        let encargado = localStorage.getItem("encargado");
+        let turno = localStorage.getItem("turno");
+        let tipoCedula = "LimpiezaCorrec";
+        localStorage.setItem("Opcion", '5');
+        databaseHandler.db.transaction(
+            function(tx){
+                tx.executeSql("UPDATE cedulas_general SET tipo_cedula = ? WHERE id_cedula = ?",
+                    [tipoCedula,id_cedula],
+                    function(tx, results){
+                        productHandler.addMaquinariaSuro2(id_cedula,foto_llegada,nombre_cliente,encargado,turno);
+                        app.views.main.router.back('/recorridoSUROE7/', {force: true, ignoreCache: true, reload: true});
+                    },
+                    function(tx, error){
+                        console.error("Error al actualizar el tipo de cedula: " + error.message);
+                    }
+                );
+            },
+            function(error){},
+            function(){}
+        );
+    }
     function generarMaquinariasSURO2(){
         let id_cedula = localStorage.getItem("IdCedula");
         let nombre_cliente = localStorage.getItem("nombreCliente");
@@ -44936,6 +46041,7 @@ function ShowReglas(cliente,cardname,FirstName,MiddleName, LastName, Position, E
         let encargado = localStorage.getItem("encargado");
         let turno = localStorage.getItem("turno");
         let tipoCedula = "Maquinaria";
+        localStorage.setItem("Opcion", '1');
         databaseHandler.db.transaction(
             function(tx){
                 tx.executeSql("UPDATE cedulas_general SET tipo_cedula = ? WHERE id_cedula = ?",
@@ -44960,6 +46066,7 @@ function ShowReglas(cliente,cardname,FirstName,MiddleName, LastName, Position, E
         let encargado = localStorage.getItem("encargado");
         let turno = localStorage.getItem("turno");
         let tipoCedula = "Materiales";
+        localStorage.setItem("Opcion", '2');
         databaseHandler.db.transaction(
             function(tx){
                 tx.executeSql("UPDATE cedulas_general SET tipo_cedula = ? WHERE id_cedula = ?",
@@ -44984,6 +46091,7 @@ function ShowReglas(cliente,cardname,FirstName,MiddleName, LastName, Position, E
         let encargado = localStorage.getItem("encargado");
         let turno = localStorage.getItem("turno");
         let tipoCedula = "Sitio";
+        localStorage.setItem("Opcion", '3');
         databaseHandler.db.transaction(
             function(tx){
                 tx.executeSql("UPDATE cedulas_general SET tipo_cedula = ? WHERE id_cedula = ?",
@@ -44994,6 +46102,65 @@ function ShowReglas(cliente,cardname,FirstName,MiddleName, LastName, Position, E
                     },
                     function(tx, error){
                         console.error("Error al actualizar el tipo de cedula: " + error.message);
+                    }
+                );
+            },
+            function(error){},
+            function(){}
+        );
+    }
+    function guardarEntregaTurnoSuro2(){
+        let id_cedula = localStorage.getItem("IdCedula");
+        var supervisor_entrega = $("#supervisor_entrega").val();
+        var cards_asign = $("#cards_asign").val();
+        var cards_dejan = $("#cards_dejan").val();
+        var t_rutinas = $("#t_rutinas").val();
+        var tarjetas_acceso = $("#tarjetas_acceso").val();
+        var radios_asign = $("#radios_asign").val();
+        var radios_dejan = $("#radios_dejan").val();
+        var cel_cargador = $("#cel_cargador").val();
+        var herramientas_asign = $("#herramientas_asign").val();
+        var herramientas_dejan = $("#herramientas_dejan").val();
+        var activi_pendi = $("#activi_pendi").val();
+
+        databaseHandler.db.transaction(
+            function (tx) {
+                console.log("sep");
+                tx.executeSql("select count(*) as Cant from entrega_turno where id_cedula = ?",
+                    [id_cedula],
+                    function(tx,results){
+                        console.log("inserthast aqui llgo",results);
+                        var item = results.rows.item(0);
+                        if(item.Cant == 0){
+                            console.log("inserto");
+                            tx.executeSql("insert into entrega_turno(nombre_entrega,cleaning_asign,cleaning_dejan,t_rutinas,no_tarjetas_acces_dejan,radios_asign,radios_dejan,cel_cargador,herraminetas_asign,herramientas_dejan,activi_pendi,id_cedula) values(?,?,?,?,?,?,?,?,?,?,?,?)",
+                                [supervisor_entrega,cards_asign,cards_dejan,t_rutinas,tarjetas_acceso,radios_asign,radios_dejan,cel_cargador,herramientas_asign,herramientas_dejan,activi_pendi,id_cedula],
+                                function(tx,result){
+                                    swal("", "Se guardaron los datos correctamente", "success");
+                                },
+                                function(tx, error){
+                                    console.error("Error al actualizar el tipo de cedula: " + error.message);
+                                }
+                            );
+                        
+                        }else{
+                            console.log("actualizo");
+                            
+                            tx.executeSql("update entrega_turno  set nombre_entrega = ?, cleaning_asign = ?, cleaning_dejan = ?, t_rutinas = ?, no_tarjetas_acces_dejan = ?, radios_asign = ?, radios_dejan = ?, cel_cargador = ?, herraminetas_asign = ?, herramientas_dejan = ?, activi_pendi = ? where id_cedula = ?",
+                                [supervisor_entrega,cards_asign,cards_dejan,t_rutinas,tarjetas_acceso,radios_asign,radios_dejan,cel_cargador,herramientas_asign,herramientas_dejan,activi_pendi,id_cedula],
+                                function(tx,result){
+                                    swal("", "Se actualizaron los datos correctamente", "success");
+                                },
+                                function(tx, error){
+                                    console.error("Error al actualizar el tipo de cedula: " + error.message);
+                                }
+                            );
+                               
+                        }
+                    },
+                    function (tx, error) {
+                        swal("Error al guardar", error.message, "error");
+                        app.preloader.hide();
                     }
                 );
             },
@@ -45013,7 +46180,7 @@ function ShowReglas(cliente,cardname,FirstName,MiddleName, LastName, Position, E
                         swal("", "Se guardaron los datos correctamente", "success");
                     },
                     function(tx, error){
-                        console.error("Error al actualizar el tipo de cedula: " + error.message);
+                        console.error("Error al guardar los datos: " + error.message);
                     }
                 );
             },
@@ -45039,7 +46206,7 @@ function ShowReglas(cliente,cardname,FirstName,MiddleName, LastName, Position, E
                     "Insert into maquinarias(id_cedula,sitio,nombre_recibe,nombre_maquina,no_serie,marca,modelo,propietario,propietario_mmto,tipo,fecha_maquina) values(?,?,?,?,?,?,?,?,?,?,?)",
                     [id_cedula,sitio,nombre_recibe,nombre_maquina,no_serie,marca,modelo,propietario,propietario_mmto,tipo,fecha_maquina],
                     function (tx, results) {
-                        swal("", "Se guardaron los datos correctamente", "success");
+                        swal("", "Se guardaron los datos correctamente", "success"); 
                         databaseHandler.db.transaction(
                             function(tx){
                                 tx.executeSql("Select * from maquinarias where id_cedula = ? ORDER BY id_maquina DESC",
@@ -45065,13 +46232,13 @@ function ShowReglas(cliente,cardname,FirstName,MiddleName, LastName, Position, E
                                         $("#propietario_mmto").val(0);
                                         $("#tipo").val('');
                                         var item = results.rows.item(0);
-                                        $("#tabla_registros").append("<tr id='fila"+
-                                            item.id_maquina +"'><td class='FWM-table-options'><a href='#' onclick='eliminarFilaSURO2("+
+                                        $("#tabla_registros").append("<tr id='fila"+ 
+                                            item.id_maquina +"'><td class='FWM-table-options'><a href='#' onclick='eliminarFilaSURO2("+ 
                                             item.id_maquina +",1);' style='border: none; outline:none;'><img src='img/borrar.png' width='30px' style='margin-top:10%' /></a></td><td>"+
-                                            item.sitio+"</td><td style='text-align: center;'>" +unescape(item.nombre_recibe) + "</td><td style='text-align: center;'>" +
-                                            unescape(item.nombre_maquina) + "</td><td style='text-align: center;'>" + item.no_serie + "</td><td style='text-align: center;'>" +
-                                            item.marca + "</td><td style='text-align: center;'>" + item.modelo + "</td><td style='text-align: center;'>" +
-                                            item.propietario + "</td><td style='text-align: center;'>" + item.propietario_mmto + "</td><td style='text-align: center;'>" +
+                                            item.sitio+"</td><td style='text-align: center;'>" +unescape(item.nombre_recibe) + "</td><td style='text-align: center;'>" + 
+                                            unescape(item.nombre_maquina) + "</td><td style='text-align: center;'>" + item.no_serie + "</td><td style='text-align: center;'>" + 
+                                            item.marca + "</td><td style='text-align: center;'>" + item.modelo + "</td><td style='text-align: center;'>" + 
+                                            item.propietario + "</td><td style='text-align: center;'>" + item.propietario_mmto + "</td><td style='text-align: center;'>" + 
                                             item.tipo + "</td><td style='text-align: center;'>" + item.fecha_maquina + "</td></tr>"
                                         );
                                     },
@@ -45082,7 +46249,7 @@ function ShowReglas(cliente,cardname,FirstName,MiddleName, LastName, Position, E
                             },
                             function(error){},
                             function(){}
-                        );
+                        );  
                     },
                     function (tx, error) {
                         console.error("Error al registrar: " + error.message);
@@ -45091,6 +46258,70 @@ function ShowReglas(cliente,cardname,FirstName,MiddleName, LastName, Position, E
             },
             function (error) { },
             function () { }
+        );
+    }
+    function BajamaquinaSuro(){
+        swal("", "Se guardaron los datos correctamente", "success");
+    }
+    function saveChecklistSuro(){
+        var id_cedula = localStorage.getItem("IdCedula");
+        let disponible = "";
+        let capacitacion = "";
+        $("input:checkbox[name='disponible[]']:checked").each(function () {
+            insertCheckList(this.value)
+
+            disponible += this.value + ',';
+        });
+    }
+    function insertCheckList(value){
+        var id_cedula = localStorage.getItem("IdCedula");
+        var fecha = new Date();
+        var fecha = fecha.getFullYear()+"-"+(fecha.getMonth()+1)+"-"+fecha.getDate();
+        
+        databaseHandler.db.transaction(
+            function (tx) {
+                tx.executeSql("select *  from checklist where id_cedula = ? and nombre_material = ? and fecha = ?",
+                    [id_cedula,value,fecha],
+                    function(tx,results){
+                        var item = results.rows.item(0);
+                        var sitio = 'Corporativo liverpool';
+                        var encargado = 'Arturo';
+                        var disponible = '1';
+                        if(!item){
+                            console.log("inserto");
+                            tx.executeSql("insert into checklist(id_cedula,nombre_material,fecha, sitio, encargado, disponible) values(?,?,?,?,?,?)",
+                                [id_cedula,value,fecha,sitio,encargado,disponible],
+                                function(tx,result){
+                                    swal("", "Se guardaron los datos correctamente", "success");
+                                },
+                                function(tx, error){
+                                    console.error("Error al actualizar el tipo de cedula: " + error.message);
+                                }
+                            );
+                        
+                        }else{
+                            console.log("actualizo");
+                            
+                            /*tx.executeSql("update entrega_turno  set nombre_entrega = ?, cleaning_asign = ?, cleaning_dejan = ?, t_rutinas = ?, no_tarjetas_acces_dejan = ?, radios_asign = ?, radios_dejan = ?, cel_cargador = ?, herraminetas_asign = ?, herramientas_dejan = ?, activi_pendi = ? where id_cedula = ?",
+                                [supervisor_entrega,cards_asign,cards_dejan,t_rutinas,tarjetas_acceso,radios_asign,radios_dejan,cel_cargador,herramientas_asign,herramientas_dejan,activi_pendi,id_cedula],
+                                function(tx,result){
+                                    swal("", "Se actualizaron los datos correctamente", "success");
+                                },
+                                function(tx, error){
+                                    console.error("Error al actualizar el tipo de cedula: " + error.message);
+                                }
+                            );*/
+                               
+                        }
+                    },
+                    function (tx, error) {
+                        swal("Error al guardar", error.message, "error");
+                        app.preloader.hide();
+                    }
+                );
+            },
+            function(error){},
+            function(){}
         );
     }
     function guardarFallaSuro2(){
@@ -45111,7 +46342,7 @@ function ShowReglas(cliente,cardname,FirstName,MiddleName, LastName, Position, E
                     "Insert into corecciones(id_cedula,accion,estatus,id_ticket,fecha,folio_mmto,nombre_entrega,consumibles,costo_reparacion,recomendaciones) values(?,?,?,?,?,?,?,?,?,?)",
                     [id_cedula,accion,estatus,id_ticket,fecha,folio_mmto,nombre_entrega,consumibles,costo_reparacion,recomendaciones],
                     function (tx, results) {
-                        swal("", "Se guardaron los datos correctamente", "success");
+                        swal("", "Se guardaron los datos correctamente", "success"); 
                         databaseHandler.db.transaction(
                             function(tx){
                                 tx.executeSql("Select * from corecciones where id_cedula = ? ORDER BY id_coreccion DESC",
@@ -45137,13 +46368,13 @@ function ShowReglas(cliente,cardname,FirstName,MiddleName, LastName, Position, E
                                         $("#costo_reparacion").val('');
                                         $("#recomendaciones").val('');
                                         var item = results.rows.item(0);
-                                        $("#tabla_registros").append("<tr id='fila"+
-                                            item.id_coreccion +"'><td class='FWM-table-options'><a href='#' onclick='eliminarFilaSURO2("+
+                                        $("#tabla_registros").append("<tr id='fila"+ 
+                                            item.id_coreccion +"'><td class='FWM-table-options'><a href='#' onclick='eliminarFilaSURO2("+ 
                                             item.id_coreccion +",4);' style='border: none; outline:none;'><img src='img/borrar.png' width='30px' style='margin-top:10%' /></a></td><td>"+
-                                            item.accion+"</td><td style='text-align: center;'>" +unescape(item.estatus) + "</td><td style='text-align: center;'>" +
-                                            unescape(item.id_ticket) + "</td><td style='text-align: center;'>" + item.fecha + "</td><td style='text-align: center;'>" +
-                                            item.folio_mmto + "</td><td style='text-align: center;'>" + item.nombre_entrega + "</td><td style='text-align: center;'>" +
-                                            item.consumibles + "</td><td style='text-align: center;'>" + item.costo_reparacion + "</td><td style='text-align: center;'>" +
+                                            item.accion+"</td><td style='text-align: center;'>" +unescape(item.estatus) + "</td><td style='text-align: center;'>" + 
+                                            unescape(item.id_ticket) + "</td><td style='text-align: center;'>" + item.fecha + "</td><td style='text-align: center;'>" + 
+                                            item.folio_mmto + "</td><td style='text-align: center;'>" + item.nombre_entrega + "</td><td style='text-align: center;'>" + 
+                                            item.consumibles + "</td><td style='text-align: center;'>" + item.costo_reparacion + "</td><td style='text-align: center;'>" + 
                                             item.recomendaciones + "</td></tr>"
                                         );
                                     },
@@ -45154,7 +46385,7 @@ function ShowReglas(cliente,cardname,FirstName,MiddleName, LastName, Position, E
                             },
                             function(error){},
                             function(){}
-                        );
+                        );  
                     },
                     function (tx, error) {
                         console.error("Error al registrar: " + error.message);
@@ -45182,7 +46413,7 @@ function ShowReglas(cliente,cardname,FirstName,MiddleName, LastName, Position, E
                     "Insert into listado_material(id_cedula,nombre_sitio,sucursal,nombre_comercial,sitio,presupuesto,direccion,nombre_contacto,telefono_contacto,correo_contacto) values(?,?,?,?,?,?,?,?,?,?)",
                     [id_cedula,nombre_sitio,sucursal,nombre_comercial,sitio,presupuesto,direccion,nombre_contacto,telefono_contacto,correo_contacto],
                     function (tx, results) {
-                        swal("", "Se guardaron los datos correctamente", "success");
+                        swal("", "Se guardaron los datos correctamente", "success"); 
                         databaseHandler.db.transaction(
                             function(tx){
                                 tx.executeSql("Select * from listado_material where id_cedula = ? ORDER BY id_entrada DESC",
@@ -45208,13 +46439,13 @@ function ShowReglas(cliente,cardname,FirstName,MiddleName, LastName, Position, E
                                         $("#telefono_contacto").val('');
                                         $("#correo_contacto").val('');
                                         var item = results.rows.item(0);
-                                        $("#tabla_registros").append("<tr id='fila"+
-                                            item.id_entrada +"'><td class='FWM-table-options'><a href='#' onclick='eliminarFilaSURO2("+
+                                        $("#tabla_registros").append("<tr id='fila"+ 
+                                            item.id_entrada +"'><td class='FWM-table-options'><a href='#' onclick='eliminarFilaSURO2("+ 
                                             item.id_entrada +",8);' style='border: none; outline:none;'><img src='img/borrar.png' width='30px' style='margin-top:10%' /></a></td><td>"+
-                                            item.nombre_sitio+"</td><td style='text-align: center;'>" +unescape(item.sucursal) + "</td><td style='text-align: center;'>" +
-                                            unescape(item.nombre_comercial) + "</td><td style='text-align: center;'>" + item.sitio + "</td><td style='text-align: center;'>" +
-                                            item.presupuesto + "</td><td style='text-align: center;'>" + item.direccion + "</td><td style='text-align: center;'>" +
-                                            item.nombre_contacto + "</td><td style='text-align: center;'>" + item.telefono_contacto + "</td><td style='text-align: center;'>" +
+                                            item.nombre_sitio+"</td><td style='text-align: center;'>" +unescape(item.sucursal) + "</td><td style='text-align: center;'>" + 
+                                            unescape(item.nombre_comercial) + "</td><td style='text-align: center;'>" + item.sitio + "</td><td style='text-align: center;'>" + 
+                                            item.presupuesto + "</td><td style='text-align: center;'>" + item.direccion + "</td><td style='text-align: center;'>" + 
+                                            item.nombre_contacto + "</td><td style='text-align: center;'>" + item.telefono_contacto + "</td><td style='text-align: center;'>" + 
                                             item.correo_contacto + "</td></tr>"
                                         );
                                     },
@@ -45225,7 +46456,7 @@ function ShowReglas(cliente,cardname,FirstName,MiddleName, LastName, Position, E
                             },
                             function(error){},
                             function(){}
-                        );
+                        );  
                     },
                     function (tx, error) {
                         console.error("Error al registrar: " + error.message);
@@ -45254,7 +46485,7 @@ function ShowReglas(cliente,cardname,FirstName,MiddleName, LastName, Position, E
                     "Insert into ticket(id_cedula,id_usuario,nombre_maquina,no_serie,folio,comentarios,tipo_ticket,id_ticket,foto_ticket,fecha_registro) values(?,?,?,?,?,?,?,?,?,?)",
                     [id_cedula,id_usuario,nombre_maquina,no_serie,folio,comentarios,tipo_ticket,id_ticket,foto,fecha_registro],
                     function (tx, results) {
-                        swal("", "Se guardaron los datos correctamente", "success");
+                        swal("", "Se guardaron los datos correctamente", "success"); 
                         databaseHandler.db.transaction(
                             function(tx){
                                 tx.executeSql("Select * from ticket where id_cedula = ? ORDER BY id_tickets DESC",
@@ -45279,13 +46510,12 @@ function ShowReglas(cliente,cardname,FirstName,MiddleName, LastName, Position, E
                                         $("#smallImage").attr("src","img/blank.png");
                                         $("#photoIcon").attr("src","img/camera.svg");
                                         var item = results.rows.item(0);
-                                        $("#tabla_registros").append("<tr id='fila"+
-                                            item.id_tickets +"'><td class='FWM-table-options'><a href='#' onclick='eliminarFilaSURO2("+
+                                        $("#tabla_registros").append("<tr id='fila"+ 
+                                            item.id_tickets +"'><td class='FWM-table-options'><a href='#' onclick='eliminarFilaSURO2("+ 
                                             item.id_tickets +",3);' style='border: none; outline:none;'><img src='img/borrar.png' width='30px' style='margin-top:10%' /></a></td><td><img src='"+
-                                            item.foto_ticket+"' width='60px' style='margin-top: 4px;'/></td><td>"+
-                                            item.id_usuario+"</td><td style='text-align: center;'>" +unescape(item.nombre_maquina) + "</td><td style='text-align: center;'>" +
-                                            unescape(item.no_serie) + "</td><td style='text-align: center;'>" + item.folio + "</td><td style='text-align: center;'>" +
-                                            item.comentarios + "</td><td style='text-align: center;'>" + item.tipo_ticket + "</td><td style='text-align: center;'>" +
+                                            item.foto_ticket+"' width='60px' style='margin-top: 4px;'/></td><td style='text-align: center;'>" +unescape(item.nombre_maquina) + "</td><td style='text-align: center;'>" + 
+                                            unescape(item.no_serie) + "</td><td style='text-align: center;'>" + item.folio + "</td><td style='text-align: center;'>" + 
+                                            item.comentarios + "</td><td style='text-align: center;'>" + item.tipo_ticket + "</td><td style='text-align: center;'>" + 
                                             item.id_ticket + "</td><td style='text-align: center;'>" + item.fecha_registro + "</td></tr>"
                                         );
                                     },
@@ -45296,7 +46526,170 @@ function ShowReglas(cliente,cardname,FirstName,MiddleName, LastName, Position, E
                             },
                             function(error){},
                             function(){}
-                        );
+                        );  
+                    },
+                    function (tx, error) {
+                        console.error("Error al registrar: " + error.message);
+                    }
+                );
+            },
+            function (error) { },
+            function () { }
+        );
+    }
+    function guardarListadoMaterialSURO2(){
+        var id_cedula = localStorage.getItem("IdCedula");
+        var nombre_material = $("#nombre_material").val();
+        var cod_material = $("#cod_material").val();
+        var fecha_alta = $("#fecha_alta").val();
+        var sitio = $("#sitio").val();
+        var inventario_sitio = $("#inventario_sitio").val();
+        var supervisor_alta = $("#supervisor_alta").val();
+        var precio = $("#precio").val();
+        var fecha = new Date();
+        var fecha_registro = fecha.getFullYear()+"-"+(fecha.getMonth()+1)+"-"+fecha.getDate()+" "+fecha.getHours()+":"+fecha.getMinutes()+":"+fecha.getSeconds();
+        databaseHandler.db.transaction(
+            function (tx) {
+                tx.executeSql(
+                    "Insert into listado_material(id_cedula,nombre_material, codigo_material, fecha_alta, sitio, inventario_sitio, supervisor_alta, precio) values(?,?,?,?,?,?,?,?)",
+                    [id_cedula,nombre_material,cod_material,fecha_alta,sitio,inventario_sitio,supervisor_alta,precio],
+                    function (tx, results) {
+                        swal("", "Se guardaron los datos correctamente", "success"); 
+                        databaseHandler.db.transaction(
+                            function(tx){
+                                tx.executeSql("Select * from listado_material where id_cedula = ? ORDER BY id_entrada DESC",
+                                [id_cedula],
+                                    function(tx, results){
+                                        $("#message-nr").css("display","none");
+                                        $("#nombre_material").css("background-color","#fff");
+                                        $("#cod_material").css("background-color","#fff");
+                                        $("#fecha_alta").css("background-color","#fff");
+                                        $("#sitio").css("background-color","#fff");
+                                        $("#inventario_sitio").css("background-color","#fff");
+                                        $("#supervisor_alta").css("background-color","#fff");
+                                        $("#precio").css("background-color","#fff");
+                                        var item = results.rows.item(0);
+                                        $("#tabla_registros").append("<tr id='fila"+ 
+                                            item.id_entrada +"'><td class='FWM-table-options'><a href='#' onclick='eliminarFilaSURO2("+ 
+                                            item.id_entrada +",8);' style='border: none; outline:none;'><img src='img/borrar.png' width='30px' style='margin-top:10%' /></a></td><td>"+
+                                            item.nombre_material+"</td><td>"+
+                                            item.codigo_material+"</td><td style='text-align: center;'>" +unescape(item.fecha_alta) + "</td><td style='text-align: center;'>" + 
+                                            item.sitio + "</td><td style='text-align: center;'>" + item.inventario_sitio + "</td><td style='text-align: center;'>" + 
+                                            item.supervisor_alta + "</td><td style='text-align: center;'>" + item.precio + "</td></tr>"
+                                        );
+                                    },
+                                    function(tx, error){
+                                        console.log("Error al guardar cedula: " + error.message);
+                                    }
+                                );
+                            },
+                            function(error){},
+                            function(){}
+                        );  
+                    },
+                    function (tx, error) {
+                        console.error("Error al registrar: " + error.message);
+                    }
+                );
+            },
+            function (error) { },
+            function () { }
+        );
+    }
+    function guardarSolidMaterialSURO2(){
+        var id_cedula = localStorage.getItem("IdCedula");
+        var sitio = $("#sitio").val();
+        var quiem_solicita = $("#quiem_solicita").val();
+        var codigo_material = $("#codigo_material").val();
+        var cantidad_solicitada = $("#cantidad_solicitada").val();
+        var fecha = new Date();
+        var fecha_registro = fecha.getFullYear()+"-"+(fecha.getMonth()+1)+"-"+fecha.getDate()+" "+fecha.getHours()+":"+fecha.getMinutes()+":"+fecha.getSeconds();
+        databaseHandler.db.transaction(
+            function (tx) {
+                tx.executeSql(
+                    "Insert into solicitud_material(id_cedula,sitio, quiem_solicita, codigo_material, cantidad_solicitada) values(?,?,?,?,?)",
+                    [id_cedula,sitio, quiem_solicita, codigo_material, cantidad_solicitada],
+                    function (tx, results) {
+                        swal("", "Se guardaron los datos correctamente", "success"); 
+                        databaseHandler.db.transaction(
+                            function(tx){
+                                tx.executeSql("Select * from solicitud_material where id_cedula = ? ORDER BY id_solicitud DESC",
+                                [id_cedula],
+                                    function(tx, results){
+                                        $("#message-nr").css("display","none");
+                                        $("#sitio").css("background-color","#fff");
+                                        $("#quiem_solicita").css("background-color","#fff");
+                                        $("#codigo_material").css("background-color","#fff");
+                                        $("#cantidad_solicitada").css("background-color","#fff");
+                                        var item = results.rows.item(0);
+                                        $("#tabla_registros").append("<tr id='fila"+ 
+                                        item.id_entrada +"'><td class='FWM-table-options'><a href='#' onclick='eliminarFilaSURO2("+ 
+                                        item.id_entrada +",8);' style='border: none; outline:none;'><img src='img/borrar.png' width='30px' style='margin-top:10%' /></a></td><td>"+
+                                        item.sitio+"</td><td>"+
+                                        item.quiem_solicita+"</td><td style='text-align: center;'>" +item.codigo_material + "</td><td style='text-align: center;'>" + 
+                                        item.cantidad_solicitada + "</td></tr>"
+                                        );
+                                    },
+                                    function(tx, error){
+                                        console.log("Error al guardar cedula: " + error.message);
+                                    }
+                                );
+                            },
+                            function(error){},
+                            function(){}
+                        );  
+                    },
+                    function (tx, error) {
+                        console.error("Error al registrar: " + error.message);
+                    }
+                );
+            },
+            function (error) { },
+            function () { }
+        );
+    }
+    function guardarEntradaMaterialSURO2(){
+        var id_cedula = localStorage.getItem("IdCedula");
+        var nom_material = $("#nom_material").val();
+        var fecha_recepcion = $("#fecha_recepcion").val();
+        var quien_recibe = $("#quien_recibe").val();
+        var cant_recibe = $("#cant_recibe").val();
+        var fecha = new Date();
+        var fecha_registro = fecha.getFullYear()+"-"+(fecha.getMonth()+1)+"-"+fecha.getDate()+" "+fecha.getHours()+":"+fecha.getMinutes()+":"+fecha.getSeconds();
+        databaseHandler.db.transaction(
+            function (tx) {
+                tx.executeSql(
+                    "Insert into entrada_material(id_cedula,nom_material, fecha_recepcion, quien_recibe, cant_recibe) values(?,?,?,?,?)",
+                    [id_cedula, nom_material, fecha_recepcion, quien_recibe,cant_recibe],
+                    function (tx, results) {
+                        swal("", "Se guardaron los datos correctamente", "success"); 
+                        databaseHandler.db.transaction(
+                            function(tx){
+                                tx.executeSql("Select * from entrada_material where id_cedula = ? ORDER BY id_entrada DESC",
+                                [id_cedula],
+                                    function(tx, results){
+                                        $("#message-nr").css("display","none");
+                                        $("#nom_material").css("background-color","#fff");
+                                        $("#fecha_recepcion").css("background-color","#fff");
+                                        $("#quien_recibe").css("background-color","#fff");
+                                        $("#cant_recibe").css("background-color","#fff");
+                                        var item = results.rows.item(0);
+                                        $("#tabla_registros").append("<tr id='fila"+ 
+                                        item.id_entrada +"'><td class='FWM-table-options'><a href='#' onclick='eliminarFilaSURO2("+ 
+                                        item.id_entrada +",8);' style='border: none; outline:none;'><img src='img/borrar.png' width='30px' style='margin-top:10%' /></a></td><td>"+
+                                        item.nom_material+"</td><td>"+
+                                        item.fecha_recepcion+"</td><td style='text-align: center;'>" +item.quien_recibe + "</td><td style='text-align: center;'>" + 
+                                        item.cant_recibe + "</td></tr>"
+                                        );
+                                    },
+                                    function(tx, error){
+                                        console.log("Error al guardar cedula: " + error.message);
+                                    }
+                                );
+                            },
+                            function(error){},
+                            function(){}
+                        );  
                     },
                     function (tx, error) {
                         console.error("Error al registrar: " + error.message);
@@ -45318,7 +46711,7 @@ function ShowReglas(cliente,cardname,FirstName,MiddleName, LastName, Position, E
                     "Insert into consumibles(id_cedula,nombre_maquina,modelo_maquina,consumible) values(?,?,?,?)",
                     [id_cedula,nombre_maquina,modelo_maquina,consumible],
                     function (tx, results) {
-                        swal("", "Se guardaron los datos correctamente", "success");
+                        swal("", "Se guardaron los datos correctamente", "success"); 
                         databaseHandler.db.transaction(
                             function(tx){
                                 tx.executeSql("Select * from consumibles where id_cedula = ? ORDER BY id_consumible DESC",
@@ -45332,10 +46725,10 @@ function ShowReglas(cliente,cardname,FirstName,MiddleName, LastName, Position, E
                                         $("#modelo_maquina").val('');
                                         $("#consumible").val('');
                                         var item = results.rows.item(0);
-                                        $("#tabla_registros").append("<tr id='fila"+
-                                            item.id_consumible +"'><td class='FWM-table-options'><a href='#' onclick='eliminarFilaSURO2("+
+                                        $("#tabla_registros").append("<tr id='fila"+ 
+                                            item.id_consumible +"'><td class='FWM-table-options'><a href='#' onclick='eliminarFilaSURO2("+ 
                                             item.id_consumible +",2);' style='border: none; outline:none;'><img src='img/borrar.png' width='30px' style='margin-top:10%' /></a></td><td>"+
-                                            item.nombre_maquina+"</td><td style='text-align: center;'>" +unescape(item.modelo_maquina) + "</td><td style='text-align: center;'>" +
+                                            item.nombre_maquina+"</td><td style='text-align: center;'>" +unescape(item.modelo_maquina) + "</td><td style='text-align: center;'>" + 
                                             unescape(item.consumible) + "</td></tr>"
                                         );
                                     },
@@ -45346,7 +46739,7 @@ function ShowReglas(cliente,cardname,FirstName,MiddleName, LastName, Position, E
                             },
                             function(error){},
                             function(){}
-                        );
+                        );  
                     },
                     function (tx, error) {
                         console.error("Error al registrar: " + error.message);
@@ -45357,21 +46750,88 @@ function ShowReglas(cliente,cardname,FirstName,MiddleName, LastName, Position, E
             function () { }
         );
     }
+    function ChangeValueProgramLimp(id,status){
+        var id_cedula = localStorage.getItem("IdCedula");
+        var status = 1;
+        var usuario = localStorage.getItem("id_usuario");
+        var fecha = new Date();
+        var fecha_registro = fecha.getFullYear()+"-"+(fecha.getMonth()+1)+"-"+fecha.getDate()+" "+fecha.getHours()+":"+fecha.getMinutes()+":"+fecha.getSeconds();
+        databaseHandler.db.transaction(
+            function(tx){
+                tx.executeSql("SELECT * from ProgramLimp WHERE id_limpieza = ? and id_cedula = ?",
+                    [id, id_cedula],
+                    function(tx, results){
+                        var item = results.rows.item(0);
+                        if(item){
+                            databaseHandler.db.transaction(
+                                function (tx) {
+                                  tx.executeSql(
+                                    "UPDATE ProgramLimp set status = ?, fecha = ?  WHERE id_limpieza = ? and id_cedula = ?",
+                                    [status,fecha_registro,id, id_cedula],
+                                    function (tx, results) {
+                                        console.log("registro actualizado")
+                                    },
+                                    function (tx, error) {
+                                      console.error("Error al guardar cierre: " + error.message);
+                                    }
+                                  );
+                                },
+                                function (error) {},
+                                function () {}
+                            );
+                        }else{
+                            databaseHandler.db.transaction(
+                                function (tx) {
+                                  tx.executeSql(
+                                    "INSERT INTO ProgramLimp (id_cedula, usuario, id_limpieza, fecha, status) values (?,?,?,?,?)",
+                                    [id_cedula,usuario,id,fecha_registro,status],
+                                    function (tx, results) {
+                                        console.log("registro insertado")
+                                    },
+                                    function (tx, error) {
+                                      console.error("Error al guardar cierre: " + error.message);
+                                    }
+                                  );
+                                },
+                                function (error) {},
+                                function () {}
+                            );
+                        }
+                    },
+                    function(tx, error){
+                        console.log('Error:'+ error.message);
+                    }
+                );
+            },
+            function(error){},
+            function(){}
+        );
+
+        console.log("me presionaste: ", id)
+    }
     function continuarCedSURO2(id_cedula,tipo){
         localStorage.setItem("IdCedula",id_cedula);
         if(tipo == 1){
             localStorage.setItem("Opcion", '1');
             app.views.main.router.navigate({ name: 'recorridoSUROE1'});
         }else if(tipo == 2){
-            localStorage.setItem("Opcion", '1');
+            localStorage.setItem("Opcion", '2');
             app.views.main.router.navigate({ name: 'recorridoSUROE2'});
         }else if(tipo == 3){
-            localStorage.setItem("Opcion", '1');
+            localStorage.setItem("Opcion", '3');
             app.views.main.router.navigate({ name: 'recorridoSUROE3'});
+        }else if(tipo == 4){
+            localStorage.setItem("Opcion", '4');
+            app.views.main.router.navigate({ name: 'recorridoSUROE4'});
+        }else if(tipo == 5){
+            localStorage.setItem("Opcion", '5');
+            app.views.main.router.navigate({ name: 'recorridoSUROE5'});
         }
     }
     function regresarMaquinariaSuro2(){
-        app.views.main.router.back('/recorridoSUROE1/', {force: true, ignoreCache: true, reload: true});
+        var opcion = localStorage.getItem("Opcion");
+        var route = '/recorridoSUROE'+opcion+'/';
+        app.views.main.router.back(route, {force: true, ignoreCache: true, reload: true});
     }
     function eliminarFilaSURO2(index, opc){
         if(opc == 1) {
@@ -45381,8 +46841,8 @@ function ShowReglas(cliente,cardname,FirstName,MiddleName, LastName, Position, E
                         "DELETE FROM maquinarias WHERE id_maquina = ?",
                         [index],
                         function(tx, results){
-                             swal("","El registro se elimino satisfactoriamente","success");
-                             $("#fila" + index).remove();
+                            swal("","El registro se elimino satisfactoriamente","success");
+                            $("#fila" + index).remove();
                         },
                         function(tx, error){
                             swal("Error al eliminar registro",error.message,"error");
@@ -51536,6 +52996,387 @@ if ($("#proveedor").val() == "" || $("#sucursal").val() == "" || $("#rfc").val()
     }
     //Fin Ivy
     // Dilimipio Inicio
+    
+     //DILIMPIO ED ED prueb a de metodos 
+     function guardarDatosDL5(){
+        let id_cedula = localStorage.getItem("IdCedula");
+        let cliente = $("#cliente").val();
+        let contacto = $("#nombre_contacto").val();
+        let correo = $("#correo").val();
+        let telefono = $("#telefono").val();
+        let direccion = $("#direccion").val();
+        let Ciudad = $("#Ciudad").val();
+        let Responsable = $("#Responsable").val();
+        let Horario = $("#Horario").val();
+        let territorio = $("#Territorio").val();
+        let Maquina = $("#Maquina").val();
+
+        if(cliente && contacto && correo && telefono && direccion && Ciudad && Responsable && Horario && Territorio&& Maquina ){
+            console.log('ENTRO CON,')
+            databaseHandler.db.transaction(
+                function(tx){
+                    tx.executeSql("UPDATE DatosentregasDL SET nombre_contacto=?, correo=?, telefono =?,direccion =?,ciudad  =?,responsable =?,horario =?,territorio =?, maquina =? WHERE id_cedula = ?",
+                        [contacto,correo,telefono,direccion,Ciudad,Responsable, Horario,territorio, Maquina,id_cedula],
+                        function(tx, results){
+                        swal("","Se guardaron los datos correctamente", "success");
+                        $('#cliente').css("background-color","#ffffff");
+                        $('#nombre_contacto').css("background-color","#ffffff");2
+                        $('#correo').css("background-color","#ffffff");
+                        $('#telefono').css("background-color","#ffffff");
+                        $('#direccion').css("background-color","#ffffff");
+                        $('#Ciudad').css("background-color","#ffffff");
+                        $('#Responsable').css("background-color","#ffffff");
+                        $('#Horario').css("background-color","#ffffff");
+                        $('#Territorio').css("background-color","#ffffff");
+                        $('#Maquina').css("background-color","#ffffff");
+                        },
+                        function(tx, error){
+                            console.error("Error al actualizar: " + error.message);
+                        }
+                    );
+                },
+                function(error){ console.error("Error al actualizar: " + error.message);},
+                function(){}
+            );
+        }else{
+            swal("", "Debes de llenar todos los campos" , "warning");
+        }
+    }
+    function guardarrevisonL(){     
+        var pr4 = $('input:radio[name=pregunta4]:checked').val();
+        var pr5 = $('input:radio[name=pregunta5]:checked').val();
+      
+        var values = get_datos_completos();
+        var quita_coma = values.response;
+        var valido = values.valido;
+        if (valido) {
+            var id_cedula = localStorage.getItem("IdCedula");
+            var pregunta4 = $("#pregunta4").val();
+            var dureza_agua = $("#dureza_agua").val();
+            var solidos = $("#solidos").val();
+            // var cloro = $("#cloro").val();
+            var detergente = $("#detergente").val();
+            var secante = $("#secante").val();
+            var tem_agua = $("#tem_agua").val();
+            var pregunta5 = $("#pregunta5").val();
+            var tem_pre = $("#tem_pre").val();
+            var tem_lav = $("#tem_lav").val();
+            var tem_enj = $("#tem_enj").val();
+            var canastillas = $("#canastillas").val();
+            
+            databaseHandler.db.transaction(
+                function(tx){
+                    tx.executeSql("SELECT * from dosificadores_lavanderia WHERE id_cedula = ?",
+                    [id_cedula],
+                        function(tx, results){
+                            if(results.rows.length == 0){
+                                databaseHandler.db.transaction(
+                                    function(tx){
+                                        tx.executeSql("INSERT INTO dosificadores_lavanderia(id_cedula,dureza_agua,solidos,tempe_agua,lavad_rdio,temp_prelav,temp_lava, temp_enju,canastillas,lav_rdio2,detergente,secante) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)",
+                                            [id_cedula,dureza_agua,solidos,tem_agua,pr4,tem_pre,tem_lav,tem_enj,canastillas,pr5,detergente,secante],
+                                            function(tx, results){
+                                                console.log('Inserta');
+                                                swal("","Se guardaron los datos correctamente", "success");
+                                                $("#dureza_agua").css("background-color", "#FFFFFF");
+                                                $("#solidos").css("background-color", "#ffffff");
+                                                // $("#cloro").css("background-color", "#ffffff");
+                                                $("#detergente").css("background-color", "#ffffff");
+                                                $("#secante").css("background-color", "#ffffff");
+                                                $("#tem_agua").css("background-color", "#ffffff");
+                                                $("#tem_pre").css("background-color", "#ffffff");
+                                                $("#tem_lav").css("background-color", "#ffffff");
+                                                $("#tem_enj").css("background-color", "#ffffff");
+                                                $("#canastillas").css("background-color", "#ffffff");
+                                            },
+                                            function(tx, error){
+                                                swal("Error al guardar",error.message,"error");
+                                                app.preloader.hide();
+                                            }
+                                        );
+                                    },function(error){},function(){}
+                                );
+                            } else {
+                                databaseHandler.db.transaction(
+                                    function(tx){
+                                        tx.executeSql("UPDATE dosificadores_lavanderia SET dureza_agua =?,solidos =?,tempe_agua =?,lavad_rdio=?,temp_prelav =?,temp_lava=?,temp_enju =?,canastillas=?,lav_rdio2 =?,detergente=?,secante=? WHERE id_cedula = ?",
+                                            [dureza_agua,solidos,tem_agua,pr4,tem_pre,tem_lav,tem_enj,canastillas,pr5,detergente,secante, id_cedula],
+                                            function(tx, results){
+                                                console.log('update');
+                                                swal("", "Datos actualizados correctamente", "success");
+                                                $("#dureza_agua").css("background-color", "#FFFFFF");
+                                                $("#solidos").css("background-color", "#ffffff");
+                                                // $("#cloro").css("background-color", "#ffffff");
+                                                $("#detergente").css("background-color", "#ffffff");
+                                                $("#secante").css("background-color", "#ffffff");
+                                                $("#tem_agua").css("background-color", "#ffffff");
+                                                $("#tem_pre").css("background-color", "#ffffff");
+                                                $("#tem_lav").css("background-color", "#ffffff");
+                                                $("#tem_enj").css("background-color", "#ffffff");
+                                                $("#canastillas").css("background-color", "#ffffff");
+                                          
+                                            },
+                                            function(tx, error){
+                                                swal("Error al guardar",error.message,"error");
+                                                app.preloader.hide();
+                                            }
+                                        );
+                                    },function(error){},function(){}
+                                );
+                            }
+                        },
+                        function(tx, error){
+                            console.log("Error al guardar checklits: " + error.message);
+                            app.preloader.hide();
+                        }
+                    );
+                },
+                function(error){},
+                function(){}
+            );
+
+        }else{
+            swal("","Debes llenar estos campos para poder guardar: "+quita_coma,"warning");
+        }
+        
+    }
+    function guardarlavodoDL2(){
+
+        var pr1 = $('input:radio[name=pregunta1]:checked').val();
+        var pr2 = $('input:radio[name=pregunta2]:checked').val();
+        var pr3 = $('input:radio[name=pregunta3]:checked').val();
+        console.log(pr3)
+
+        var values = get_datos_completos();
+        var quita_coma = values.response;
+        var valido = values.valido;
+        if (valido) {
+            var id_cedula = localStorage.getItem("IdCedula");
+            var apariencia = $('#apariencia').val();
+            var rango = $('#rango').val();
+            var olor  = $('#olor').val();
+            var estatico = $('#estatico').val();
+            var suavidad= $('#suavidad').val();
+            var remocion_mancha = $('#remocion_mancha').val();
+            var hierro= $('#hierro').val();
+            var cloro = $('#cloro').val();
+            var pH= $('#pH').val();
+            var efecto_cebra= $('#efecto_cebra').val();
+            var efecto_piling = $('#efecto_piling').val();
+            var temperatura = $('#temperatura').val();
+            var niveles_agua = $('#niveles_agua').val();
+            var extraccion = $('#extraccion').val();
+            var drenajes= $('#drenajes').val();
+            var rotacion = $('#rotacion').val();
+            var incrustacion = $('#incrustacion').val();
+            var manual_auto = $('#manual_auto').val();
+            var capacidad_lavadora = $('#capacidad_lavadora').val();
+            var cartulinas_la = $('#cartulinas_la').val();
+            var formulas_lav = $('#formulas_lav').val();
+            var clasi_ropa = $('#clasi_ropa').val();
+            var peso_ropa= $('#peso_ropa').val();
+            var cargado_agua = $('#cargado_agua').val();
+            var tiempo_secado= $('#tiempo_secado').val();
+            var filtro_secadora = $('#filtro_secadora').val();
+            var manglesitem= $('#mangles').val();
+            var othersitem= $('#others').val();
+
+            console.log(manual_auto)
+
+            databaseHandler.db.transaction(
+                function(tx){
+                    tx.executeSql("SELECT * from resultados_lavado WHERE id_cedula = ?",
+                    [id_cedula],
+                        function(tx, results){
+                            console.log('RES',results);
+                            console.log(results.rows.length);
+                            if(results.rows.length == 0){
+                                console.log('Entro');
+                                databaseHandler.db.transaction(
+                                    function(tx){
+                                        tx.executeSql("INSERT INTO resultados_lavado(pregunta1,pregunta2,pregunta3,id_cedula,apariencia,rango,olor,estatico,suavidad,remocion_mancha,hierro,cloro,pH,efecto_cebra,efecto_piling,temperatura,niveles_agua,extraccion,drenajes,rotacion,incrustacion,manual_auto,capacidad_lavadora,cartulinas_la,formulas_lav,clasi_ropa,peso_ropa,cargado_agua,tiempo_secado,filtro_secadora,manglesitem,othersitem) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
+                                            [pr1,pr2,pr3,id_cedula, apariencia,rango,olor, estatico,suavidad, remocion_mancha,hierro,cloro,pH, efecto_cebra, efecto_piling,temperatura,niveles_agua,extraccion,drenajes, rotacion,incrustacion,manual_auto,capacidad_lavadora,cartulinas_la,formulas_lav,clasi_ropa,peso_ropa,cargado_agua,tiempo_secado, filtro_secadora,manglesitem,othersitem],
+                                            function(tx, results){
+                                                console.log('Inserta');
+                                                swal("","Se guardaron los datos correctamente", "success");
+                                                $("#apariencia").css("background-color", "#FFFFFF");
+                                                $("#rango").css("background-color", "#ffffff");
+                                                $("#olor").css("background-color", "#ffffff");
+                                                $("#estatico").css("background-color", "#ffffff");
+                                                $("#suavidad").css("background-color", "#ffffff");
+                                                $("#remocion_mancha").css("background-color", "#ffffff");
+                                                $("#hierro").css("background-color", "#ffffff");
+                                                $("#cloro").css("background-color", "#ffffff");
+                                                $("#pH").css("background-color", "#ffffff");
+                                                $("#efecto_cebra").css("background-color", "#ffffff");
+                                                $("#efecto_piling").css("background-color", "#ffffff");
+                                                $("#temperatura").css("background-color", "#ffffff");
+                                                $("#niveles_agua").css("background-color", "#ffffff");
+                                                $("#extraccion").css("background-color", "#ffffff");
+                                                $("#drenajes").css("background-color", "#ffffff");
+                                                $("#rotacion").css("background-color", "#ffffff");
+                                                $("#incrustacion").css("background-color", "#ffffff");
+                                                $("#manual_auto").css("background-color", "#ffffff");
+                                                $("#capacidad_lavadora").css("background-color", "#ffffff");
+                                                $("#cartulinas_la").css("background-color", "#ffffff");
+                                                $("#formulas_lav").css("background-color", "#FFFFFF");
+                                                $("#clasi_ropa").css("background-color", "#ffffff");
+                                                $("#peso_ropa").css("background-color", "#ffffff");
+                                                $("#cargado_agua").css("background-color", "#ffffff");
+                                                $("#tiempo_secado").css("background-color", "#ffffff");
+                                                $("#filtro_secadora").css("background-color", "#ffffff");
+                                                $("#mangles").css("background-color", "#ffffff");
+                                                $("#others").css("background-color", "#ffffff");
+                                            },
+                                            function(tx, error){
+                                                swal("Error al guardar 1", error.message ,"error");
+                                                app.preloader.hide();
+                                            }
+                                        );
+                                    },function(error){ swal("Error al guardar2",error.message,"error");},function(){}
+                                );
+                            } else {
+                                databaseHandler.db.transaction(
+                                    function(tx){
+                                        tx.executeSql("UPDATE resultados_lavado SET pregunta1 =?,pregunta2=?,pregunta3=?,apariencia =?,rango =?,olor =?,estatico =?,suavidad =?,remocion_mancha =?,hierro =?,cloro =?,pH =?,efecto_cebra =?,efecto_piling =?,temperatura =?,niveles_agua =?,extraccion =?,drenajes =?,rotacion =?,incrustacion =?,manual_auto =?,capacidad_lavadora =?,cartulinas_la =?,formulas_lav =?,clasi_ropa =?,peso_ropa =?,cargado_agua =?,tiempo_secado =?,filtro_secadora =?,manglesitem =?,othersitem =? WHERE id_cedula = ?",
+                                        [pr1,pr2,pr3,apariencia,rango,olor, estatico,suavidad, remocion_mancha,hierro,cloro,pH, efecto_cebra, efecto_piling,temperatura,niveles_agua,extraccion,drenajes, rotacion,incrustacion,manual_auto,capacidad_lavadora,cartulinas_la,formulas_lav,clasi_ropa,peso_ropa,cargado_agua,tiempo_secado, filtro_secadora,manglesitem,othersitem,id_cedula],
+                                         function(tx, results){
+                                                console.log('update');
+                                                swal("", "Datos actualizados correctamente", "success");
+                                                $("#apariencia").css("background-color", "#FFFFFF");
+                                                $("#rango").css("background-color", "#ffffff");
+                                                $("#olor").css("background-color", "#ffffff");
+                                                $("#estatico").css("background-color", "#ffffff");
+                                                $("#suavidad").css("background-color", "#ffffff");
+                                                $("#remocion_mancha").css("background-color", "#ffffff");
+                                                $("#hierro").css("background-color", "#ffffff");
+                                                $("#cloro").css("background-color", "#ffffff");
+                                                $("#pH").css("background-color", "#ffffff");
+                                                $("#efecto_cebra").css("background-color", "#ffffff");
+                                                $("#efecto_piling").css("background-color", "#ffffff");
+                                                $("#temperatura").css("background-color", "#ffffff");
+                                                $("#niveles_agua").css("background-color", "#ffffff");
+                                                $("#extraccion").css("background-color", "#ffffff");
+                                                $("#drenajes").css("background-color", "#ffffff");
+                                                $("#rotacion").css("background-color", "#ffffff");
+                                                $("#incrustacion").css("background-color", "#ffffff");
+                                                $("#manual_auto").css("background-color", "#ffffff");
+                                                $("#capacidad_lavadora").css("background-color", "#ffffff");
+                                                $("#cartulinas_la").css("background-color", "#ffffff");
+                                                $("#formulas_lav").css("background-color", "#FFFFFF");
+                                                $("#clasi_ropa").css("background-color", "#ffffff");
+                                                $("#peso_ropa").css("background-color", "#ffffff");
+                                                $("#cargado_agua").css("background-color", "#ffffff");
+                                                $("#tiempo_secado").css("background-color", "#ffffff");
+                                                $("#filtro_secadora").css("background-color", "#ffffff");
+                                                $("#mangles").css("background-color", "#ffffff");
+                                                $("#others").css("background-color", "#ffffff");
+                                            },
+                                            function(tx, error){
+                                                swal("Error al guardar",error.message,"error");
+                                                app.preloader.hide();
+                                            }
+                                        );
+                                    },function(error){ swal("Error al guardar",error.message,"error");},function(){}
+                                );
+                            }
+                        },
+                        function(tx, error){
+                            console.log("Error al guardar checklits: " + error.message);
+                            app.preloader.hide();
+                        }
+                    );
+                },
+                function(error){ swal("Error al guardar",error.message,"error");},
+                function(){}
+            );
+         
+        }else{
+            swal("","Debes llenar estos campos para poder guardar: "+quita_coma,"warning");
+        }
+    }
+    function guardardagecotrolres(){
+        let id_cedula = localStorage.getItem("IdCedula");
+        let cliente = $("#cliente").val();
+        let contacto = $("#nombre_contacto").val();
+        let correo = $("#correo").val();
+      let telefono = $("#telefono").val();
+      
+        let hora_entrada = $("#hora_entrada").val();
+        let hora_salida = $("#hora_salida").val();
+        let colaborador = $("#colaborador").val();      
+        if(cliente && contacto && correo && telefono){
+            databaseHandler.db.transaction(
+                function(tx){
+                    tx.executeSql("UPDATE DatosentregasDL SET nombre_contacto=?, correo=?, telefono =?, hora_entrada =?, hora_salida =?, colaborador =? WHERE id_cedula = ? ",
+                        [contacto,correo,telefono,hora_entrada,hora_salida, colaborador, id_cedula],
+                        function(tx, results){
+                        swal("","Se guardaron los datos correctamente", "success");
+                        $('#cliente').css("background-color","#ffffff");
+                        $('#nombre_contacto').css("background-color","#ffffff");
+                        $('#correo').css("background-color","#ffffff");
+                        $('#estatus_cliente').css("background-color","#ffffff");
+                            $('#telefono').css("background-color", "#ffffff");
+                            
+                        $("#hora_entrada").css("background-color","#ffffff");
+                        $("#hora_salida").css("background-color","#ffffff");
+                        $("#colaborador").css("background-color","#ffffff");
+                        },
+                        function(tx, error){
+                            console.error("Error al actualizar: " + error.message);
+                        }
+                    );
+                },
+                function(error){},
+                function(){}
+            );
+        }else{
+            swal("", "Debes de llenar todos los campos" , "warning");
+        }
+    }
+    function guardarintallbdDES() {
+      
+        let id_cedula = localStorage.getItem("IdCedula");
+        let cliente = $("#cliente").val();
+        let contacto = $("#nombre_contacto").val();
+        let correo = $("#correo").val();
+        let telefono = $("#telefono").val();
+        let hora_entrada = $("#hora_entrada").val();
+        let hora_salida  = $("#hora_salida").val();
+        let localizacion  = $("#localizacion").val();
+        let colaborador  = $("#colaborador").val();
+
+      
+        if(cliente && contacto && correo && telefono ){
+            databaseHandler.db.transaction(
+                function(tx){
+                    tx.executeSql("UPDATE DatosentregasDL SET nombre_contacto=?, correo=?, telefono =?, hora_entrada = ?, hora_salida = ?, colaborador = ? WHERE id_cedula = ? ",
+                        [contacto,correo,telefono,hora_entrada,hora_salida,colaborador,id_cedula],
+                        function (tx, results) {
+                            
+                        swal("","Se guardaron los datos correctamente", "success");
+                        $('#cliente').css("background-color","#ffffff");
+                        $('#nombre_contacto').css("background-color","#ffffff");
+                        $('#correo').css("background-color","#ffffff");
+                        $('#telefono').css("background-color", "#ffffff");
+                        $("#hora_entrada").css("background-color", "#ffffff");
+                        $("#hora_salida").css("background-color", "#ffffff");
+                        $("#localizacion").css("background-color", "#ffffff");
+                        $("#colaborador").css("background-color", "#ffffff");
+
+                        },
+                        function(tx, error){
+                            console.error("Error al actualizar: " + error.message);
+                        }
+                    );
+                },
+                function(error){},
+                function(){}
+            );
+        }else{
+            swal("", "Debes de llenar todos los campos" , "warning");
+        }
+    }
+     //FIN DILIMPIO EDED ED ED 
     function buscarClienteDilimpio() {
         app.preloader.show('blue');
         var id_usuario = localStorage.getItem("id_usuario");
@@ -51663,7 +53504,7 @@ if ($("#proveedor").val() == "" || $("#sucursal").val() == "" || $("#rfc").val()
             app.views.main.router.navigate({ name: 'recorridoDL6'});
             localStorage.setItem("tipo_servicio", "Instalacion");
         }else if(tipo == 7){
-            app.views.main.router.navigate({ name: 'recorridoDL7'});
+            app.views.main.router.navigate({ name: 'recorridoDL6'});
             localStorage.setItem("tipo_servicio", "Desinstalacion");
         }else if(tipo == 8){
             app.views.main.router.navigate({ name: 'recorridoDL8'});
@@ -53108,14 +54949,14 @@ if ($("#proveedor").val() == "" || $("#sucursal").val() == "" || $("#rfc").val()
                                                                 var tipo2= 'H2';
                                                                 productHandler.addControl(id_cedula,H2,tipo,tipo2);
                                                             }
-                                                            if(VIBE == 0 || VIBE == ''){}else{
-                                                                var tipo2= 'VIBE';
-                                                                productHandler.addControl(id_cedula,VIBE,tipo,tipo2);
-                                                            }
-                                                            if(Odocontrol_SPRAY == 0 || Odocontrol_SPRAY == ''){}else{
-                                                                var tipo2= 'Odocontrol';
-                                                                productHandler.addControl(id_cedula,Odocontrol_SPRAY,tipo,tipo2);
-                                                            }
+                                                            // if(VIBE == 0 || VIBE == ''){}else{
+                                                            //     var tipo2= 'VIBE';
+                                                            //     productHandler.addControl(id_cedula,VIBE,tipo,tipo2);
+                                                            // }
+                                                            // if(Odocontrol_SPRAY == 0 || Odocontrol_SPRAY == ''){}else{
+                                                            //     var tipo2= 'Odocontrol';
+                                                            //     productHandler.addControl(id_cedula,Odocontrol_SPRAY,tipo,tipo2);
+                                                            // }
                                                             app.views.main.router.back('/recorridoDL5/', {force: true, ignoreCache: true, reload: true});
                                                         },
                                                         function(tx, error){
@@ -53190,7 +55031,7 @@ if ($("#proveedor").val() == "" || $("#sucursal").val() == "" || $("#rfc").val()
                                                                 var tipo2= 'Sistema de Control de olores';
                                                                 productHandler.addControl(id_cedula,sistema_olores,tipo,tipo2);
                                                             }
-                                                            app.views.main.router.back('/recorridoDL7/', {force: true, ignoreCache: true, reload: true});
+                                                            app.views.main.router.back('/recorridoDL6/', {force: true, ignoreCache: true, reload: true});
                                                         },
                                                         function(tx, error){
                                                             console.error("Error al actualizar el tipo de cedula: " + error.message);
@@ -53293,6 +55134,148 @@ if ($("#proveedor").val() == "" || $("#sucursal").val() == "" || $("#rfc").val()
             }else{
                 swal("", "Debes Colocar un Comentario General" , "warning");
             }
+        }
+        function generarservOlores(){// traer datos 
+            let id_cedula = localStorage.getItem("IdCedula");
+            let foto_llegada = localStorage.getItem("foto_llegada");
+            let id_cliente = localStorage.getItem("id_cliente");
+            let nombre_cliente = localStorage.getItem("nombre_cliente");
+            let nombre_contacto = localStorage.getItem("nombre_contacto");
+            let correo = localStorage.getItem("correo");
+            let estatus_cliente = localStorage.getItem("estatus_cliente");
+            let telefono = localStorage.getItem("telefono");
+            let tipoCedula = "Control de olores";
+            var LGS = localStorage.getItem("LGS");
+            var O2 = localStorage.getItem("O2");
+            var H2 = localStorage.getItem("H2");
+            var VIBE = localStorage.getItem("VIBE");
+            var Odocontrol_SPRAY = localStorage.getItem("Odocontrol_SPRAY");
+            var despachador_higienico = localStorage.getItem("despachador_higienico");
+            var despachador_toalla = localStorage.getItem("despachador_toalla");
+            var dispensador_jabon = localStorage.getItem("dispensador_jabon");
+            var dosificador_quimico = localStorage.getItem("dosificador_quimico");
+            var sistema_olores = localStorage.getItem("sistema_olores");
+            var dosificador_biodigestor = localStorage.getItem("dosificador_biodigestor");
+            var dosificador_Nova = localStorage.getItem("dosificador_Nova");
+            var dosificador_prodose = localStorage.getItem("dosificador_prodose");
+            var boton_1galon = localStorage.getItem("boton_1galon");
+            var boton_4galon = localStorage.getItem("boton_4galon");
+            var dosificador_lavandaeria = localStorage.getItem("dosificador_lavandaeria");
+            var trampa_grasa = localStorage.getItem("trampa_grasa");
+            var id_visita = localStorage.getItem("id_visita");
+
+            databaseHandler.db.transaction(
+                function(tx){
+                    tx.executeSql("UPDATE cedulas_general SET tipo_cedula = ?  WHERE id_cedula = ?",
+                        [tipoCedula,id_cedula],
+                        function(tx, results){
+                            productHandler.addVentasDL(id_cedula,foto_llegada,id_cliente,nombre_cliente,nombre_contacto,correo,telefono,id_visita);
+                            
+                            app.views.main.router.back('/recorridoDL5/', {force: true, ignoreCache: true, reload: true});
+                        },
+                        function(tx, error){
+                            console.error("Error al actualizar el tipo de cedula: " + error.message);
+                        }
+                    );
+                },
+                function(error){console.error("Error al actualizar el tipo de cedula: " + error.message);},
+                function(){}
+            );
+}
+              function generarinstalldes(){// traer datos 
+            let id_cedula = localStorage.getItem("IdCedula");
+            let foto_llegada = localStorage.getItem("foto_llegada");
+            let id_cliente = localStorage.getItem("id_cliente");
+            let nombre_cliente = localStorage.getItem("nombre_cliente");
+            let nombre_contacto = localStorage.getItem("nombre_contacto");
+            let correo = localStorage.getItem("correo");
+            let estatus_cliente = localStorage.getItem("estatus_cliente");
+            let telefono = localStorage.getItem("telefono");
+            let tipoCedula = "Instalacion";
+            var LGS = localStorage.getItem("LGS");
+            var O2 = localStorage.getItem("O2");
+            var H2 = localStorage.getItem("H2");
+            var VIBE = localStorage.getItem("VIBE");
+            var Odocontrol_SPRAY = localStorage.getItem("Odocontrol_SPRAY");
+            var despachador_higienico = localStorage.getItem("despachador_higienico");
+            var despachador_toalla = localStorage.getItem("despachador_toalla");
+            var dispensador_jabon = localStorage.getItem("dispensador_jabon");
+            var dosificador_quimico = localStorage.getItem("dosificador_quimico");
+            var sistema_olores = localStorage.getItem("sistema_olores");
+            var dosificador_biodigestor = localStorage.getItem("dosificador_biodigestor");
+            var dosificador_Nova = localStorage.getItem("dosificador_Nova");
+            var dosificador_prodose = localStorage.getItem("dosificador_prodose");
+            var boton_1galon = localStorage.getItem("boton_1galon");
+            var boton_4galon = localStorage.getItem("boton_4galon");
+            var dosificador_lavandaeria = localStorage.getItem("dosificador_lavandaeria");
+            var trampa_grasa = localStorage.getItem("trampa_grasa");
+            var id_visita = localStorage.getItem("id_visita");
+
+            databaseHandler.db.transaction(
+                function(tx){
+                    tx.executeSql("UPDATE cedulas_general SET tipo_cedula = ?  WHERE id_cedula = ?",
+                        [tipoCedula,id_cedula],
+                        function(tx, results){
+                            productHandler.addVentasDL(id_cedula,foto_llegada,id_cliente,nombre_cliente,nombre_contacto,correo,telefono,id_visita);
+                            // if(despachador_higienico == 0 || despachador_higienico == ''){}else{
+                            //     var tipo2= 'Despachador higiénico';
+                            //     productHandler.addControl(id_cedula,despachador_higienico,tipo,tipo2);
+                            // }
+                            // if(despachador_toalla == 0 || despachador_toalla == ''){}else{
+                            //     var tipo2= 'Despachador toalla';
+                            //     productHandler.addControl(id_cedula,despachador_toalla,tipo,tipo2);
+                            // }
+                            // if(dispensador_jabon == 0 || dispensador_jabon == ''){}else{
+                            //     var tipo2= 'Dispensador jabón';
+                            //     productHandler.addControl(id_cedula,dispensador_jabon,tipo,tipo2);
+                            // }
+                            // if(dosificador_quimico == 0 || dosificador_quimico == ''){}else{
+                            //     var tipo2= 'Dosificador químico';
+                            //     productHandler.addControl(id_cedula,dosificador_quimico,tipo,tipo2);
+                            // }
+                            // if(sistema_olores == 0 || sistema_olores == ''){}else{
+                            //     var tipo2= 'Sistema de Control de olores';
+                            //     productHandler.addControl(id_cedula,sistema_olores,tipo,tipo2);
+                            // }
+                            app.views.main.router.back('/recorridoDL6/', {force: true, ignoreCache: true, reload: true});
+                        },
+                        function(tx, error){
+                            console.error("Error al actualizar el tipo de cedula: " + error.message);
+                        }
+                    );
+                },
+                function(error){console.error("Error al actualizar el tipo de cedula: " + error.message);},
+                function(){}
+            );
+        }
+          function generarmantenimientobtns(){// traer datos 
+            let id_cedula = localStorage.getItem("IdCedula");
+            let foto_llegada = localStorage.getItem("foto_llegada");
+            let id_cliente = localStorage.getItem("id_cliente");
+            let nombre_cliente = localStorage.getItem("nombre_cliente");
+            let nombre_contacto = localStorage.getItem("nombre_contacto");
+            let correo = localStorage.getItem("correo");
+            let estatus_cliente = localStorage.getItem("estatus_cliente");
+            let telefono = localStorage.getItem("telefono");
+            var id_visita = localStorage.getItem("id_visita");
+            let tipoCedula = "Mantenimiento";
+
+            databaseHandler.db.transaction(
+                function(tx){
+                    tx.executeSql("UPDATE cedulas_general SET tipo_cedula = ?  WHERE id_cedula = ?",
+                        [tipoCedula,id_cedula],
+                        function(tx, results){
+                            productHandler.addVentasDL(id_cedula,foto_llegada,id_cliente,nombre_cliente,nombre_contacto,correo,telefono,id_visita);
+                            app.views.main.router.back('/recorridoDL8/', {force: true, ignoreCache: true, reload: true});
+                        },
+                        function(tx, error){
+                            console.error("Error al actualizar el tipo de cedula: " + error.message);
+                        }
+                    );
+                },
+                function(error){console.error("Error al actualizar el tipo de cedula: " + error.message);},
+                function(){}
+            );
         }
         function generarCobranzaDL(){
             let id_cedula = localStorage.getItem("IdCedula");
@@ -53673,6 +55656,7 @@ if ($("#proveedor").val() == "" || $("#sucursal").val() == "" || $("#rfc").val()
                 }
                 var id_cedula = localStorage.getItem("IdCedula");
                 var equipos = $("#equipos option:selected").text();
+                var quimico = $("#quimico").val();
                 var condiciones_equipo = $("#condiciones_equipo option:selected").text();
                 var cantidad = $("#cantidad").val();
                 var foto=$('#imagenC').val();
@@ -53684,10 +55668,13 @@ if ($("#proveedor").val() == "" || $("#sucursal").val() == "" || $("#rfc").val()
                     if(comentarios){}else{comentarios='Sin comentarios';}
                     databaseHandler.db.transaction(
                         function(tx){
-                            tx.executeSql("INSERT INTO evidencias_equipo_comision(id_cedula,foto,equipo,fecha,comentarios,fase,condiciones_equipo) VALUES (?,?,?,?,?,?,?)",
-                                [id_cedula,foto,equipos,fecha_foto,comentarios,fase,condiciones_equipo],
+                            tx.executeSql("INSERT INTO evidencias_equipo_comision(id_cedula,foto,equipo,quimico,fecha,comentarios,fase,condiciones_equipo) VALUES (?,?,?,?,?,?,?,?)",
+                                [id_cedula,foto,equipos,quimico,fecha_foto,comentarios,fase,condiciones_equipo],
                                 function(tx, results){
                                     $("#equipos").val(0);
+                                    $("#equipos").css("background-color", "#ffffff");
+                                    $("#quimico").val('');
+                                    $("#quimico").css("background-color","#ffffff");
                                     $("#condiciones_equipo").val(0);
                                     $("#cantidad").css("background-color","#ffffff");
                                     $("#cantidad").val('');
@@ -53994,6 +55981,188 @@ if ($("#proveedor").val() == "" || $("#sucursal").val() == "" || $("#rfc").val()
             swal("","Debes llenar estos campos para poder guardar: "+quita_coma,"warning");
         }
     }
+    function AplicaDL(vari, op) {
+        console.log('VARIALE', vari, op);
+        if (vari == 0) {
+            if (op == 'fisico'){
+                $('#Fisico').css("display", "none");
+                $("#apariencia").removeClass("obligatorio");
+                $("#rango").removeClass("obligatorio");
+                $("#olor").removeClass("obligatorio");
+                $("#estatico").removeClass("obligatorio");
+                $("#suavidad").removeClass("obligatorio");
+                $("#remocion_mancha").removeClass("obligatorio");
+            }else if (op == 'reactivos'){
+                $('#reactivos').css("display", "none");
+                $("#hierro").removeClass("obligatorio");
+                $("#cloro").removeClass("obligatorio");
+                $("#pH").removeClass("obligatorio");
+                $("#efecto_cebra").removeClass("obligatorio");
+                $("#efecto_piling").removeClass("obligatorio");
+                $("#temperatura").removeClass("obligatorio");
+                $("#niveles_agua").removeClass("obligatorio");
+                $("#extraccion").removeClass("obligatorio");
+                $("#drenajes").removeClass("obligatorio");
+                $("#rotacion").removeClass("obligatorio");
+                $("#incrustacion").removeClass("obligatorio");
+                $("#manual_auto").removeClass("obligatorio");
+                $("#capacidad_lavadora").removeClass("obligatorio");
+            }else if(op == 'Metodos'){
+                $('#Metodos').css("display", "none");
+                $("#cartulinas_la").removeClass("obligatorio");
+                $("#formulas_lav").removeClass("obligatorio");
+                $("#clasi_ropa").removeClass("obligatorio");
+                $("#peso_ropa").removeClass("obligatorio");
+                $("#cargado_agua").removeClass("obligatorio");
+                $("#tiempo_secado").removeClass("obligatorio");
+                $("#filtro_secadora").removeClass("obligatorio");
+                $("#mangles").removeClass("obligatorio");
+                $("#others").removeClass("obligatorio");
+            }else if (op == 'suministros') {
+                $('#suministros').css("display", "none");
+                $("#dureza_agua").removeClass("obligatorio");
+                $("#solidos").removeClass("obligatorio");
+                $("#cloro").removeClass("obligatorio");
+                $("#tem_agua").removeClass("obligatorio");
+    
+            }else if (op == 'lavado') {
+                $('#lavado').css("display", "none");
+                $("#tem_pre").removeClass("obligatorio");
+                $("#tem_lav").removeClass("obligatorio");
+                $("#tem_enj").removeClass("obligatorio");
+                $("#canastillas").removeClass("obligatorio");
+                
+            }
+        } else if (vari == 1) {
+            if (op == 'fisico') {
+                $('#Fisico').css("display", "block");
+                $("#apariencia").addClass("obligatorio");
+                $("#rango").addClass("obligatorio");
+                $("#olor").addClass("obligatorio");
+                $("#estatico").addClass("obligatorio");
+                $("#suavidad").addClass("obligatorio");
+                $("#remocion_mancha").addClass("obligatorio");
+            } else if (op == 'reactivos') {
+                $('#reactivos').css("display", "block");
+                $("#hierro").addClass("obligatorio");
+                $("#cloro").addClass("obligatorio");
+                $("#pH").addClass("obligatorio");
+                $("#efecto_cebra").addClass("obligatorio");
+                $("#efecto_piling").addClass("obligatorio");
+                $("#temperatura").addClass("obligatorio");
+                $("#niveles_agua").addClass("obligatorio");
+                $("#extraccion").addClass("obligatorio");
+                $("#drenajes").addClass("obligatorio");
+                $("#rotacion").addClass("obligatorio");
+                $("#incrustacion").addClass("obligatorio");
+                $("#manual_auto").addClass("obligatorio");
+                $("#capacidad_lavadora").addClass("obligatorio");
+    
+            } else if (op == 'Metodos') {
+                $('#Metodos').css("display", "block");
+                $("#cartulinas_la").addClass("obligatorio");
+                $("#formulas_lav").addClass("obligatorio");
+                $("#clasi_ropa").addClass("obligatorio");
+                $("#peso_ropa").addClass("obligatorio");
+                $("#cargado_agua").addClass("obligatorio");
+                $("#tiempo_secado").addClass("obligatorio");
+                $("#filtro_secadora").addClass("obligatorio");
+                $("#mangles").addClass("obligatorio");
+                $("#others").addClass("obligatorio");
+            }else if (op == 'suministros') {
+                $('#suministros').css("display", "block");
+                $("#dureza_agua").addClass("obligatorio");
+                $("#solidos").addClass("obligatorio");
+                $("#cloro").addClass("obligatorio");
+                $("#tem_agua").addClass("obligatorio");
+        
+                }else if (op == 'lavado') {
+                    $('#lavado').css("display", "block");
+                    $("#tem_pre").addClass("obligatorio");
+                    $("#tem_lav").addClass("obligatorio");
+                    $("#tem_enj").addClass("obligatorio");
+                    $("#canastillas").addClass("obligatorio");
+            
+        
+                }   
+        }
+    }
+function regresarRecorridobtns() {
+    app.views.main.router.back('/recorridoDL8/', { force: true, ignoreCache: true, reload: true });
+}
+function regresarRecorridoinstalacion() {
+    app.views.main.router.back('/recorridoDL6/', { force: true, ignoreCache: true, reload: true });
+}
+function regresarRecorridocontrol() {
+    app.views.main.router.back('/recorridoDL5/', { force: true, ignoreCache: true, reload: true });
+}
+function guardarDLinventariopro() {
+    var values = get_datos_completos();
+    var quita_coma = values.response;
+    var valido = values.valido;
+    if (valido) {
+
+        var id_cedula = localStorage.getItem("IdCedula");
+        var nombre_producto = $("#nombre_producto").val();
+        var presentacion = $("#presentacion").val();
+        var existencia_dosi = $("#existencia_dosi").val();
+        var existencia_alm = $("#existencia_alm").val();
+        var comentarios = $("#comentarios").val();
+
+
+        databaseHandler.db.transaction(
+            function (tx) {
+                tx.executeSql("INSERT INTO inventario_productos (id_cedula, nombre_producto, presentacion, existencia_dos, existencia_alm, comentarios) VALUES (?,?,?,?,?,?)",
+                    [id_cedula, nombre_producto, presentacion, existencia_dosi, existencia_alm, comentarios],
+                    function (tx, results) {
+                        databaseHandler.db.transaction(
+                            function (tx) {
+                                tx.executeSql("Select * from inventario_productos where id_cedula = ? ORDER BY id_producto DESC",
+                                    [id_cedula],
+                                    function (tx, results) {
+                                        let length = results.rows.length;
+                                        var item = results.rows.item(0);
+
+                                        $("#tabla_productosdl").append("<tr id='fila" + item.id_producto + "'><td><a href='#' onclick='eliminarFilaDL(" + item.id_producto + ",12);' style='border: none; outline:none;'><img src='img/borrar.png' width='30px' /></a></td><td style='text-align: center;'>" + item.nombre_producto + "</td><td style='text-align: center;'>" + item.presentacion + "</td><td style='text-align: center;'>" + item.existencia_dos + "</td><td style='text-align: center;'>" + item.existencia_alm + "</td><td style='text-align: center;'>" + item.comentarios + "</td></tr>");
+
+                                        $("#nombre_producto").val('');
+                                        $("#presentacion").val('');
+                                        $("#existencia_dosi").val('');
+                                        $("#existencia_alm").val('');
+                                        $("#comentarios").val('');
+
+                                        $("#nombre_producto").css("background-color", "#FFFFFF");
+                                        $("#presentacion").css("background-color", "#FFFFFF");
+                                        $("#existencia_dosi").css("background-color", "#FFFFFF");
+                                        $("#existencia_alm").css("background-color", "#FFFFFF");
+                                        $("#comentarios").css("background-color", "#FFFFFF");
+
+                                        $("#message-nr").css("display", "none");
+                                        $('.preloader').remove();
+                                        $('.infinite-scroll-preloader').remove();
+                                        swal("", "Se guardaron los datos correctamente", "success");
+                                    },
+                                    function (tx, error) {
+                                        console.log("Error al guardar cedula: " + error.message);
+                                    }
+                                );
+                            },
+                            function (error) { },
+                            function () { }
+                        );
+                    },
+                    function (tx, error) {
+                        console.log("Error al guardar cedula: " + error.message);
+                    }
+                );
+            },
+            function (error) { },
+            function () { }
+        );
+    } else {
+        swal("", "Debes llenar estos campos para poder guardar: " + quita_coma, "warning");
+    }
+}
     function guardarsuministroDL(){
         var values = get_datos_completos();
         var quita_coma = values.response;
@@ -54190,6 +56359,322 @@ if ($("#proveedor").val() == "" || $("#sucursal").val() == "" || $("#rfc").val()
             swal("", "Debes de tomar una fotografía e ingresar un comentario" , "warning");
         }
     }
+    function guardarintallbd() {
+      
+        let id_cedula = localStorage.getItem("IdCedula");
+        let cliente = $("#cliente").val();
+        let contacto = $("#nombre_contacto").val();
+        let correo = $("#correo").val();
+        let telefono = $("#telefono").val();
+        let hora_entrada = $("#hora_entrada").val();
+        let hora_salida  = $("#hora_salida").val();
+        let localizacion  = $("#localizacion").val();
+        let colaborador  = $("#colaborador").val();
+
+      
+        if(cliente && contacto && correo && telefono && colaborador ){
+            databaseHandler.db.transaction(
+                function(tx){
+                    tx.executeSql("UPDATE instalacionDL SET nombre_contacto=?, correo=?, telefono =?, hora_entrada = ?, hora_salida = ?, localizacion = ?, colaborador = ? WHERE id_cedula = ? ",
+                        [contacto,correo,telefono,hora_entrada,hora_salida,localizacion,colaborador,id_cedula],
+                        function (tx, results) {
+                            
+                        swal("","Se guardaron los datos correctamente", "success");
+                        $('#cliente').css("background-color","#ffffff");
+                        $('#nombre_contacto').css("background-color","#ffffff");
+                        $('#correo').css("background-color","#ffffff");
+                        $('#telefono').css("background-color", "#ffffff");
+                        $("#hora_entrada").css("background-color", "#ffffff");
+                        $("#hora_salida").css("background-color", "#ffffff");
+                        $("#localizacion").css("background-color", "#ffffff");
+                        $("#colaborador").css("background-color", "#ffffff");
+
+                        },
+                        function(tx, error){
+                            console.error("Error al actualizar: " + error.message);
+                        }
+                    );
+                },
+                function(error){},
+                function(){}
+            );
+        }else{
+            swal("", "Debes de llenar todos los campos" , "warning");
+        }
+    }
+
+  function guardardagecotrolre(){
+        let id_cedula = localStorage.getItem("IdCedula");
+        let cliente = $("#cliente").val();
+        let contacto = $("#nombre_contacto").val();
+        let correo = $("#correo").val();
+      let telefono = $("#telefono").val();
+      
+        let hora_entrada = $("#hora_entrada").val();
+        let hora_salida = $("#hora_salida").val();
+        let colaborador = $("#colaborador").val();      
+        if(cliente && contacto && correo && telefono){
+            databaseHandler.db.transaction(
+                function(tx){
+                    tx.executeSql("UPDATE datosgencontrolDL SET nombre_contacto=?, correo=?, telefono =?, hora_entrada =?, hora_salida =?, colaborador =? WHERE id_cedula = ? ",
+                        [contacto,correo,telefono,hora_entrada,hora_salida, colaborador, id_cedula],
+                        function(tx, results){
+                        swal("","Se guardaron los datos correctamente", "success");
+                        $('#cliente').css("background-color","#ffffff");
+                        $('#nombre_contacto').css("background-color","#ffffff");
+                        $('#correo').css("background-color","#ffffff");
+                        $('#estatus_cliente').css("background-color","#ffffff");
+                            $('#telefono').css("background-color", "#ffffff");
+                            
+                        $("#hora_entrada").css("background-color","#ffffff");
+                        $("#hora_salida").css("background-color","#ffffff");
+                        $("#colaborador").css("background-color","#ffffff");
+                        },
+                        function(tx, error){
+                            console.error("Error al actualizar: " + error.message);
+                        }
+                    );
+                },
+                function(error){},
+                function(){}
+            );
+        }else{
+            swal("", "Debes de llenar todos los campos" , "warning");
+        }
+    }
+     function regresarmenuinstalacion(){
+            app.views.main.router.back('/recorridoDL6/', {force: true, ignoreCache: true, reload: true});
+}
+        function regresarmenucontrolOlor(){
+            app.views.main.router.back('/recorridoDL5/', {force: true, ignoreCache: true, reload: true});
+}
+        function regresarmenudilimpio(){
+            app.views.main.router.back('/menuDilimpio/', {force: true, ignoreCache: true, reload: true});
+        }
+function terminar_instalacion_post(){
+
+        var correo_cuenta='N/A';
+
+        if ($("#NombreFirma").val() == "" || $("#signate").val() == "" || $("#eval").val() == ""){
+            swal("", "Todos los campos son obligatorios", "warning");
+            return false;
+        }
+        
+      var id_cedula         = localStorage.getItem("IdCedula");
+      var nombrefirma       = $("#NombreFirma").val();
+      var firmaCliente      = $("#signate").val();
+         
+      if($("#eval").val() <= '3' && $("#comentario_cliente").val() == ""){
+          swal("","Por favor, ingresa el motivo de tu calificacion","warning");
+          return false;
+         }
+         
+      var calificacion = $("#eval").val();
+      var comentarioCliente = $('#comentario_cliente').val();
+      var fecha = new Date();
+      var fecha_firma =
+          fecha.getFullYear() +
+          "-" +
+          (fecha.getMonth() + 1) +
+          "-" +
+          fecha.getDate() +
+          " " +
+          fecha.getHours() +
+          ":" +
+          fecha.getMinutes() +
+          ":" +
+          fecha.getSeconds();
+
+      databaseHandler.db.transaction(
+        function (tx) {
+          tx.executeSql(
+            "UPDATE  instalacionDL SET firma_cliente = ? WHERE id_cedula = ?",
+            [firmaCliente, id_cedula],
+            function (tx, results) {
+              databaseHandler.db.transaction(
+                function (tx) {
+                  tx.executeSql(
+                    "UPDATE cedulas_general SET calificacion = ?, nombre_evalua = ?,comentario_cliente = ? WHERE id_cedula = ?",
+                    [calificacion, nombrefirma, comentarioCliente, id_cedula],
+                    function (tx, results) {
+                      swal("", "Guardado correctamente", "success");
+                      app.views.main.router.back("/yamevoyDLinstall/", {
+                        force: true,
+                        ignoreCache: true,
+                        reload: true,
+                      });
+                    },
+                    function (tx, error) {
+                      console.error("Error al guardar cierre: " + error.message);
+                    }
+                  );
+                },
+                function (error) {},
+                function () {}
+              );
+            },
+            function (tx, error) {
+              console.error("Error al guardar cierre: " + error.message);
+            }
+          );
+        },
+        function (error) {},
+        function () {}
+      );
+}
+      function terminarInstalacionDLfinal(){
+        if($('#imagenC').val() == ""){
+            swal("","La fotografia es obligatoria","warning");
+            return false;
+        }
+        var id_cedula = localStorage.getItem("IdCedula");
+        var foto_salida = $('#imagenC').val();
+        var fecha = new Date();
+        var fecha_salida = fecha.getFullYear()+"-"+(fecha.getMonth()+1)+"-"+fecha.getDate()+" "+fecha.getHours()+":"+fecha.getMinutes()+":"+fecha.getSeconds();
+        var ubicacion_salida = $('#geolocation').val();
+        var estatus = 1;
+        databaseHandler.db.transaction(
+            function(tx){
+                tx.executeSql("UPDATE instalacionDL SET foto_salida  = ? WHERE id_cedula = ?",
+                    [foto_salida,id_cedula],
+                    function(tx, results){
+                        databaseHandler.db.transaction(
+                            function(tx){
+                                tx.executeSql("UPDATE cedulas_general SET fecha_salida  = ?,geolocalizacion_salida = ?,estatus = ? WHERE id_cedula = ?",
+                                    [fecha_salida,ubicacion_salida,estatus,id_cedula],
+                                    function(tx, results){
+                                        window.location.href = "./menu.html";
+                                    },
+                                    function(tx, error){
+                                        swal("Error al guardar",error.message,"error");
+                                    }
+                                );
+                            },
+                            function(error){},
+                            function(){}
+                        );
+                    },
+                    function(tx, error){
+                        swal("Error al guardar",error.message,"error");
+                    }
+                );
+            },
+            function(error){},
+            function(){}
+        );
+    }
+    function terminar_olores_post(){
+
+        var correo_cuenta='N/A';
+
+        if ($("#NombreFirma").val() == "" || $("#signate").val() == "" || $("#eval").val() == ""){
+            swal("", "Todos los campos son obligatorios", "warning");
+            return false;
+        }
+        
+      var id_cedula         = localStorage.getItem("IdCedula");
+      var nombrefirma       = $("#NombreFirma").val();
+      var firmaCliente      = $("#signate").val();
+         
+      if($("#eval").val() <= '3' && $("#comentario_cliente").val() == ""){
+          swal("","Por favor, ingresa el motivo de tu calificacion","warning");
+          return false;
+         }
+         
+      var calificacion = $("#eval").val();
+      var comentarioCliente = $('#comentario_cliente').val();
+      var fecha = new Date();
+      var fecha_firma =
+          fecha.getFullYear() +
+          "-" +
+          (fecha.getMonth() + 1) +
+          "-" +
+          fecha.getDate() +
+          " " +
+          fecha.getHours() +
+          ":" +
+          fecha.getMinutes() +
+          ":" +
+          fecha.getSeconds();
+
+      databaseHandler.db.transaction(
+        function (tx) {
+          tx.executeSql(
+            "UPDATE datosgencontrolDL SET firma_cliente = ? WHERE id_cedula = ?",
+            [firmaCliente, id_cedula],
+            function (tx, results) {
+              databaseHandler.db.transaction(
+                function (tx) {
+                  tx.executeSql(
+                    "UPDATE cedulas_general SET calificacion = ?, nombre_evalua = ?,comentario_cliente = ? WHERE id_cedula = ?",
+                    [calificacion, nombrefirma, comentarioCliente, id_cedula],
+                    function (tx, results) {
+                      swal("", "Guardado correctamente", "success");
+                      app.views.main.router.back("/yamevoyDLolores/", {
+                        force: true,
+                        ignoreCache: true,
+                        reload: true,
+                      });
+                    },
+                    function (tx, error) {
+                      console.error("Error al guardar cierre: " + error.message);
+                    }
+                  );
+                },
+                function (error) {},
+                function () {}
+              );
+            },
+            function (tx, error) {
+              console.error("Error al guardar cierre: " + error.message);
+            }
+          );
+        },
+        function (error) {},
+        function () {}
+      );
+}
+ function terminarOloresfinal(){
+        if($('#imagenC').val() == ""){
+            swal("","La fotografia es obligatoria","warning");
+            return false;
+        }
+        var id_cedula = localStorage.getItem("IdCedula");
+        var foto_salida = $('#imagenC').val();
+        var fecha = new Date();
+        var fecha_salida = fecha.getFullYear()+"-"+(fecha.getMonth()+1)+"-"+fecha.getDate()+" "+fecha.getHours()+":"+fecha.getMinutes()+":"+fecha.getSeconds();
+        var ubicacion_salida = $('#geolocation').val();
+        var estatus = 1;
+        databaseHandler.db.transaction(
+            function(tx){
+                tx.executeSql("UPDATE datosgencontrolDL SET foto_salida  = ? WHERE id_cedula = ?",
+                    [foto_salida,id_cedula],
+                    function(tx, results){
+                        databaseHandler.db.transaction(
+                            function(tx){
+                                tx.executeSql("UPDATE cedulas_general SET fecha_salida  = ?,geolocalizacion_salida = ?,estatus = ? WHERE id_cedula = ?",
+                                    [fecha_salida,ubicacion_salida,estatus,id_cedula],
+                                    function(tx, results){
+                                        window.location.href = "./menu.html";
+                                    },
+                                    function(tx, error){
+                                        swal("Error al guardar",error.message,"error");
+                                    }
+                                );
+                            },
+                            function(error){},
+                            function(){}
+                        );
+                    },
+                    function(tx, error){
+                        swal("Error al guardar",error.message,"error");
+                    }
+                );
+            },
+            function(error){},
+            function(){}
+        );
+    }
     // Dilimpio Fin
     // Funcion global Inicio
     function eliminaCache(){
@@ -54383,8 +56868,6 @@ if ($("#proveedor").val() == "" || $("#sucursal").val() == "" || $("#rfc").val()
         var empresa = localStorage.getItem("nombre_empresa");
         if(empresa == "SMC"){
             app.views.main.router.navigate({ name: 'yallegueSMC'});
-        } else if(empresa == "LIC"){
-            app.views.main.router.navigate({ name: 'yallegueLIC'});
         } else if(empresa == "DIPREC"){
             app.views.main.router.navigate({ name: 'yallegueDIPREC'});
         } else if(empresa == "Bennetts"){
@@ -55712,6 +58195,15 @@ function clientSelected2(clientName,fecha){
     localStorage.setItem("year_detalle",fechaDetalle[0]);
     localStorage.setItem("month_detalle",fechaDetalle[1]);
     localStorage.setItem("day_detalle",fechaDetalle[2]);
+    app.views.main.router.navigate({name: 'calendar-page'});
+}
+function clientSelected3(clientName,fecha,orden){
+    let fechaDetalle = fecha.split("-");
+    localStorage.setItem("id_cliente",clientName);
+    localStorage.setItem("year_detalle",fechaDetalle[0]);
+    localStorage.setItem("month_detalle",fechaDetalle[1]);
+    localStorage.setItem("day_detalle",fechaDetalle[2]);
+    localStorage.setItem("orden_servicio",orden);
     app.views.main.router.navigate({name: 'calendar-page'});
 }
 //metodo regresar

@@ -1,10 +1,81 @@
+<style>
+    .span{
+            margin-top: 10px;
+            height: auto;
+            line-height: 22px;
+            margin-bottom: 3px;
+            margin-left: 0;width: 50%;
+    }
+    input[type="text"] {
+            margin-top: auto;
+            margin-bottom: auto;
+            width: 40% !important;
+    }
+    .FWM-fixing-form div{
+        margin-bottom: 10px;
+    }
+    #cajaB {
+              width: 350px;
+            }
+
+            #cajaB h1 {
+              color: rgb(3, 3, 3);
+              font-size: 12px;
+              text-transform: uppercase;
+              text-align: left;
+              line-height: 30px;
+              margin-left: 5px;
+            }
+
+            #pregunta {
+              position: relative ;
+              display: flex;
+              margin-top: 5px;
+              border: transparent;
+              box-sizing: border-box;
+              background: #FAFAFA;
+            }
+
+            #pregunta input[type=checkbox] {
+              display: none;
+            }
+            #pregunta input[type=radio] {
+              display: none;
+            }
+
+            #pregunta label {
+              display: block;
+              width: 150px;
+              height: 40px;
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              transition: 0.5s;
+              background: #FFF;  
+              
+            }
+
+            #pregunta label:hover {
+              background: #679ceb;
+            }
+
+            #pregunta input[type=checkbox]:checked + label {
+              background: #063E7F;
+              color: #FAFAFA;
+            }
+            #pregunta input[type=radio]:checked + label {
+              background: #063E7F;
+              color: #FAFAFA;
+            }
+
+</style>
 <template>
     <div class="page" style="background-color: rgb(245, 245, 245);">
         <div class="navbar" style="background-color: #063E7F;height: 52px;">
             <div style="text-align: center;"><img src="img/logo-FWM.png" style="margin-top: 5px;" height="41.38px" alt="Logo Field"></div>
             <div class="navbar-inner sliding" style="height: 52px;">
                 <div class="left">
-                    <a href="#" onclick="regresarRecorridoIvy2();">
+                    <a href="#" onclick="regresarRecorridobtns();">
                         <span class="nav-text-regresar" id="nav-text-regresar-function">Regresar</span>
                     </a>
                 </div>
@@ -13,46 +84,93 @@
             <!-- Contenido Formulario --> 
             <div class="page-content">
                 <div style="text-align: center; justify-content:center; margin-right:auto; margin-left:auto; width: 99%;margin-top: 30px;">
-                    <h2 class="FWN-titulo-2">SUMINISTRO DE AGUA</h2>
+                    <h2 class="FWN-titulo-2">Revisión de equipos dosificadores de lavanderia</h2>
+                    <h1 style="margin: 8px;padding: 0;font-size: 20px;text-align: unset;">Analisis del suministro de agua</h1>
                     <div style="text-align: left;">
-                        <div class="list FWM-fixing-form">
+                        <div class="list FWM-fixing-form" id="datos_form">
+                            <span class="span FWM-span-form" style="font-weight: bold;">LAVALOZA</span>
+                            <span id="text2" style="width: 90%;margin-bottom: 0;border-bottom: 0;margin-bottom: 10px;"> 
+                                <div id="pregunta" style="border: 1px solid #063E7F;width: 90%;margin-left: 5%;font-size: 17px;">
+                                    <input type="radio" name="pregunta4" onclick="AplicaDL(this.value,'suministros')" value="1" id="Res1">
+                                    <label for="Res1">Aplica</label>
+                                    <input type="radio" name="pregunta4" onclick="AplicaDL(this.value,'suministros')" value="0" id="Res2">
+                                    <label for="Res2">No aplica</label>                           
+                                </div>
+                            </span>
+
+
+                        <div id="suministros" style="display: none;">
                             <div style="display: flex;">
-                                <span class="span FWM-span-form" style="font-weight: bold;">1.- Cloro residual ppm: *</span>
-                                <input type="text" class="FWM-input" id="titulo" name="titulo" style="background-color: white;width: 20%;" onchange="inputLleno(this.id,this.value)"/>
+                                <span class="span FWM-span-form" style="font-weight: bold;">1.- Dureza de Agua: *</span>
+                                <input type="text" class="FWM-input " id="dureza_agua" name="dureza_agua" style="background-color: white;width: 20%;" onchange="inputLleno(this.id,this.value)"/>
                             </div>
                             <div style="display: flex;">
-                                <span class="span FWM-span-form" style="font-weight: bold;">2.- Dureza de Agua: *</span>
-                                <input type="text" class="FWM-input" id="titulo" name="titulo" style="background-color: white;width: 40%;" onchange="inputLleno(this.id,this.value)"/>
+                                <span class="span FWM-span-form" style="font-weight: bold;">2.- Solidos Disueltos Totales *</span>
+                                <input type="text" class="FWM-input " id="solidos" name="solidos" style="background-color: white;width: 40%;" onchange="inputLleno(this.id,this.value)"/>
+                            </div>
+                            <!-- <div style="display: flex;">
+                                <span class="span FWM-span-form" style="font-weight: bold;">3.- Cloro: *</span>
+                                <input type="text" class="FWM-input " id="cloro" name="cloro" style="background-color: white;width: 20%;" onchange="inputLleno(this.id,this.value)"/>
+                            </div> -->
+                            <div style="display: flex;">
+                                <span class="span FWM-span-form" style="font-weight: bold;">3.- Detergente: *</span>
+                                <input type="text" class="FWM-input " id="detergente" name="detergente" style="background-color: white;width: 20%;" onchange="inputLleno(this.id,this.value)"/>
                             </div>
                             <div style="display: flex;">
-                                <span class="span FWM-span-form" style="font-weight: bold;">3.- Bicarbonatos: *</span>
-                                <input type="text" class="FWM-input" id="titulo" name="titulo" style="background-color: white;width: 20%;" onchange="inputLleno(this.id,this.value)"/>
+                                <span class="span FWM-span-form" style="font-weight: bold;">4.- Secante: *</span>
+                                <input type="text" class="FWM-input " id="secante" name="secante" style="background-color: white;width: 20%;" onchange="inputLleno(this.id,this.value)"/>
                             </div>
                             <div style="display: flex;">
-                                <span class="span FWM-span-form" style="font-weight: bold;">4.- pH: *</span>
-                                <input type="text" class="FWM-input" id="titulo" name="titulo" style="background-color: white;width: 20%;" onchange="inputLleno(this.id,this.value)"/>
+                                <span class="span FWM-span-form" style="font-weight: bold;">5.- Temperatura del Agua (°C o OF) *</span>
+                                <input type="text" class="FWM-input " id="tem_agua" name="tem_agua" style="background-color: white;width: 20%;" onchange="inputLleno(this.id,this.value)"/>
                             </div>
-                            <div style="display: flex;">
-                                <span class="span FWM-span-form" style="font-weight: bold;">5.- Hierro: *</span>
-                                <input type="text" class="FWM-input" id="titulo" name="titulo" style="background-color: white;width: 20%;" onchange="inputLleno(this.id,this.value)"/>
+
+                        </div>
+
+
+
+
+
+
+                            <h1 style="margin: 8px;padding: 0;font-size: 20px;text-align: unset;">Check list Proceso de lavado</h1>
+                            <span class="span FWM-span-form" style="font-weight: bold;">LAVANDERIA</span>
+                            <span id="text2" style="width: 90%;margin-bottom: 0;border-bottom: 0;margin-bottom: 10px;"> 
+                                <div id="pregunta" style="border: 1px solid #063E7F;width: 90%;margin-left: 5%;font-size: 17px;">
+                                    <input type="radio" name="pregunta5" onclick="AplicaDL(this.value,'lavado')" value="1" id="Res3">
+                                    <label for="Res3">Aplica</label>
+                                    <input type="radio" name="pregunta5" onclick="AplicaDL(this.value,'lavado')" value="0" id="Res4">
+                                    <label for="Res4">No aplica</label>                           
+                                </div>
+                            </span>
+
+                            <div id="lavado" style="display: none;">
+                                <div style="display: flex;">
+                                    <span class="span FWM-span-form" style="font-weight: bold;">1.- Temperatura de Prelavado (oC o oOF): *</span>
+                                    <input type="text" class="FWM-input " id="tem_pre" name="tem_pre" style="background-color: white;width: 20%;" onchange="inputLleno(this.id,this.value)"/>
+                                </div>
+                                
+                                    <div style="display: flex;">
+                                    <span class="span FWM-span-form" style="font-weight: bold;">2.- Temperatura de Lavado (oC o oOF): *</span>
+                                    <input type="text" class="FWM-input " id="tem_lav" name="tem_lav" style="background-color: white;width: 20%;" onchange="inputLleno(this.id,this.value)"/>
+                                </div>
+                                
+                                    <div style="display: flex;">
+                                    <span class="span FWM-span-form" style="font-weight: bold;">3.- Temperatura de enjuague  (oC o oOF): *</span>
+                                    <input type="text" class="FWM-input " id="tem_enj" name="tem_enj" style="background-color: white;width: 20%;" onchange="inputLleno(this.id,this.value)"/>
+                                </div>
+                                
+                                    <div style="display: flex;">
+                                    <span class="span FWM-span-form" style="font-weight: bold;">4.- Num. De casnastillas de lavado : *</span>
+                                    <input type="text" class="FWM-input " id="canastillas" name="canastillas" style="background-color: white;width: 20%;" onchange="inputLleno(this.id,this.value)"/>
+                                </div>
                             </div>
-                            <div style="display: flex;">
-                                <span class="span FWM-span-form" style="font-weight: bold;">6.- : *</span>
-                                <input type="text" class="FWM-input" id="titulo" name="titulo" style="background-color: white;width: 20%;" onchange="inputLleno(this.id,this.value)"/>
-                            </div>
-                            <div style="display: flex;">
-                                <span class="span FWM-span-form" style="font-weight: bold;">7.- : *</span>
-                                <input type="text" class="FWM-input" id="titulo" name="titulo" style="background-color: white;width: 20%;" onchange="inputLleno(this.id,this.value)"/>
-                            </div>
-                            <div style="display: flex;">
-                                <span class="span FWM-span-form" style="font-weight: bold;">8.- : *</span>
-                                <input type="text" class="FWM-input" id="titulo" name="titulo" style="background-color: white;width: 20%;" onchange="inputLleno(this.id,this.value)"/>
-                            </div>
+                          
+                            
                             <div class="block grid-resizable-demo" style="margin-bottom: 50px;">
                                 <div class="row align-items-stretch" style="text-align: center;">
                                     <div class="col-100 medium-50" style="min-width: 50px; border-style: none;">
                                         <span class="resize-handler"></span>
-                                        <a href="#" onclick="GuardarSUROF1();" class="boton-equipo">Guardar</a>
+                                        <a href="#" onclick="guardarrevisonL();" class="boton-equipo">Guardar</a>
                                     </div>
                                 </div>
                             </div>
@@ -69,42 +187,50 @@
           pageInit: function () {
                 $('.preloader').remove();
                 $('.infinite-scroll-preloader').remove();
-                // var id_cedula = localStorage.getItem("IdCedula");
-                // var recorrido = 1;
-                // databaseHandler.db.transaction(
-                //     function(tx){
-                //         tx.executeSql("Select * from Fotos_SURO where id_cedula = ? and recorrido = ?",
-                //         [id_cedula,recorrido],
-                //             function(tx, results){
-                //                 var length = results.rows.length;
-                //                 var item = results.rows.item(0);
-                //                 console.log("item",item);
-                //                 if(length == 0){
-                //                             $("#message-nr").css("display", "block");
-                //                         } else {
-                //                             for(var i = 0; i< length; i++){
-                //                                 var item = results.rows.item(i);
-                //                                 $("#smallImage").attr("src","img/blank.png");
-                //                                 $('#imagenC').val("");
-                //                                 $("#photoIcon").attr("src","img/camera.svg");
-                //                                 $("#titulo").css("background-color", "#FFFFFF");
-                //                                 $("#tabla_SURO1 tbody").append("<tr id='fila"+ item.id_fotos +"'><td><a href='#' onclick='eliminarFilaSURO("+ item.id_fotos +",2);' style='border: none; outline:none;'><img src='img/borrar.png' width='30px' /></a></td><td><img src='"+item.foto+"' width='60px' style='margin-top: 4px;'/></td><td style='text-align: center;'>" + item.titulo + "</td><td style='text-align: center;'>" + item.fecha + "</td></tr>");
-                //                                 $("#message-nr").css("display", "none");
-                //                                 $('.preloader').remove();
-                //                             }
-                //                         }
-                                $('.infinite-scroll-preloader').remove();
-                                app.preloader.hide();
-                //             },
-                //             function(tx, error){
-                //                 console.log("Error al guardar cedula: " + error.message);
-                //                 app.preloader.hide();
-                //             }
-                //         );
-                //     },
-                //     function(error){},
-                //     function(){}
-                // );
+                var id_usuario = localStorage.getItem("id_usuario");
+                var id_cedula = localStorage.getItem("IdCedula");        
+                console.log('IDDDD',id_cedula)
+                databaseHandler.db.transaction(
+                    function(tx){
+                        tx.executeSql(
+                            "Select * from dosificadores_lavanderia WHERE id_cedula = ?",
+                                [id_cedula],
+                                function(tx, results){
+                                    let length = results.rows.length;
+                                     console.log(length);
+                                    for(var i = 0; i< length; i++){
+                                        var item = results.rows.item(i);
+                                        console.log(item);
+
+                                      
+                                        $("#dureza_agua").val(item.dureza_agua);
+                                        $("#solidos").val(item.solidos);
+                                        // $("#cloro").val(item.cloro);
+                                        $("#detergente").val(item.detergente);
+                                        $("#secante").val(item.secante);
+                                        $("#tem_agua").val(item.tempe_agua);
+
+                                    
+                                        $("#tem_pre").val(item.temp_prelav);
+                                        $("#tem_lav").val(item.temp_lava);
+                                        $("#tem_enj").val(item.temp_enju);
+                                        $("#canastillas").val(item.canastillas);
+                                        
+                                        $("input[name=pregunta4][value=" + item.lavad_rdio + "]").prop("checked", true);
+                                        $("input[name=pregunta5][value=" + item.lav_rdio2 + "]").prop("checked", true);
+                                        AplicaDL(item.lavad_rdio,'suministros')
+                                        AplicaDL(item.lav_rdio2,'lavado')
+                                    }
+                                    },
+                                function(tx, error){
+                                    console.log("Error: " + error.message);
+                                    app.preloader.hide();  
+                                }
+                        );  
+                    },
+                    function(error){},
+                    function(){}
+                );
             }
           }
     }

@@ -21,52 +21,52 @@
                 </div>
                     <div class="buttons-container" style="display: flex;">
                         <a href="/datosgeneralesDIPREC4/" class="fwm-button-recorrido">
-                            <img src="img/iconsMenu/persona2.svg" width="90px" height="90px" id="img1"/>
+                            <img src="img/iconsMenu/persona2.svg" width="90px" height="90px" id="img1" alt=""/>
                             <span class="fwm-text-recorrido">Datos Generales</span>
                         </a>
                         <a href="/formDIPREC8/" class="fwm-button-recorrido">
-                            <img src="img/iconsMenu/herramientas.svg" width="90px" height="90px" id="img2"/>
+                            <img src="img/iconsMenu/herramientas.svg" width="90px" height="90px" id="img2" alt=""/>
                             <span class="fwm-text-recorrido">Carga y Descarga</span>
                         </a>
                     </div>
                     <div class="buttons-container" style="display: flex;margin-top: 5%;">
                         <a href="/formDIPREC9/" class="fwm-button-recorrido">
-                            <img src="img/iconsMenu/revision_equipo.svg" width="90px" height="90px" id="img3"/>
-                            <span class="fwm-text-recorrido">Área de proyecto - Arquitectura</span>
+                            <img src="img/iconsMenu/apoyo.svg" width="90px" height="90px" id="img3" alt=""/>
+                            <span class="fwm-text-recorrido">Área de Proyecto - Arquitectura</span>
                         </a>
                         <a href="/formDIPREC10/" class="fwm-button-recorrido">
-                            <img src="img/iconsMenu/checklist.svg" width="90px" height="90px" id="img4"/>
+                            <img src="img/iconsMenu/checklist.svg" width="90px" height="90px" id="img4" alt=""/>
                             <span class="fwm-text-recorrido">Drenes</span>
                         </a>
                     </div>
                     <div class="buttons-container" style="display: flex;margin-top: 5%;">
                         <a href="/formDIPREC11/" class="fwm-button-recorrido">
-                            <img src="img/iconsMenu/equifina.svg" width="90px" height="90px" id="img5"/>
-                            <span class="fwm-text-recorrido">Hidraulica</span>
+                            <img src="img/iconsMenu/equifina.svg" width="90px" height="90px" id="img5" alt=""/>
+                            <span class="fwm-text-recorrido">Hidráulica</span>
                         </a>
                         <a href="/formDIPREC12/" class="fwm-button-recorrido">
-                            <img src="img/iconsMenu/herramientas.svg" width="90px" height="90px" id="img6"/>
+                            <img src="img/iconsMenu/electrico.svg" width="90px" height="90px" id="img6" alt=""/>
                             <span class="fwm-text-recorrido">Eléctrico</span>
                         </a>
                     </div>
                     <div class="buttons-container" style="display: flex;margin-top: 5%;">
                         <a href="/formDIPREC13/" class="fwm-button-recorrido">
-                            <img src="img/iconsMenu/revision_equipo.svg" width="90px" height="90px" id="img5"/>
+                            <img src="img/iconsMenu/insumos.svg" width="90px" height="90px" id="img7" alt=""/>
                             <span class="fwm-text-recorrido">Gas</span>
                         </a>
                         <a href="/formDIPREC18/" class="fwm-button-recorrido">
-                            <img src="img/iconsMenu/revision_equipo.svg" width="90px" height="90px" id="img5"/>
+                            <img src="img/iconsMenu/herramienta.svg" width="90px" height="90px" id="img8" alt=""/>
                             <span class="fwm-text-recorrido">Extracción</span>
                         </a>
                     </div>
                     <div class="buttons-container" style="display: flex;margin-top: 5%;">
                         <a href="/formDIPREC15/" class="fwm-button-recorrido">
-                            <img src="img/iconsMenu/mot.svg" width="90px" height="90px" id="img4"/>
+                            <img src="img/iconsMenu/mot.svg" width="90px" height="90px" id="img9" alt=""/>
                             <span class="fwm-text-recorrido">Evidencias</span>
                         </a>
                         <a href="/cierreDIPREC4/" class="fwm-button-recorrido">
-                            <img src="img/iconsMenu/estrellas.svg" width="90px" height="90px" id="img6"/>
-                            <span class="fwm-text-recorrido">Evaluación y cierre</span>
+                            <img src="img/iconsMenu/estrellas.svg" width="90px" height="90px" id="img10" alt=""/>
+                            <span class="fwm-text-recorrido">Evaluación y Cierre</span>
                         </a>
                     </div>
                 <!-- Inicio FWM Recorrido -->
@@ -102,7 +102,7 @@
                 );
                 databaseHandler.db.transaction(
                     function(tx){
-                        tx.executeSql("Select * FROM checklist_diprec WHERE id_cedula = ? AND (fase IS NOT NULL AND pregunta IS NOT NULL AND id IS NOT NULL AND valor IS NOT NULL AND tipo IS NOT NULL)",
+                        tx.executeSql("SELECT * from checklist_diprec WHERE id_cedula = ? AND fase = 6 AND (pregunta IS NOT NULL AND id IS NOT NULL AND valor IS NOT NULL AND tipo IS NOT NULL)",
                             [id_cedula],
                             function(tx, results){
                                 var item = results.rows.item(0);
@@ -119,12 +119,12 @@
                 );
                 databaseHandler.db.transaction(
                     function(tx){
-                        tx.executeSql("Select * FROM checklist_diprec WHERE id_cedula = ? AND (fase IS NOT NULL AND pregunta IS NOT NULL AND id IS NOT NULL AND valor IS NOT NULL AND tipo IS NOT NULL)",
+                        tx.executeSql("SELECT * from checklist_diprec WHERE id_cedula = ? AND fase = 7 AND (pregunta IS NOT NULL AND id IS NOT NULL AND valor IS NOT NULL AND tipo IS NOT NULL)",
                             [id_cedula],
                             function(tx, results){
                                 var item = results.rows.item(0);
                                 if(item.id_cedula > 0){
-                                    document.getElementById("img3").src="img/iconsMenu/revision_equipo2.svg";
+                                    document.getElementById("img3").src="img/iconsMenu/apoyo2.svg";
                                 }
                             },
                             function(tx, error){
@@ -136,7 +136,7 @@
                 );
                 databaseHandler.db.transaction(
                     function(tx){
-                        tx.executeSql("Select * FROM checklist_diprec WHERE id_cedula = ? AND (fase IS NOT NULL AND pregunta IS NOT NULL AND id IS NOT NULL AND valor IS NOT NULL AND tipo IS NOT NULL)",
+                        tx.executeSql("SELECT * from checklist_diprec WHERE id_cedula = ? AND fase = 8 AND (pregunta IS NOT NULL AND id IS NOT NULL AND valor IS NOT NULL AND tipo IS NOT NULL)",
                             [id_cedula],
                             function(tx, results){
                                 var item = results.rows.item(0);
@@ -151,6 +151,75 @@
                     function(error){},
                     function(){}
                 );
+                databaseHandler.db.transaction(
+                    function(tx){
+                        tx.executeSql("SELECT * from checklist_diprec WHERE id_cedula = ? AND fase = 9 AND (pregunta IS NOT NULL AND id IS NOT NULL AND valor IS NOT NULL AND tipo IS NOT NULL)",
+                            [id_cedula],
+                            function(tx, results){
+                                var item = results.rows.item(0);
+                                if(item.id_cedula > 0){
+                                    document.getElementById("img5").src="img/iconsMenu/equifina2.svg";
+                                }
+                            },
+                            function(tx, error){
+                            }
+                        );
+                    },
+                    function(error){},
+                    function(){}
+                );
+                databaseHandler.db.transaction(
+                    function(tx){
+                        tx.executeSql("SELECT * from checklist_diprec WHERE id_cedula = ? AND fase = 10 AND (pregunta IS NOT NULL AND id IS NOT NULL AND valor IS NOT NULL AND tipo IS NOT NULL)",
+                            [id_cedula],
+                            function(tx, results){
+                                var item = results.rows.item(0);
+                                if(item.id_cedula > 0){
+                                    document.getElementById("img6").src="img/iconsMenu/electrico2.svg";
+                                }
+                            },
+                            function(tx, error){
+                            }
+                        );
+                    },
+                    function(error){},
+                    function(){}
+                );
+                databaseHandler.db.transaction(
+                    function(tx){
+                        tx.executeSql("SELECT * from checklist_diprec WHERE id_cedula = ? AND fase = 11 AND (pregunta IS NOT NULL AND id IS NOT NULL AND valor IS NOT NULL AND tipo IS NOT NULL)",
+                            [id_cedula],
+                            function(tx, results){
+                                var item = results.rows.item(0);
+                                if(item.id_cedula > 0){
+                                    document.getElementById("img7").src="img/iconsMenu/insumos2.svg";
+                                }
+                            },
+                            function(tx, error){
+                            }
+                        );
+                    },
+                    function(error){},
+                    function(){}
+                );
+                databaseHandler.db.transaction(
+                    function(tx){
+                        tx.executeSql("SELECT * from checklist_diprec WHERE id_cedula = ? AND fase = 12 AND (pregunta IS NOT NULL AND id IS NOT NULL AND valor IS NOT NULL AND tipo IS NOT NULL)",
+                            [id_cedula],
+                            function(tx, results){
+                                var item = results.rows.item(0);
+                                if(item.id_cedula > 0){
+                                    document.getElementById("img8").src="img/iconsMenu/herramienta2.svg";
+                                }
+                            },
+                            function(tx, error){
+                            }
+                        );
+                    },
+                    function(error){},
+                    function(){}
+                );
+                
             }
         }
     }

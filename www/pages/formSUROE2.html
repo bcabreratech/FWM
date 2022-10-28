@@ -37,18 +37,24 @@
                 <div class="page-content">
 
                     <div style="text-align: center; justify-content:center; margin-right:auto; margin-left:auto; width: 99%;margin-top: 30px;">
-                        <h2 class="FWN-titulo-2">Alta de Consumible</h2>
+                        <h2 class="FWN-titulo-2">Tipo de Maquina</h2>
     
                     <div style="text-align: left;">     
                         <div class="list FWM-fixing-form">
-                            <span class="span FWM-span-form">Nombre de la maquinaria:</span>
+                            <span class="span FWM-span-form">Nombre:</span>
                             <input type="text" name="" id="nombre_maquina" class="FWM-input" onchange="inputLleno(this.id,this.value)">
     
-                            <span class="span FWM-span-form">Modelo de la maquinaria:</span>
+                            <span class="span FWM-span-form">Modelo:</span>
                             <input type="text" name="" id="modelo_maquina" class="FWM-input" onchange="inputLleno(this.id,this.value)">
 
-                            <span class="span FWM-span-form">Consumible de maquinaria:</span>
-                            <input type="text" name="" id="consumible" class="FWM-input" onchange="inputLleno(this.id,this.value)">
+                            <span class="span FWM-span-form">Consumible:</span>
+                            <select id="consumible" style="width: 100%; padding-left: 3px; font-size: 15px; height: 37px; font-family: 'ITC Avant Garde Gothic', sans-serif; background-color: white; border-radius: 8px; border: 1px solid gray;" onchange="">
+                                <option value="0">Selecciona un opción</option>
+                                <option value="Gasolina">Gasolina</option>
+                                <option value="Diesel">Diesel</option>
+                                <option value="Gas">Gas</option>
+                            </select>
+                            <!--<input type="text" name="" id="consumible" class="FWM-input" onchange="inputLleno(this.id,this.value)">-->
 
                             <div class="block grid-resizable-demo" style="margin-bottom: 80px; margin-top: 50px;">
                                 <div class="row align-items-stretch" style="text-align: center;">

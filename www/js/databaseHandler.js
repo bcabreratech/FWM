@@ -234,13 +234,14 @@ var databaseHandler = {
                         }
                     );
                     tx.executeSql(
-                        "create table if not exists datos_generales_diprec(id_dato integer primary key,id_cedula integer,proyecto text, pedido text, fecha text, referencia text, proyectos text, vendedor text, mombre text, razon_social text, direccion text, telefono text, rfc text, atencion text, puesto text,reponsable text, puesto2 text,foto_entrada blob,firma_cliente blob,fecha_cliente text,foto_salida blob)",
+                        "create table if not exists datos_generales_diprec(id_dato integer primary key,id_cedula integer,proyecto text, pedido text, fecha text, referencia text, proyectos text, vendedor text, mombre text, razon_social text, direccion text, telefono text, rfc text, atencion text, puesto text, foto_entrada blob, fecha_cliente text,foto_salida blob, firma_cliente blob,nombre_puesto text)",
+                        // "drop table datos_generales_diprec",
                         [],
                         function(tx, results){
-                            // console.log("Se creo notas coordinador DIPREC correctamente!");
+                            // console.log("Se elimino correctamente la tabla datos generales");
                         },
                         function(tx, error){
-                            console.error("Error al crear la tabla de levantamiento_smc: " + error.message);
+                            console.error("Error al crear la tabla de datos generales diprec: " + error.message);
                         }
                     );
                     tx.executeSql(
@@ -260,7 +261,46 @@ var databaseHandler = {
                           //console.log("Se creo datos_generales correcto");
                         },
                         function(tx, error){
-                            console.error("Error al crear la tabla checklist Serv: " + error.message);
+                            console.error("Error al crear la tabla checlist diprec: " + error.message);
+                        }
+                    );
+
+                    // -|-|-|-|-|-|-|     TABLAS DEL TERCER RECORRIDO DE DIPREC     |-|-|-|-|-|-|-
+
+                    // Crea tabla de datos datos_generales_seguridad_higiene
+                    tx.executeSql(
+                        "create table if not exists datos_generales_hse(id_dato integer primary key, id_cedula integer, nombre_inspecciona text, tipo_inspeccion text, codigo text, ubicacion text, responsable_equipo text, foto_entrada blob, foto_salida blob, fecha_cliente text, firma_cliente blob)",
+                        // "drop table datos_generales_hse",
+                        [],
+                        function(tx, results){
+                            // console.log("Se elimino correctamente la tabla datos_generales_hse");
+                        },
+                        function(tx, error){
+                            console.error("Error al crear la tabla de datos_generales_hse: " + error.message);
+                        }
+                    );
+                    // Crea la tabla de checklist_seguridad_higiene
+                    tx.executeSql(
+                        "create table if not exists checklist_seguridad_higiene(id_pregunta integer primary key,id_cedula integer,fase text,pregunta text,id text,valor text, tipo text)",
+                        // "drop table checklist_seguridad_higiene",
+                        [],
+                        function(tx, results){
+                          //console.log("Se creo correctamente checklist_seguridad_higiene");
+                        },
+                        function(tx, error){
+                            console.error("Error al crear la tabla checklist_seguridad_higiene: " + error.message);
+                        }
+                    );
+                     // Crea la tabla de foto_evidencia_seguridad_higiene
+                     tx.executeSql(
+                        "create table if not exists foto_evidencia_seguridad_higiene(id_evidencia integer primary key,id_cedula integer, comentario text, foto blob,area text, recorrido text, fecha text)",
+                        // "drop table foto_evidencia_seguridad_higiene",
+                        [],
+                        function(tx, results){
+                          //console.log("Se creo correctamente la tabla foto_evidencia_seguridad_higiene");
+                        },
+                        function(tx, error){
+                            console.error("Error al crear la tabla foto_evidencia_seguridad_higiene: " + error.message);
                         }
                     );
                 }
@@ -632,6 +672,7 @@ var databaseHandler = {
                 //Fin Bennettsl
                 //incio SURO2
                if(empresa == "SURO2"){
+                //datos generales
                 tx.executeSql(
                     "create table if not exists datos_maquinaria(id_dato integer primary key,id_cedula integer,foto_inicio blob,id_cliente text,cliente text, firma_cliente blob,fecha_cliente text,foto_salida blob,encargado_turno text,turno text)",
                     [],
@@ -642,6 +683,18 @@ var databaseHandler = {
                         console.error("Error al crear la tabla Cobranza")
                     }
                 );
+                //Entrega de turno
+                tx.executeSql(
+                    "create table if not exists entrega_turno(id_entrega integer primary key,id_cedula integer,nombre_entrega text, cleaning_asign text, cleaning_dejan text, t_rutinas text,no_tarjetas_acces_dejan int, radios_asign int,radios_dejan text, cel_cargador text, herraminetas_asign int,herramientas_dejan text, activi_pendi text)",
+                    [],
+                    function(){
+                        //console.log("Tabla entrega de turno se creo correctamente")
+                    },
+                    function(){
+                        console.error("Error al crear la tabla entrega_turno")
+                    }
+                );
+                //Maquinaria
                 tx.executeSql(
                     "create table if not exists maquinarias(id_maquina integer primary key,id_cedula integer,sitio text, nombre_recibe text, nombre_maquina text, no_serie text, marca text, modelo text, propietario int, propietario_mmto int, tipo text, fecha_maquina text)",
                     [],
@@ -682,6 +735,7 @@ var databaseHandler = {
                         console.error("Error al crear la tabla Cobranza")
                     }
                 );
+                //Materiales
                 tx.executeSql(
                     "create table if not exists materiales_suro(id_material integer primary key,id_cedula integer,nombre_material text, codigo_material text, fecha_alta text, sitio text, inventario text, nombre_da_alta text, precio text)",
                     [],
@@ -703,7 +757,7 @@ var databaseHandler = {
                     }
                 );
                 tx.executeSql(
-                    "create table if not exists entrada_material(id_entrada integer primary key,id_cedula integer, fecha_material text, fecha_recepcion text, quien_recibe text)",
+                    "create table if not exists entrada_material(id_entrada integer primary key,id_cedula integer, nom_material text, fecha_recepcion text, quien_recibe text, cant_recibe text)",
                     [],
                     function(tx,results){
                         // console.log("Se creo Control correctamente!")
@@ -712,11 +766,44 @@ var databaseHandler = {
                         console.error("Error al crear la tabla Cobranza")
                     }
                 );
-                tx.executeSql(
+                /*tx.executeSql(
                     "create table if not exists listado_material(id_entrada integer primary key,id_cedula integer, nombre_sitio text, sucursal text, nombre_comercial text, sitio text, presupuesto text, direccion text, nombre_contacto text, telefono_contacto text, correo_contacto text)",
                     [],
                     function(tx,results){
                         // console.log("Se creo Control correctamente!")
+                    },
+                    function(tx,results){
+                        console.error("Error al crear la tabla Cobranza")
+                    }
+                );*/
+               
+                tx.executeSql(
+                    "create table if not exists listado_material(id_entrada integer primary key,id_cedula integer,nombre_material text, codigo_material text, fecha_alta text, sitio text, inventario_sitio integer, supervisor_alta text, precio text )",
+                    [],
+                    function(tx,results){
+                        //console.log("Se creo Control listado_material!")
+                    },
+                    function(tx,results){
+                        console.error("Error al crear la tabla Cobranza")
+                    }
+                );
+
+                tx.executeSql(
+                    "create table if not exists checklist(id_entrada integer primary key,id_cedula integer,nombre_material text, codigo_material text, fecha text, sitio text, encargado text,disponible integer )",
+                    [],
+                    function(tx,results){
+                        //console.log("Se creo Control listado_material!")
+                    },
+                    function(tx,results){
+                        console.error("Error al crear la tabla Cobranza")
+                    }
+                );
+
+                tx.executeSql(
+                    "create table if not exists ProgramLimp(id_entrada integer primary key,id_cedula integer, usuario text, id_limpieza integer, fecha text,status integer)",
+                    [],
+                    function(tx,results){
+                        console.log("Se creo ProgramLimp!")
                     },
                     function(tx,results){
                         console.error("Error al crear la tabla Cobranza")
@@ -1060,6 +1147,63 @@ var databaseHandler = {
             //Inicio DILIMPIO
             if(empresa == "Dilimpio"){
                 tx.executeSql(
+                    "create table if not exists equipo_comision(id_equipo integer primary key, id_cedula integer, equipo text, cantidad integer,reporte text)",
+                    [],
+                    function(tx, results){
+                     //    console.log("Se creo APOYO VIC correctamente!");
+                    },
+                    function(tx, error){
+                        console.error("Error al crear la tabla equipo_comision: " + error.message);
+                    }
+                );
+     
+                tx.executeSql("create table if not exists resultados_lavado (id_check integer primary key, id_cedula integer, apariencia text ,rango text , olor text , estatico text ,suavidad text ,remocion_mancha text, hierro text, cloro text, pH text, efecto_cebra text, efecto_piling text,temperatura text, niveles_agua text, extraccion text, drenajes text, rotacion text,incrustacion text, manual_auto text, capacidad_lavadora text, cartulinas_la text, formulas_lav text, clasi_ropa text, peso_ropa text, cargado_agua text,tiempo_secado text, filtro_secadora text, manglesitem text, othersitem text,pregunta1 text,pregunta2 text,pregunta3 text)",
+                [],
+                function(tx, results){
+                   console.log("Se creo tabla resultados_lavado!");
+                },
+                function(tx, error){
+                    console.error("Error al crear la tabla resultados_lavado: " + error.message);
+                }
+            );
+                tx.executeSql("create table if not exists dosificadores_lavanderia (id_formula integer primary key, id_cedula integer, dureza_agua text, solidos text, cloro text, tempe_agua text, lavad_rdio text, temp_prelav text, temp_lava text, temp_enju text, canastillas text, lav_rdio2 text,detergente text,secante text)",
+                [],
+                function(tx, results){
+                   console.log("Se creo dosificadores_lavanderia correctamente!");
+                },
+                function(tx, error){
+                    console.error("Error al crear la tabla dosificadores_lavandería : " + error.message);
+                }
+            );
+                tx.executeSql(
+                    "create table if not exists evidencias_equipo_comision(id_evidencia integer primary key, id_cedula integer, foto blob, equipo text, quimico text, fecha text,comentarios text, fase integer,condiciones_equipo text)",
+                    [],
+                    function(tx, results){
+                     //    console.log("Se creo APOYO VIC correctamente!");
+                    },
+                    function(tx, error){
+                        console.error("Error al crear la tabla evidencias_equipo_comision: " + error.message);
+                    }
+                );
+                tx.executeSql("create table if not exists inventario_productos (id_producto integer primary key, id_cedula integer,nombre_producto text, presentacion text, existencia_dos integer, existencia_alm integer, comentarios text)",
+                [],
+                function(tx, results){
+                   console.log("Se creo inventario_productos  correctamente!");
+                },
+                function(tx, error){
+                    console.error("Error al crear la tabla inventario_productos: " + error.message);
+                }
+            );
+                tx.executeSql("create table if not exists check_lavanderia(id_check integer primary key, id_cedula integer, apariencia text, rango text, olor text, estatico text, suavidad text, remocion_mancha text, hierro text, cloro text, pH text, efecto_cebra text, efecto_piling text, temperatura text, niveles_agua text, extraccion text, drenajes text, rotacion text, incrustacion text, manual_auto text, capacidad_lavadora text,cartulinas_lavado text,formulas_lavado text,clasificacion_ropa text,peso_ropa text,cargado_ropa text,tiempo_secado text,filtros_secadora text,mangles text,otros text, cloro_residual text, dureza_agua text, bicarbonatos text, pH2 text, hierro2 text)",
+                    [],
+                    function(tx, results){
+                    //    console.log("Se creo APOYO VIC correctamente!");
+                    },
+                    function(tx, error){
+                        console.error("Error al crear la tabla check_lavanderia: " + error.message);
+                    }
+                );
+                tx.executeSql(
                     "create table if not exists visitaDilimpio(id_datos integer primary key, id_cedula integer, foto_inicio blob, id_cliente text, nombre_cliente text, nombre_contacto text , correo text, telefono text, id_visita text, firma_cliente blob, foto_salida blob, observaciones_generales text, estado_cuenta text, permite_almacen text, persona_cuenta text, correo_cuenta text)",
                     [],
                     function(tx, results){
@@ -1130,10 +1274,10 @@ var databaseHandler = {
                     }
                 );
                 tx.executeSql(
-                    "create table if not exists DatosentregasDL(id_datos integer primary key, id_cedula integer, foto_inicio blob, id_cliente text, nombre_cliente text, nombre_contacto text , correo text, telefono text, id_visita text, firma_cliente blob, foto_salida blob)",
+                    "create table if not exists DatosentregasDL(id_datos integer primary key, id_cedula integer, foto_inicio blob, id_cliente text, nombre_cliente text, nombre_contacto text , correo text, telefono text, id_visita text, firma_cliente blob, foto_salida blob,hora_entrada text,hora_salida text,colaborador text,direccion text,ciudad text, responsable text,territorio text, maquina text,horario text)",
                     [],
                     function(tx, results){
-                     //    console.log("Se creo APOYO VIC correctamente!");
+                     console.log("Se creo DatosentregasDL correctamente!");
                     },
                     function(tx, error){
                         console.error("Error al crear la tabla entregasDL: " + error.message);
@@ -1177,6 +1321,27 @@ var databaseHandler = {
                     },
                     function(tx, error){
                         console.error("Error al crear la tabla entregasDL: " + error.message);
+                    }
+                );
+                tx.executeSql(
+                    "create table if not exists instalacionDL(id_datos integer primary key, id_cedula integer, foto_inicio blob, id_cliente text, nombre_cliente text, nombre_contacto text , correo text, telefono text, id_visita text, firma_cliente blob, foto_salida blob, hora_entrada text ,hora_salida text,localizacion text, colaborador text)",
+                    [],
+                    function(tx, results){
+                         console.log("Se creo instalacionDL correctamente!");
+                    },
+                    function(tx, error){
+                        console.error("Error al crear la tabla intalacion entregasDL: " + error.message);
+                    }
+                );
+
+                    tx.executeSql(
+                    "create table if not exists datosgencontrolDL(id_datos integer primary key, id_cedula integer, foto_inicio blob, id_cliente text, nombre_cliente text, nombre_contacto text , correo text, telefono text, id_visita text, firma_cliente blob, foto_salida blob, hora_entrada text, hora_salida text, colaborador text)",
+                    [],
+                    function(tx, results){
+                       console.log("Se creo datosgencontrolDL correctamente!");
+                    },
+                    function(tx, error){
+                        console.error("Error al crear la tabla control de olores DL: " + error.message);
                     }
                 );
             }

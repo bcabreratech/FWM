@@ -194,12 +194,12 @@ p {
                                 </p>
                                 <div class="FWM-photo-container">
                                     <div class="border-capture">
-                                        <a onclick="capturePhoto();">
-                                            <img class="FWM-photo" src="img/camera.svg" id="photoIcon" width="45px"/>
+                                        <a onclick="capturePhoto1();">
+                                            <img class="FWM-photo" src="img/camera.svg" id="photoIcon1" width="45px"/>
                                         </a>
                                     </div>
-                                    <img class="FWM-photo-hide" id="smallImage" src=""/>
-                                    <input type="hidden" id="imagenC" name="imagenC"/>
+                                    <img class="FWM-photo-hide" id="smallImage1" src=""/>
+                                    <input type="hidden" id="imagenC1" name="imagenC1"/>
                                 </div>
 
                                 <div class="popup popup-photo" style="text-align: center;">
@@ -514,10 +514,10 @@ p {
                                     $('#fecha_entrada').html(item.fecha);
                                     
                                     if (item.foto_sello){
-                                        $("#imagenC3").val(item.foto_sello);
-                                        $("#smallImage3").attr("src", item.foto_sello);
-                                        $("#smallImage3").css("display","block")
-                                        $("#photoIcon").attr("src","img/reload.svg");
+                                        $("#imagenC1").val(item.foto_sello);
+                                        $("#smallImage1").attr("src", item.foto_sello);
+                                        $("#smallImage1").css("display","block")
+                                        $("#photoIcon1").attr("src","img/reload.svg");
                                     }
 
                                     var id_visita = id_cedula;

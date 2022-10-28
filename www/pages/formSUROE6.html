@@ -41,26 +41,26 @@
     
                     <div style="text-align: left;">     
                         <div class="list FWM-fixing-form">
-                            <span class="span FWM-span-form">Sitio:</span>
-                            <input type="text" name="" id="1" class="FWM-input" onchange="inputLleno(this.id,this.value)">
+                            <!--<span class="span FWM-span-form">Sitio:</span>
+                            <input type="text" name="" id="sitio" class="FWM-input" onchange="inputLleno(this.id,this.value)">
 
                             <span class="span FWM-span-form">Nombre del Supervisor que solicita material:</span>
-                            <input type="text" name="" id="3" class="FWM-input" onchange="inputLleno(this.id,this.value)">
+                            <input type="text" name="" id="quiem_solicita" class="FWM-input" onchange="inputLleno(this.id,this.value)">
 
                             <span class="span FWM-span-form">Codigo de material:</span>
-                            <input type="text" name="" id="5" class="FWM-input" onchange="inputLleno(this.id,this.value)">
+                            <input type="text" name="" id="codigo_material" class="FWM-input" onchange="inputLleno(this.id,this.value)">
 
                             <span class="span FWM-span-form">Cantidad solicitada:</span>
-                            <input type="text" name="" id="6" class="FWM-input" onchange="inputLleno(this.id,this.value)">
+                            <input type="text" name="" id="cantidad_solicitada" class="FWM-input" onchange="inputLleno(this.id,this.value)">
 
                             <div class="block grid-resizable-demo" style="margin-bottom: 80px; margin-top: 50px;">
                                 <div class="row align-items-stretch" style="text-align: center;">
                                     <div class="col-100 medium-50" style="min-width: 50px; border-style: none;">
                                         <span class="resize-handler"></span>
-                                        <a href="#" onclick="" class="boton-equipo" style="background-color: #063E7F; color: white;">Agregar a Solicitud</a>
+                                        <a href="#" onclick="guardarSolidMaterialSURO2()" class="boton-equipo" style="background-color: #063E7F; color: white;">Agregar a Solicitud</a>
                                     </div>
                                 </div>
-                            </div>
+                            </div>-->
 
                         </div>
                         <div class="block-title FWM-subtitulo">Listado de Solicitud:</div>  
@@ -69,23 +69,89 @@
                                     <table id="tabla_SURO9">
                                         <thead>
                                             <tr>
-                                                <th class="numeric-cell" style="text-align: center;background-color: #063E7F;color: white;">Accion</th>
-                                                <th class="numeric-cell" style="text-align: center;background-color: #063E7F;color: white;">Codigo Material</th>
-                                                <th class="numeric-cell" style="text-align: center;background-color: #063E7F;color: white;">Nombre Material</th>
-                                                <th class="numeric-cell" style="text-align: center;background-color: #063E7F;color: white;">Cantidad Solicitada</th>
-                                                <th class="numeric-cell" style="text-align: center;background-color: #063E7F;color: white;">Fecha</th>
+                                                <th class="numeric-cell" style="text-align: center;background-color: #063E7F;color: white;">Material</th>
+                                                <th class="numeric-cell" style="text-align: center;background-color: #063E7F;color: white;">Codigo</th>
+                                                <th class="numeric-cell" style="text-align: center;background-color: #063E7F;color: white;">Consumo <br> Estimado  <br>Mensual</th>
+                                                <th class="numeric-cell" style="text-align: center;background-color: #063E7F;color: white;">UM</th>
+                                                <th class="numeric-cell" style="text-align: center;background-color: #063E7F;color: white;">Inventario  <br>a día del  <br>pedido</th>
+                                                <th class="numeric-cell" style="text-align: center;background-color: #063E7F;color: white;">Sugerido  <br>a pedir</th>
+                                                <th class="numeric-cell" style="text-align: center;background-color: #063E7F;color: white;">Pedido</th>
                                             </tr>
                                         </thead>
-                                        <tbody></tbody>
+                                        <tbody id="tabla_registros">
+                                            <tr>
+                                                <td>DISCO PORKO NATURAL 19 1 PZA14819 UHS 19NATURAL POLY 1956</td>
+                                                <td>AR-JR-11012</td>
+                                                <td>5</td>
+                                                <td>Pza</td>
+                                                <td>3</td>
+                                                <td>2</td>
+                                                <td><input type="number" value="2" class="FWM-input" onchange="inputLleno(this.id,this.value)"></td>
+                                            </tr>
+                                            <tr>
+                                                <td>DISCO DE LANA DE ACERO 19" MEDIO</td>
+                                                <td>AR-JR-11014</td>
+                                                <td>10</td>
+                                                <td>Pza</td>
+                                                <td>6</td>
+                                                <td>4</td>
+                                                <td><input type="number" value="4" class="FWM-input" onchange="inputLleno(this.id,this.value)"></td>
+                                            </tr>
+                                            <tr>
+                                                <td>FIBRA 3M ESPONJA</td>
+                                                <td>AR-JR-11060</td>
+                                                <td>12</td>
+                                                <td>Pza</td>
+                                                <td>5</td>
+                                                <td>7</td>
+                                                <td><input type="number" value="7" class="FWM-input" onchange="inputLleno(this.id,this.value)"></td>
+                                            </tr>
+                                            <tr>
+                                                <td>REP TRAPEADOR ANTIB INTER AZUL8418B</td>
+                                                <td>AR-JR-20011</td>
+                                                <td>5</td>
+                                                <td>Pza</td>
+                                                <td>1</td>
+                                                <td>4</td>
+                                                <td><input type="number" value="3" class="FWM-input" onchange="inputLleno(this.id,this.value)"></td>
+                                            </tr>
+                                            <tr>
+                                                <td>TRAPEADOR DE MICROFIBRA AZUL250GR</td>
+                                                <td>AR-JR-20016</td>
+                                                <td>2</td>
+                                                <td>Pza</td>
+                                                <td>2</td>
+                                                <td>0</td>
+                                                <td><input type="number" value="" class="FWM-input" onchange="inputLleno(this.id,this.value)"></td>
+                                            </tr>
+                                            <tr>
+                                                <td>BOLSA 24X24 NATURAL MC</td>
+                                                <td>AR-JR-40038</td>
+                                                <td>1</td>
+                                                <td>Pza</td>
+                                                <td>1</td>
+                                                <td>0</td>
+                                                <td><input type="number" value="" class="FWM-input" onchange="inputLleno(this.id,this.value)"></td>
+                                            </tr>
+                                        </tbody>
                                     </table>
                                     <!-- <div class="sentencia preloader color-grey infinite-scroll-preloader"></div> -->
                                     <div id="message-nr" style="width: 100%;text-align: center;font-family: 'ITC Avant Garde Gothic', sans-serif;font-size: 16px;" style="display: none;">
-                                        <p>Sin registros</p>
+                                        
+                                    </div>
+                                    
+                                </div>
+                                
+                            </div>
+                            <div class="block grid-resizable-demo" style="margin-bottom: 80px; margin-top: 50px;">
+                                <div class="row align-items-stretch" style="text-align: center;">
+                                    <div class="col-100 medium-50" style="min-width: 50px; border-style: none;">
+                                        <span class="resize-handler"></span>
+                                        <a href="#" onclick="BajamaquinaSuro()" class="boton-equipo" style="background-color: #063E7F; color: white;">Guardar Datos</a>
                                     </div>
                                 </div>
                             </div>
-                    </div>
-
+                        </div>
                     </div>
                 </div>
             </div>
@@ -98,6 +164,29 @@
                     var id_usuario = localStorage.getItem("id_usuario");
                     var id_cedula = localStorage.getItem("IdCedula");
                     
+                    databaseHandler.db.transaction(
+                            function(tx){
+                                tx.executeSql("Select * from solicitud_material where id_cedula = ? ORDER BY id_solicitud DESC",
+                                [id_cedula],
+                                    function(tx, results){
+                                        $("#message-nr").css("display","none");
+                                        var item = results.rows.item(0);
+                                        $("#tabla_registros").append("<tr id='fila"+ 
+                                            item.id_entrada +"'><td class='FWM-table-options'><a href='#' onclick='eliminarFilaSURO2("+ 
+                                            item.id_entrada +",8);' style='border: none; outline:none;'><img src='img/borrar.png' width='30px' style='margin-top:10%' /></a></td><td>"+
+                                            item.sitio+"</td><td>"+
+                                            item.quiem_solicita+"</td><td style='text-align: center;'>" +item.codigo_material + "</td><td style='text-align: center;'>" + 
+                                            item.cantidad_solicitada + "</td></tr>"
+                                        );
+                                    },
+                                    function(tx, error){
+                                        console.log("Error al guardar cedula: " + error.message);
+                                    }
+                                );
+                            },
+                            function(error){},
+                            function(){}
+                        );
                     
                 }
             }  

@@ -113,7 +113,7 @@
                                 <p style="margin: 0;">
                                     <label style="font-size: 20px;color:#063E7F;font-family: 'ITC Avant Garde Gothic', sans-serif;font-size: 20px;"><strong>Puesto</strong></label>
                                 </p>
-                                <center><input style="display: block;margin: 0 auto;width: 100%;border: 0;border-bottom: 1px solid rgba(0,0,0,.2);height: 35px;line-height: 45px;  margin-bottom: 10px;font-size: 1em;" class="spanBlanco" type="text" name="puesto" id="puesto" placeholder="Puesto de quién recibió el servicio:"></center><br/>
+                                <center><input style="display: block;margin: 0 auto;width: 100%;border: 0;border-bottom: 1px solid rgba(0,0,0,.2);height: 35px;line-height: 45px;  margin-bottom: 10px;font-size: 1em;" class="spanBlanco" type="text" name="nombre_puesto" id="nombre_puesto" placeholder="Puesto de quién recibió el servicio:"></center><br/>
                                 <!-- Contenedor de botones -->
                                 <div class="BotonesCierreContainer text-center" style="display: flex; flex-direction: row;justify-content: center;">
                                     <a class="link popup-open" href="#" onclick="vertical();" data-popup=".popup-photo"><img src="img/iconsMenu/firmardigital.svg" width="80px" /></a>
@@ -189,7 +189,7 @@
                                     <div class="row align-items-stretch" style="text-align: center;">
                                         <div class="col-100 medium-50" style="min-width: 50px; border-style: none;">
                                             <span class="resize-handler"></span>
-                                            <a href="#" onclick="guardarCierreLevantamientoDIPREC();" class="boton-personalizado-4 link"> Terminar servicio</a>
+                                            <a href="#" onclick="guardarCierreLiberacionDIPREC();" class="boton-personalizado-4 link"> Terminar servicio</a>
                                         </div>
                                     </div>
                                 </div>
@@ -215,16 +215,28 @@
                             function(tx, results){
                                 let length = results.rows.length;
                                 if(length == 0){
+
                                 } else {
-                                    var item = results.rows.item(0);
-                                    $('#proyecto').html(item.proyecto);
-                                    $('#mombre').html(item.mombre);
-                                    $('#razon_social').html(item.razon_social);
-                                    $('#direccion').html(item.direccion);
-                                    $('#telefono').html(item.telefono);
-                                    $('#rfc').html(item.rfc);
-                                    $('#atencion').html(item.atencion);
-                                    $('#puesto').html(item.puesto);
+                                    for(var i = 0; i< length; i++){
+                                        var item = results.rows.item(i);
+                                        $('#proyecto').html(item.proyecto);
+                                        $('#mombre').html(item.mombre);
+                                        $('#razon_social').html(item.razon_social);
+                                        $('#direccion').html(item.direccion);
+                                        $('#telefono').html(item.telefono);
+                                        $('#rfc').html(item.rfc);
+                                        $('#atencion').html(item.atencion);
+                                        $('#puesto').html(item.puesto);
+                                        $('#NombreFirma').html(item.puesto);
+                                        $('#nombre_puesto').html(item.nombre_puesto);
+                                        console.log(item.nombre_puesto);
+                                    }
+                                    var item2 = results.rows.item(0);                       
+                                    if(item2.firma_cliente == null){
+                                    } else {
+                                        $("#signate").val(item2.firma_cliente);
+                                        $("#ImagenFirmaView").attr("src",item2.firma_cliente);
+                                    }
                                 }
                                  
                             },
@@ -237,21 +249,23 @@
                     function(error){},
                     function(){}
                 );
+                // Para obtener el nombre de quien recibe el servicio
                 databaseHandler.db.transaction(
                     function(tx5){
                         tx5.executeSql(
-                            "SELECT calificacion,nombre_evalua,comentario_cliente FROM cedulas_general WHERE id_cedula = ?",
+                            "SELECT nombre_evalua FROM cedulas_general WHERE id_cedula = ?",
                             [id_cedula],
                             function(tx5, results){
                                 var length = results.rows.length;
                                 for(var i = 0; i< length; i++){
                                     var item2 = results.rows.item(i);
-                                    $("#eval").val(item2.calificacion);
                                     if(item2.nombre_evalua == null){
                                     } else {
                                         $("#NombreFirma").val(item2.nombre_evalua);
                                     }
                                 }
+                                $('.preloader').remove();
+                                $('.infinite-scroll-preloader').remove();
                             },
                             function(tx5, error){
                                 console.log("Error al guardar registro: " + error.message);
@@ -261,6 +275,7 @@
                     function(error){},
                     function(){}
                 );
+                // Evidencias fotografias
                 databaseHandler.db.transaction(
                     function(tx1){
                         tx1.executeSql(
@@ -294,6 +309,7 @@
                     function(error){},
                     function(){}
                 );
+                
                 
                 var ratings = document.getElementsByClassName('rating');
                 for (var i = 0; i < ratings.length; i++) {

@@ -41,7 +41,7 @@
                     </div>
                     <div class="buttons-container" style="display: flex;margin-top: 5%;margin-bottom: 5%;">
                         <a href="/formDIPREC14/" class="fwm-button-recorrido">
-                            <img src="img/iconsMenu/mot.svg" width="90px" height="90px" id="img4"/>
+                            <img src="img/iconsMenu/mot.svg" width="90px" height="90px" id="img5"/>
                             <span class="fwm-text-recorrido">Evidencias</span>
                         </a>
                         <a href="/cierreDIPREC2/" class="fwm-button-recorrido">
@@ -62,10 +62,10 @@
     return {
         on: {      
             pageInit: function () {
-                var id_cedula = localStorage.getItem("IdCedula");/*
+                var id_cedula = localStorage.getItem("IdCedula");
                 databaseHandler.db.transaction(
                     function(tx){
-                        tx.executeSql("SELECT * from servicio_tecnico WHERE id_cedula = ? AND (atencion IS NOT NULL AND direccion IS NOT NULL AND telefono IS NOT NULL AND email IS NOT NULL AND tipo_servicio IS NOT NULL AND nombre_cliente IS NOT NULL)",
+                        tx.executeSql("SELECT * from datos_generales_diprec WHERE id_cedula = ? AND (proyecto IS NOT NULL AND pedido IS NOT NULL AND fecha IS NOT NULL AND referencia IS NOT NULL AND proyectos IS NOT NULL AND vendedor IS NOT NULL AND mombre IS NOT NULL AND razon_social IS NOT NULL AND direccion IS NOT NULL AND telefono IS NOT NULL AND rfc IS NOT NULL AND atencion IS NOT NULL AND puesto IS NOT NULL)",
                             [id_cedula],
                             function(tx, results){
                                 var item = results.rows.item(0);
@@ -82,7 +82,7 @@
                 );
                 databaseHandler.db.transaction(
                     function(tx){
-                        tx.executeSql("Select * FROM datos_equipo WHERE id_cedula = ? AND (equipo IS NOT NULL AND marca IS NOT NULL AND modelo IS NOT NULL AND no_serie IS NOT NULL AND fecha_registro IS NOT NULL)",
+                        tx.executeSql("SELECT * from checklist_diprec WHERE id_cedula = ? AND fase = 2 AND (pregunta IS NOT NULL AND id IS NOT NULL AND valor IS NOT NULL AND tipo IS NOT NULL)",
                             [id_cedula],
                             function(tx, results){
                                 var item = results.rows.item(0);
@@ -99,7 +99,7 @@
                 );
                 databaseHandler.db.transaction(
                     function(tx){
-                        tx.executeSql("SELECT * from datos_equipo_antes WHERE id_cedula = ? AND (equipo IS NOT NULL)",
+                        tx.executeSql("SELECT * from checklist_diprec WHERE id_cedula = ? AND fase = 3 AND (pregunta IS NOT NULL AND id IS NOT NULL AND valor IS NOT NULL AND tipo IS NOT NULL)",
                             [id_cedula],
                             function(tx, results){
                                 var item = results.rows.item(0);
@@ -116,7 +116,7 @@
                 );
                 databaseHandler.db.transaction(
                     function(tx){
-                        tx.executeSql("SELECT * from check_list WHERE id_cedula = ? AND (equipo IS NOT NULL)",
+                        tx.executeSql("SELECT * from checklist_diprec WHERE id_cedula = ? AND fase = 4 AND (pregunta IS NOT NULL AND id IS NOT NULL AND valor IS NOT NULL AND tipo IS NOT NULL)",
                             [id_cedula],
                             function(tx, results){
                                 var item = results.rows.item(0);
@@ -133,12 +133,12 @@
                 );
                 databaseHandler.db.transaction(
                     function(tx){
-                        tx.executeSql("SELECT * from check_list2 WHERE id_cedula = ? AND (equipo IS NOT NULL)",
+                        tx.executeSql("SELECT * from evidencias_diprec WHERE id_cedula = ? AND (comentario IS NOT NULL AND area IS NOT NULL AND fecha IS NOT NULL AND foto IS NOT NULL)",
                             [id_cedula],
                             function(tx, results){
                                 var item = results.rows.item(0);
                                 if(item.id_cedula > 0){
-                                    document.getElementById("img4").src="img/iconsMenu/checklist2.svg";
+                                    document.getElementById("img5").src="img/iconsMenu/mot2.svg";
                                 }
                             },
                             function(tx, error){
@@ -148,23 +148,6 @@
                     function(error){},
                     function(){}
                 );
-                databaseHandler.db.transaction(
-                    function(tx){
-                        tx.executeSql("SELECT * from datos_equipo_despues WHERE id_cedula = ? AND (equipo IS NOT NULL)",
-                            [id_cedula],
-                            function(tx, results){
-                                var item = results.rows.item(0);
-                                if(item.id_cedula > 0){
-                                    document.getElementById("img5").src="img/iconsMenu/equifina2.svg";
-                                }
-                            },
-                            function(tx, error){
-                            }
-                        );
-                    },
-                    function(error){},
-                    function(){}
-                );*/
             }
         }
     }

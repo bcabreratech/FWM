@@ -1,113 +1,136 @@
 <template>
     <div class="page" style="background-color: rgb(245, 245, 245);">
         <div class="navbar" style="background-color: #063E7F;height: 52px;">
-            <div style="text-align: center;"><img src="img/logo-FWM.png" style="margin-top: 5px;" height="41.38px" alt="Logo Field"></div>
+            <div style="text-align: center;">
+                <img src="img/logo-FWM.png" style="margin-top: 5px;" height="41.38px" alt="Logo Field">
+            </div>
             <div class="navbar-inner sliding" style="height: 52px;">
                 <div class="left">
-                    <a href="#" onclick="regresarRecorridoDIPREC2();">
-                        <span class="nav-text-regresar" id="nav-text-regresar-function">Regresar</span>
+                    <a href="#" onclick="regresarRecorridoDIPREC2();" class="link" style="margin-left: 5px;">
+                        <span class="nav-text-regresar">Regresar</span>
+                    </a>
+                </div>
+                <div class="right">
+                    <a href="#" onclick="validateScan()" class="link" style="margin-left: 5px;">
+                        <span class="nav-text-regresar">?</span>
                     </a>
                 </div>
             </div>
         </div>
-
         <div class="page-content">
-            <div style="text-align: center; justify-content:center; margin-right:auto; margin-left:auto; width: 99%;">
-                <h2 style="color:#063E7F;font-size: 20px;font-family: 'ITC Avant Garde Gothic', sans-serif;margin-top: 35px;">Datos Generales</h2>
+            <h2 class="global-dates">Inventario</h2>
+            <div class="list" id="demo-form" style="margin-top: 0;">
+                <style type="text/css">
+                    input[type=text]{
+                        margin: 8px 0;
+                        border: 1px solid #ccc;
+                        border-radius: 6px;
+                    }
+                </style>
+                <div style="width: 90%;border-radius: 15px;margin-left: 5%;border: 0.5px solid #ECECEC;background-color: white;">
+                    <span class="span" style="font-weight: bold;width: 90%;">Cliente:</span>
+                    <span id="text2" style="width: 90%;margin-bottom: 0;border-bottom: 0;">
+                        <input type='text' name="nombreCliente" id="nombreCliente" class="FWM-textBox"
+                            onchange="inputLleno(this.id,this.value)" disabled/>
+                    </span>
 
-                <form class="list" style="margin-top: 0;">                    
-                    <style type="text/css">
-                        input[type=text]{
-                            margin: 8px 0;
-                            border: 1px solid #ccc;
-                            border-radius: 6px;
-                        }
-                    </style>
-                    <div style="width: 90%;border-radius: 15px;margin-left: 5%;border: 0.5px solid #ECECEC;background-color: white;">
-                        <span class="span" style="font-weight: bold;width: 90%;">Persona quien inspecciona:</span>
-                        <span id="text2" style="width: 90%;margin-bottom: 0;border-bottom: 0;">
-                            <input type='text' name="nombreCliente" id="nombreCliente" class="FWM-textBox" onchange="inputLleno(this.id,this.value)"/>
-                        </span>
+                    <span class="span" style="font-weight: bold;width: 90%;">Persona quien inspecciona:</span>
+                    <span id="text2" style="width: 90%;margin-bottom: 0;border-bottom: 0;">
+                        <input type='text' name="nombreInspecciona" id="nombreInspecciona" class="FWM-textBox"
+                            onchange="inputLleno(this.id,this.value)" />
+                    </span>
 
-                        <span class="span" style="font-weight: bold;width: 90%;">Tipo de inspección:</span>
-                        <select name="" id="" class="FWM-input" style="width: 90%; border: 1px solid #ccc !important;">
-                            <option value="">Selecciona una opción</option>
-                            <option value="Instalación">Instalación</option>
-                            <option value="Extintor">Extintor</option>
-                            <option value="Contenedor/Recipiente">Contenedor/Recipiente</option>
-                            <option value="Herramienta">Herramienta</option>
-                            <option value="EPP">EPP</option>
-                            <option value="Escalera/Andamio">Escalera/Andamio</option>
-                            <option value="Vehículo">Vehículo</option>
-                            <option value="Botiquín">Botiquín</option>
-                            <option value="Trabajo">Trabajo</option>
-                        </select>
+                    <span class="span" style="font-weight: bold;width: 90%;">Tipo de inspección:</span>
+                    <select name="tipoInspeccion" id="tipoInspeccion" class="FWM-input"
+                        style="width: 90%; border: 1px solid #ccc !important;">
+                        <option value="">Selecciona una opción</option>
+                        <option value="Instalación">Instalación</option>
+                        <option value="Extintor">Extintor</option>
+                        <option value="Contenedor/Recipiente">Contenedor/Recipiente</option>
+                        <option value="Herramienta">Herramienta</option>
+                        <option value="EPP">EPP</option>
+                        <option value="Escalera/Andamio">Escalera/Andamio</option>
+                        <option value="Vehículo">Vehículo</option>
+                        <option value="Botiquín">Botiquín</option>
+                        <option value="Trabajo">Trabajo</option>
+                    </select>
 
-                        <span class="span" style="font-weight: bold;width: 90%;">Código:</span>
-                        <span id="text2" style="width: 90%;margin-bottom: 0px;border-bottom: 0;">
-                            <input type='text' name="telefono" id="telefono" class="FWM-textBox" onchange="inputLleno(this.id,this.value)"/>
-                        </span>
-                        <span class="span" style="font-weight: bold;width: 90%;">Ubicación:</span>
-                        <select name="" id="" class="FWM-input" style="width: 90%; border: 1px solid #ccc !important;">
-                            <option value="">Selecciona una opción</option>
-                            <option value="Planta">Planta</option>
-                            <option value="Oficina Tlahuac">Oficina Tlahuac</option>
-                            <option value="Almacen">Almacen</option>
-                            <option value="Oficina Roma">Oficina Roma</option>
-                            <option value="Obra">Obra</option>
-                        </select>
+                    <span class="span" style="font-weight: bold;width: 90%;">Código:</span>
+                    <span id="text2" style="width: 90%;margin-bottom: 0;border-bottom: 0;position:relative;">
+                        <input type="text" class="FWM-textBox" id="codigo" name="codigo">
+                        <button class="barcode-button" id="take-codigo"><img class="barcode-image"
+                                src="img/iconsMenu/barcode.svg" alt=""></button>
+                    </span>
 
-                        <span class="span" style="font-weight: bold;width: 90%;">Responsable del equipo o trabajo:</span>
-                        <span id="text2" style="width: 90%;margin-bottom: 15px;border-bottom: 0;">
-                            <input type='text' name="correo" id="correo" class="FWM-textBox" onchange="inputLleno(this.id,this.value)"/>
-                        </span>
-                    </div>
-                    <!---CAMBIOS--->    
-                    <style type="text/css">
-                        .boton-personalizado-4 {
-                            text-decoration: none;
-                            font-family: 'ITC Avant Garde Gothic', sans-serif;
-                            font-weight: 600;
-                            font-size: 16px;
-                            color: #FFFFFF;
-                            padding-top: 15px;
-                            padding-bottom: 13px;
-                            padding-left: 30px;
-                            padding-right: 30px;
-                            background-color: #063E7F;
-                            border-radius: 15px;
-                        }
-                    </style>
-                    <div class="block grid-resizable-demo" style="top: 25px;margin-bottom: 80px;">
-                        <div class="row align-items-stretch" style="text-align: center;">
-                            <div class="col-100 medium-50" style="min-width: 50px; border-style: none;">
-                                <span class="resize-handler"></span>
-                                <a href="#" onclick="//guardarDatosReporteTecnicoDIPREC();" class="boton-personalizado-4">Guardar datos</a>   
-                            </div>
-                        </div>
-                    </div>
-                </form>
+                    <span class="span" style="font-weight: bold;width: 90%;">Ubicación:</span>
+                    <select name="ubicacion" id="ubicacion" class="FWM-input"
+                        style="width: 90%; border: 1px solid #ccc !important;">
+                        <option value="">Selecciona una opción</option>
+                        <option value="Planta">Planta</option>
+                        <option value="Oficina Tlahuac">Oficina Tlahuac</option>
+                        <option value="Almacen">Almacen</option>
+                        <option value="Oficina Roma">Oficina Roma</option>
+                        <option value="Obra">Obra</option>
+                    </select>
+
+                    <span class="span" style="font-weight: bold;width: 90%;">Responsable del equipo o trabajo:</span>
+                    <span id="text2" style="width: 90%;margin-bottom: 15px;border-bottom: 0;">
+                        <input type='text' name="responsableEquipo" id="responsableEquipo" class="FWM-textBox"
+                            onchange="inputLleno(this.id,this.value)" />
+                    </span>
+                </div>
             </div>
+            <!---CAMBIOS--->    
+            <style type="text/css">
+                .boton-personalizado-4 {
+                    text-decoration: none;
+                    font-family: 'ITC Avant Garde Gothic', sans-serif;
+                    font-weight: 600;
+                    font-size: 16px;
+                    color: #FFFFFF;
+                    padding-top: 15px;
+                    padding-bottom: 13px;
+                    padding-left: 30px;
+                    padding-right: 30px;
+                    background-color: #063E7F;
+                    border-radius: 15px;
+                }
+            </style>
+
+            <div class="block grid-resizable-demo" style="top: 25px;margin-bottom: 80px;">
+                <div class="row align-items-stretch" style="text-align: center;">
+                    <div class="col-100 medium-50" style="min-width: 50px; border-style: none;">
+                        <span class="resize-handler"></span>
+                        <a href="#" onclick="guardarDatosGeneralesHSE();" class="boton-personalizado-4">Guardar datos</a>   
+                    </div>
+                </div>
+            </div>
+
         </div>
     </div>
 </template>
 <script>
     return {
-        on: {      
+        on: {
             pageInit: function () {
                 var id_cedula = localStorage.getItem("IdCedula");
+
                 databaseHandler.db.transaction(
                     function(tx){
                         tx.executeSql(
-                            "Select nombre_cliente,fecha_entrada from cedulas_general WHERE id_cedula = ?",
+                            "SELECT * FROM datos_generales_hse WHERE id_cedula = ?",
                             [id_cedula],
                             function(tx, results){
                                 let length = results.rows.length;
                                 var item = results.rows.item(0);
-                                $("#fecha").val(item.fecha_entrada);
+                                $('#nombreInspecciona').val(item.nombre_inspecciona);
+                                $('#tipoInspeccion').val(item.tipo_inspeccion);
+                                $('#codigo').val(item.codigo);
+                                $('#ubicacion').val(item.ubicacion);
+                                $('#responsableEquipo').val(item.responsable_equipo);
                             },
                             function(tx, error){
-                                console.log("Error al guardar cedula: " + error.message);
+                                console.log("Error al mostrar cedula: " + error.message);
                                 app.preloader.hide();  
                             }
                         );
@@ -115,32 +138,94 @@
                     function(error){},
                     function(){}
                 );
-                // databaseHandler.db.transaction(
-                //     function(tx){
-                //         tx.executeSql(
-                //             "Select * from servicio_tecnico WHERE id_cedula = ?",
-                //             [id_cedula],
-                //             function(tx, results){
-                //                 let length = results.rows.length;
-                //                 for(var i = 0; i< length; i++){
-                //                     var item = results.rows.item(i);
-                //                     $("#nombreTecnico").val(localStorage.getItem("nombre"),localStorage.getItem("apellido_materno"));
-                //                     $("#atencion").val(item.atencion);
-                //                     $("#direccion").val(item.direccion);
-                //                     $("#telefono").val(item.telefono);
-                //                     $("#correo").val(item.email);
-                //                     $("#tipoServicio > option[value="+item.tipo_servicio+"]").attr("selected",true);
-                //                 } 
-                //             },
-                //             function(tx, error){
-                //                 console.log("Error al guardar cedula: " + error.message);
-                //                 app.preloader.hide();  
-                //             }
-                //         );
-                //     },
-                //     function(error){},
-                //     function(){}
-                // );
+                databaseHandler.db.transaction(
+                    function(tx){
+                        tx.executeSql(
+                            "Select nombre_cliente from cedulas_general WHERE id_cedula = ?",
+                            [id_cedula],
+                            function(tx, results){
+                                let length = results.rows.length;
+                                for(var i = 0; i< length; i++){
+                                    var item = results.rows.item(i);
+                                    $("#nombreCliente").val(item.nombre_cliente);
+                                } 
+                            },
+                            function(tx, error){
+                                console.log("Error al mostrar cliente: " + error.message);
+                                app.preloader.hide();  
+                            }
+                        );
+                    },
+                    function(error){},
+                    function(){}
+                );
+
+                // Capturar código
+                $("#take-codigo").click(function () {
+                    //Verifica orientación
+                    if (localStorage.getItem("currentOrientation") == "portrait") {
+                        //Activacion del escaner
+                        cordova.plugins.barcodeScanner.scan(
+                            //Verifica si es QR
+                            function (result) {
+                                if (result.format == "QR_CODE") {
+                                    var text = result.text;
+                                    if (text.includes(",") || text.includes("\r\n")) {
+                                        swal("Formato no compatible", "El QR no cumple con los requisitos para cargar la ubicación.", "warning");
+                                    } else {
+                                        var texto = text.replaceAll(" ", "");
+                                        $("#codigo").val(texto);
+                                    }
+                                } else if (result.cancelled == true) {
+
+                                } else {
+                                    var text = result.text;
+                                    var texto = text.replaceAll(" ", "");
+                                    $("#codigo").val(texto);
+                                }
+                            },
+                            function (error) {
+                                alert("Scanning failed: " + error);
+                            },
+                            {
+                                preferFrontCamera: false,
+                                showFlipCameraButton: true,
+                                showTorchButton: true,
+                                torchOn: false,
+                                saveHistory: false,
+                                prompt: "Coloca el codigo de barras en la zona marcada",
+                                resultDisplayDuration: 500,
+                                orientation: "portrait",
+                                disableAnimations: true,
+                                disableSuccessBeep: false
+                            }
+                        );
+                    } else {
+                        cordova.plugins.barcodeScanner.scan(
+                            function (result) {
+                                var text = result.text;
+                                var texto = text.replaceAll(" ", "");
+                                $("#ubicacion").val(texto);
+                            },
+                            function (error) {
+                                alert("Scanning failed: " + error);
+                            },
+                            {
+                                preferFrontCamera: false,
+                                showFlipCameraButton: true,
+                                showTorchButton: true,
+                                torchOn: false,
+                                saveHistory: false,
+                                prompt: "Coloca el codigo de barras en la zona marcada",
+                                resultDisplayDuration: 500,
+                                orientation: "landscape",
+                                disableAnimations: true,
+                                disableSuccessBeep: false
+                            }
+                        );
+                    }
+                });
+                localStorage.setItem("currentOrientation", "portrait");
             }
         }
     }

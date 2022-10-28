@@ -1,10 +1,81 @@
+<style>
+    .span{
+            margin-top: 10px;
+            height: auto;
+            line-height: 22px;
+            margin-bottom: 3px;
+            margin-left: 0;width: 50%;
+    }
+    input[type="text"] {
+            margin-top: auto;
+            margin-bottom: auto;
+            width: 40% !important;
+    }
+    .FWM-fixing-form div{
+        margin-bottom: 10px;
+    }
+          #cajaB {
+              width: 350px;
+            }
+
+            #cajaB h1 {
+              color: rgb(3, 3, 3);
+              font-size: 12px;
+              text-transform: uppercase;
+              text-align: left;
+              line-height: 30px;
+              margin-left: 5px;
+            }
+
+            #pregunta {
+              position: relative ;
+              display: flex;
+              margin-top: 5px;
+              border: transparent;
+              box-sizing: border-box;
+              background: #FAFAFA;
+            }
+
+            #pregunta input[type=checkbox] {
+              display: none;
+            }
+            #pregunta input[type=radio] {
+              display: none;
+            }
+
+            #pregunta label {
+              display: block;
+              width: 150px;
+              height: 40px;
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              transition: 0.5s;
+              background: #FFF;  
+              
+            }
+
+            #pregunta label:hover {
+              background: #679ceb;
+            }
+
+            #pregunta input[type=checkbox]:checked + label {
+              background: #063E7F;
+              color: #FAFAFA;
+            }
+            #pregunta input[type=radio]:checked + label {
+              background: #063E7F;
+              color: #FAFAFA;
+            }
+
+</style>
 <template>
     <div class="page" style="background-color: rgb(245, 245, 245);">
         <div class="navbar" style="background-color: #063E7F;height: 52px;">
             <div style="text-align: center;"><img src="img/logo-FWM.png" style="margin-top: 5px;" height="41.38px" alt="Logo Field"></div>
             <div class="navbar-inner sliding" style="height: 52px;">
                 <div class="left">
-                    <a href="#" onclick="regresarRecorridoIvy2();">
+                    <a href="#" onclick="regresarRecorridobtns();">
                         <span class="nav-text-regresar" id="nav-text-regresar-function">Regresar</span>
                     </a>
                 </div>
@@ -15,91 +86,177 @@
                 <div style="text-align: center; justify-content:center; margin-right:auto; margin-left:auto; width: 99%;margin-top: 30px;">
                     <h2 class="FWN-titulo-2">RESULTADO DE LAVADO</h2>
                     <div style="text-align: left;">
-                        <div class="list FWM-fixing-form">
+                        <div class="list FWM-fixing-form" id="datos_form">
                             <h1 style="margin: 8px;padding: 0;font-size: 20px;text-align: unset;">Físicos</h1>
-                            <div style="display: flex;">
-                                <span class="span FWM-span-form" style="font-weight: bold;">1.- Apariencia: *</span>
-                                <input type="text" class="FWM-input" id="titulo" name="titulo" style="background-color: white;width: 20%;" onchange="inputLleno(this.id,this.value)"/>
-                            </div>
-                            <div style="display: flex;">
-                                <span class="span FWM-span-form" style="font-weight: bold;">2.- Rango: *</span>
-                                <input type="text" class="FWM-input" id="titulo" name="titulo" style="background-color: white;width: 40%;" onchange="inputLleno(this.id,this.value)"/>
-                            </div>
-                            <div style="display: flex;">
-                                <span class="span FWM-span-form" style="font-weight: bold;">3.- Olor: *</span>
-                                <input type="text" class="FWM-input" id="titulo" name="titulo" style="background-color: white;width: 20%;" onchange="inputLleno(this.id,this.value)"/>
-                            </div>
-                            <div style="display: flex;">
-                                <span class="span FWM-span-form" style="font-weight: bold;">4.- Estático: *</span>
-                                <input type="text" class="FWM-input" id="titulo" name="titulo" style="background-color: white;width: 20%;" onchange="inputLleno(this.id,this.value)"/>
-                            </div>
-                            <div style="display: flex;">
-                                <span class="span FWM-span-form" style="font-weight: bold;">5.- Suavidad: *</span>
-                                <input type="text" class="FWM-input" id="titulo" name="titulo" style="background-color: white;width: 20%;" onchange="inputLleno(this.id,this.value)"/>
-                            </div>
-                            <div style="display: flex;">
-                                <span class="span FWM-span-form" style="font-weight: bold;">6.- Remoción de Mancha: *</span>
-                                <input type="text" class="FWM-input" id="titulo" name="titulo" style="background-color: white;width: 20%;" onchange="inputLleno(this.id,this.value)"/>
-                            </div>
-                            <div style="display: flex;">
-                                <span class="span FWM-span-form" style="font-weight: bold;">7.- Hierro: *</span>
-                                <input type="text" class="FWM-input" id="titulo" name="titulo" style="background-color: white;width: 20%;" onchange="inputLleno(this.id,this.value)"/>
-                            </div>
-                            <div style="display: flex;">
-                                <span class="span FWM-span-form" style="font-weight: bold;">8.- Cloro: *</span>
-                                <input type="text" class="FWM-input" id="titulo" name="titulo" style="background-color: white;width: 20%;" onchange="inputLleno(this.id,this.value)"/>
-                            </div>
-                            <div style="display: flex;">
-                                <span class="span FWM-span-form" style="font-weight: bold;">9.- pH: *</span>
-                                <input type="text" class="FWM-input" id="titulo" name="titulo" style="background-color: white;width: 20%;" onchange="inputLleno(this.id,this.value)"/>
-                            </div>
-                            <div style="display: flex;">
-                                <span class="span FWM-span-form" style="font-weight: bold;">10.- Efecto Cebra: *</span>
-                                <input type="text" class="FWM-input" id="titulo" name="titulo" style="background-color: white;width: 20%;" onchange="inputLleno(this.id,this.value)"/>
-                            </div>
-                            <div style="display: flex;">
-                                <span class="span FWM-span-form" style="font-weight: bold;">11.- Efecto Piling: *</span>
-                                <input type="text" class="FWM-input" id="titulo" name="titulo" style="background-color: white;width: 20%;" onchange="inputLleno(this.id,this.value)"/>
-                            </div>
+                                <span id="text2" style="width: 90%;margin-bottom: 0;border-bottom: 0;margin-bottom: 10px;"> 
+                                    <div id="pregunta" style="border: 1px solid #063E7F;width: 90%;margin-left: 5%;font-size: 17px;">
+                                        <input type="radio" name="pregunta1" onclick="AplicaDL(this.value,'fisico')" value="1" id="Res1">
+                                        <label for="Res1">Aplica</label>
+                                        <input type="radio" name="pregunta1" onclick="AplicaDL(this.value,'fisico')" value="0" id="Res2">
+                                        <label for="Res2">No aplica</label>                           
+                                    </div>
+                                </span>
+                            </br>
+                            <div id="Fisico" style="display: none;">
+                                <div style="display: flex;">
+                                    <span class="span FWM-span-form" style="font-weight: bold;">1.- Apariencia: *</span>
+                                    <input type="text" class="FWM-input obligatorio" id="apariencia" name="Apariencia" style="background-color: white;width: 20%;" onchange="inputLleno(this.id,this.value)"/>
+                                </div>
+                                <div style="display: flex;">
+                                    <span class="span FWM-span-form" style="font-weight: bold;">2.- Rango: *</span>
+                                    <input type="text" class="FWM-input obligatorio" id="rango" name="Rango" style="background-color: white;width: 40%;" onchange="inputLleno(this.id,this.value)"/>
+                                </div>
+                                <div style="display: flex;">
+                                    <span class="span FWM-span-form" style="font-weight: bold;">3.- Olor: *</span>
+                                    <input type="text" class="FWM-input obligatorio" id="olor" name="Olor" style="background-color: white;width: 20%;" onchange="inputLleno(this.id,this.value)"/>
+                                </div>
+                                <div style="display: flex;">
+                                    <span class="span FWM-span-form" style="font-weight: bold;">4.- Estático: *</span>
+                                    <input type="text" class="FWM-input obligatorio" id="estatico" name="Estático" style="background-color: white;width: 20%;" onchange="inputLleno(this.id,this.value)"/>
+                                </div>
+                                <div style="display: flex;">
+                                    <span class="span FWM-span-form" style="font-weight: bold;">5.- Suavidad: *</span>
+                                    <input type="text" class="FWM-input obligatorio" id="suavidad" name="Suavidad" style="background-color: white;width: 20%;" onchange="inputLleno(this.id,this.value)"/>
+                                </div>
+                                <div style="display: flex;">
+                                    <span class="span FWM-span-form" style="font-weight: bold;">6.- Remoción de Mancha: *</span>
+                                    <input type="text" class="FWM-input obligatorio" id="remocion_mancha" name="Remoción de Mancha" style="background-color: white;width: 20%;" onchange="inputLleno(this.id,this.value)"/>
+                                </div>
+                            </div>                           
                             <br>
                             <h1 style="margin: 8px;padding: 0;font-size: 20px;text-align: unset;">Reactivos Químicos</h1>
-                            <div style="display: flex;">
-                                <span class="span FWM-span-form" style="font-weight: bold;">1.- Temperatura: *</span>
-                                <input type="text" class="FWM-input" id="titulo" name="titulo" style="background-color: white;width: 20%;" onchange="inputLleno(this.id,this.value)"/>
+                            <span id="text2" style="width: 90%;margin-bottom: 0;border-bottom: 0;margin-bottom: 10px;"> 
+                                <div id="pregunta" style="border: 1px solid #063E7F;width: 90%;margin-left: 5%;font-size: 17px;">
+                                    <input type="radio" name="pregunta2" onclick="AplicaDL(this.value,'reactivos')" value="1" id="Res3">
+                                    <label for="Res3">Aplica</label>
+                                    <input type="radio" name="pregunta2" onclick="AplicaDL(this.value,'reactivos')" value="0" id="Res4">
+                                    <label for="Res4">No aplica</label>                           
+                                </div>
+                            </span>
+                        </br>
+                            <div id="reactivos" style="display: none;">
+                                <div style="display: flex;">
+                                    <span class="span FWM-span-form" style="font-weight: bold;">1.- Hierro: *</span>
+                                    <input type="text" class="FWM-input obligatorio" id="hierro" name="Hierro" style="background-color: white;width: 20%;" onchange="inputLleno(this.id,this.value)"/>
+                                </div>
+                                <div style="display: flex;">
+                                    <span class="span FWM-span-form" style="font-weight: bold;">2.- Cloro: *</span>
+                                    <input type="text" class="FWM-input obligatorio" id="cloro" name="Cloro" style="background-color: white;width: 20%;" onchange="inputLleno(this.id,this.value)"/>
+                                </div>
+                                <div style="display: flex;">
+                                    <span class="span FWM-span-form" style="font-weight: bold;">3.- pH: *</span>
+                                    <input type="text" class="FWM-input obligatorio" id="pH" name="pH" style="background-color: white;width: 20%;" onchange="inputLleno(this.id,this.value)"/>
+                                </div>
+                                <div style="display: flex;">
+                                    <span class="span FWM-span-form" style="font-weight: bold;">4.- Efecto Cebra: *</span>
+                                    <input type="text" class="FWM-input obligatorio" id="efecto_cebra" name="Efecto Cebra" style="background-color: white;width: 20%;" onchange="inputLleno(this.id,this.value)"/>
+                                </div>
+                                <div style="display: flex;">
+                                    <span class="span FWM-span-form" style="font-weight: bold;">5.- Efecto Piling: *</span>
+                                    <input type="text" class="FWM-input obligatorio" id="efecto_piling" name="Efecto Piling" style="background-color: white;width: 20%;" onchange="inputLleno(this.id,this.value)"/>
+                                </div>
+                                <div style="display: flex;">
+                                    <span class="span FWM-span-form" style="font-weight: bold;">6.- Temperatura: *</span>
+                                    <input type="text" class="FWM-input obligatorio" id="temperatura" name="Temperatura" style="background-color: white;width: 20%;" onchange="inputLleno(this.id,this.value)"/>
+                                </div>
+                                <div style="display: flex;">
+                                    <span class="span FWM-span-form" style="font-weight: bold;">7.- Niveles de Agua: *</span>
+                                    <input type="text" class="FWM-input obligatorio" id="niveles_agua" name="Niveles de Agua" style="background-color: white;width: 20%;" onchange="inputLleno(this.id,this.value)"/>
+                                </div>
+                                <div style="display: flex;">
+                                    <span class="span FWM-span-form" style="font-weight: bold;">8.- Extracción: *</span>
+                                    <input type="text" class="FWM-input obligatorio" id="extraccion" name="Extracción" style="background-color: white;width: 20%;" onchange="inputLleno(this.id,this.value)"/>
+                                </div>
+                                <div style="display: flex;">
+                                    <span class="span FWM-span-form" style="font-weight: bold;">9.- Drenajes: *</span>
+                                    <input type="text" class="FWM-input obligatorio" id="drenajes" name="Drenajes" style="background-color: white;width: 20%;" onchange="inputLleno(this.id,this.value)"/>
+                                </div>
+                                <div style="display: flex;">
+                                    <span class="span FWM-span-form" style="font-weight: bold;">10.- Rotación: *</span>
+                                    <input type="text" class="FWM-input obligatorio" id="rotacion" name="Rotación" style="background-color: white;width: 20%;" onchange="inputLleno(this.id,this.value)"/>
+                                </div>
+                                <div style="display: flex;">
+                                    <span class="span FWM-span-form" style="font-weight: bold;">11.- Incrustación: *</span>
+                                    <input type="text" class="FWM-input obligatorio" id="incrustacion" name="Incrustación" style="background-color: white;width: 20%;" onchange="inputLleno(this.id,this.value)"/>
+                                </div>
+                                <div style="display: flex;">
+                                    <span class="span FWM-span-form" style="font-weight: bold;">12.- Manual o Automático: *</span>
+                                    <!-- <input type="text" class="FWM-input obligatorio" id="manual_auto" name="Manual o Automático" style="background-color: white;width: 20%;" onchange="inputLleno(this.id,this.value)"/> -->
+                                    <select id="manual_auto" style="width: 140px; margin-right: 0px; padding-left: 10px;font-size: 16px;font-family: 'ITC Avant Garde Gothic', sans-serif; background-color: white;border: 1px solid gray;border-radius: 8px;" >
+                                        <option value="0" >Seleccione una opción</option>
+                                        <option value="Manual" >Manual</option>
+                                        <option value="Automático" >Automático</option>
+                                    </select>
+                                </div>
+                                <div style="display: flex;">
+                                    <span class="span FWM-span-form" style="font-weight: bold;">13.- Capacidad - Lavadora: *</span>
+                                    <input type="text" class="FWM-input obligatorio" id="capacidad_lavadora" name="Capacidad - Lavadora" style="background-color: white;width: 20%;" onchange="inputLleno(this.id,this.value)"/>
+                                </div>
                             </div>
-                            <div style="display: flex;">
-                                <span class="span FWM-span-form" style="font-weight: bold;">2.- Niveles de Agua: *</span>
-                                <input type="text" class="FWM-input" id="titulo" name="titulo" style="background-color: white;width: 20%;" onchange="inputLleno(this.id,this.value)"/>
-                            </div>
-                            <div style="display: flex;">
-                                <span class="span FWM-span-form" style="font-weight: bold;">3.- Extracción: *</span>
-                                <input type="text" class="FWM-input" id="titulo" name="titulo" style="background-color: white;width: 20%;" onchange="inputLleno(this.id,this.value)"/>
-                            </div>
-                            <div style="display: flex;">
-                                <span class="span FWM-span-form" style="font-weight: bold;">4.- Drenajes: *</span>
-                                <input type="text" class="FWM-input" id="titulo" name="titulo" style="background-color: white;width: 20%;" onchange="inputLleno(this.id,this.value)"/>
-                            </div>
-                            <div style="display: flex;">
-                                <span class="span FWM-span-form" style="font-weight: bold;">5.- Rotación: *</span>
-                                <input type="text" class="FWM-input" id="titulo" name="titulo" style="background-color: white;width: 20%;" onchange="inputLleno(this.id,this.value)"/>
-                            </div>
-                            <div style="display: flex;">
-                                <span class="span FWM-span-form" style="font-weight: bold;">6.- Incrustación: *</span>
-                                <input type="text" class="FWM-input" id="titulo" name="titulo" style="background-color: white;width: 20%;" onchange="inputLleno(this.id,this.value)"/>
-                            </div>
-                            <div style="display: flex;">
-                                <span class="span FWM-span-form" style="font-weight: bold;">7.- Manual o Automático: *</span>
-                                <input type="text" class="FWM-input" id="titulo" name="titulo" style="background-color: white;width: 20%;" onchange="inputLleno(this.id,this.value)"/>
-                            </div>
-                            <div style="display: flex;">
-                                <span class="span FWM-span-form" style="font-weight: bold;">8.- Capacidad - Lavadora: *</span>
-                                <input type="text" class="FWM-input" id="titulo" name="titulo" style="background-color: white;width: 20%;" onchange="inputLleno(this.id,this.value)"/>
-                            </div>
+
+                            <h3 style="padding: 10px 0;">Metodos y procedimientos</h3>
+                            <span id="text2" style="width: 90%;margin-bottom: 0;border-bottom: 0;margin-bottom: 10px;"> 
+                                <div id="pregunta" style="border: 1px solid #063E7F;width: 90%;margin-left: 5%;font-size: 17px;">
+                                    <input type="radio" name="pregunta3" onclick="AplicaDL(this.value,'Metodos')" value="1" id="Res5">
+                                    <label for="Res5">Aplica</label>
+                                    <input type="radio" name="pregunta3" onclick="AplicaDL(this.value,'Metodos')" value="0" id="Res6">
+                                    <label for="Res6">No aplica</label>                           
+                                </div>
+                            </span>
+                        </br>
+                            <div id="Metodos" style="display: none;">
+                                <div style="display: flex;">
+                                    <span class="span FWM-span-form" style="font-weight: bold;">1.- Cartulinas de lavado: *</span>
+                                    <input type="text" class="FWM-input obligatorio" id="cartulinas_la" name="cartulinas_la"
+                                        style="background-color: white;width: 20%;" onchange="inputLleno(this.id,this.value)" />
+                                </div>
+                                <div style="display: flex;">
+                                    <span class="span FWM-span-form" style="font-weight: bold;">2.- Fórmulas de lavado: *</span>
+                                    <input type="text" class="FWM-input obligatorio" id="formulas_lav" name="formulas_lav"
+                                        style="background-color: white;width: 20%;" onchange="inputLleno(this.id,this.value)" />
+                                </div>
+                                <div style="display: flex;">
+                                    <span class="span FWM-span-form" style="font-weight: bold;">3.- Clasificación de ropa: *</span>
+                                    <input type="text" class="FWM-input obligatorio" id="clasi_ropa" name="clasi_ropa"
+                                        style="background-color: white;width: 20%;" onchange="inputLleno(this.id,this.value)" />
+                                </div>
+                                <div style="display: flex;">
+                                    <span class="span FWM-span-form" style="font-weight: bold;">4.- Peso de ropa: *</span>
+                                    <input type="text" class="FWM-input obligatorio" id="peso_ropa" name="peso_ropa"
+                                        style="background-color: white;width: 20%;" onchange="inputLleno(this.id,this.value)" />
+                                </div>
+                                <div style="display: flex;">
+                                    <span class="span FWM-span-form" style="font-weight: bold;">5.- Cargado de ropa: *</span>
+                                    <input type="text" class="FWM-input obligatorio" id="cargado_agua" name="cargado_agua"
+                                        style="background-color: white;width: 20%;" onchange="inputLleno(this.id,this.value)" />
+                                </div>
+                                <div style="display: flex;">
+                                    <span class="span FWM-span-form" style="font-weight: bold;">6.- Tiempo de secado: *</span>
+                                    <input type="text" class="FWM-input obligatorio" id="tiempo_secado" name="tiempo_secado"
+                                        style="background-color: white;width: 20%;" onchange="inputLleno(this.id,this.value)" />
+                                </div>
+                                <div style="display: flex;">
+                                    <span class="span FWM-span-form" style="font-weight: bold;">7.- Filtros de secadora: *</span>
+                                    <input type="text" class="FWM-input obligatorio" id="filtro_secadora" name="filtro_secadora"
+                                        style="background-color: white;width: 20%;" onchange="inputLleno(this.id,this.value)" />
+                                </div>
+                                <div style="display: flex;">
+                                    <span class="span FWM-span-form" style="font-weight: bold;">8.- Mangles: *</span>
+                                    <input type="text" class="FWM-input obligatorio" id="mangles" name="mangles"
+                                        style="background-color: white;width: 20%;" onchange="inputLleno(this.id,this.value)" />
+                                </div>
+                                <div style="display: flex;">
+                                    <span class="span FWM-span-form" style="font-weight: bold;">9.- Otros: *</span>
+                                    <input type="text" class="FWM-input obligatorio" id="others" name="others"
+                                        style="background-color: white;width: 20%;" onchange="inputLleno(this.id,this.value)" />
+                                </div>
+                            </div>                
+
                             <div class="block grid-resizable-demo" style="margin-bottom: 50px;">
                                 <div class="row align-items-stretch" style="text-align: center;">
                                     <div class="col-100 medium-50" style="min-width: 50px; border-style: none;">
                                         <span class="resize-handler"></span>
-                                        <a href="#" onclick="GuardarSUROF1();" class="boton-equipo">Guardar Fisicos</a>
+                                        <a href="#" onclick="guardarlavodoDL2();" class="boton-equipo">Guardar Fisicos</a>
                                     </div>
                                 </div>
                             </div>
@@ -116,42 +273,70 @@
           pageInit: function () {
                 $('.preloader').remove();
                 $('.infinite-scroll-preloader').remove();
-                // var id_cedula = localStorage.getItem("IdCedula");
-                // var recorrido = 1;
-                // databaseHandler.db.transaction(
-                //     function(tx){
-                //         tx.executeSql("Select * from Fotos_SURO where id_cedula = ? and recorrido = ?",
-                //         [id_cedula,recorrido],
-                //             function(tx, results){
-                //                 var length = results.rows.length;
-                //                 var item = results.rows.item(0);
-                //                 console.log("item",item);
-                //                 if(length == 0){
-                //                             $("#message-nr").css("display", "block");
-                //                         } else {
-                //                             for(var i = 0; i< length; i++){
-                //                                 var item = results.rows.item(i);
-                //                                 $("#smallImage").attr("src","img/blank.png");
-                //                                 $('#imagenC').val("");
-                //                                 $("#photoIcon").attr("src","img/camera.svg");
-                //                                 $("#titulo").css("background-color", "#FFFFFF");
-                //                                 $("#tabla_SURO1 tbody").append("<tr id='fila"+ item.id_fotos +"'><td><a href='#' onclick='eliminarFilaSURO("+ item.id_fotos +",2);' style='border: none; outline:none;'><img src='img/borrar.png' width='30px' /></a></td><td><img src='"+item.foto+"' width='60px' style='margin-top: 4px;'/></td><td style='text-align: center;'>" + item.titulo + "</td><td style='text-align: center;'>" + item.fecha + "</td></tr>");
-                //                                 $("#message-nr").css("display", "none");
-                //                                 $('.preloader').remove();
-                //                             }
-                //                         }
-                                $('.infinite-scroll-preloader').remove();
-                                app.preloader.hide();
-                //             },
-                //             function(tx, error){
-                //                 console.log("Error al guardar cedula: " + error.message);
-                //                 app.preloader.hide();
-                //             }
-                //         );
-                //     },
-                //     function(error){},
-                //     function(){}
-                // );
+                var id_usuario = localStorage.getItem("id_usuario");
+                var id_cedula = localStorage.getItem("IdCedula");        
+
+                databaseHandler.db.transaction(
+                    function(tx){
+                        tx.executeSql(
+                            "Select * from resultados_lavado WHERE id_cedula = ?",
+                                [id_cedula],
+                                function(tx, results){
+
+                                    let length = results.rows.length;
+                                    for(var i = 0; i< length; i++){
+                                        var item = results.rows.item(i);
+                                        console.log('item',item);
+                                        $("#apariencia").val(item.apariencia);
+                                        $("#rango").val(item.rango);
+                                        $("#olor").val(item.olor);
+                                        $("#estatico").val(item.estatico);
+                                        $("#suavidad").val(item.suavidad);
+                                        $("#remocion_mancha").val(item.remocion_mancha);
+                                        $("#hierro").val(item.hierro);
+                                        $("#cloro").val(item.cloro);
+                                        $("#pH").val(item.pH);
+                                        $("#efecto_cebra").val(item.efecto_cebra);
+                                        $("#efecto_piling").val(item.efecto_piling);
+                                        $("#temperatura").val(item.temperatura);
+                                        $("#niveles_agua").val(item.niveles_agua);
+                                        $("#extraccion").val(item.extraccion);
+                                        $("#drenajes").val(item.drenajes);
+                                        $("#rotacion").val(item.rotacion);
+                                        $("#incrustacion").val(item.incrustacion);
+                                     //   $("#manual_auto").val(item.manual_auto);
+                                        $("#capacidad_lavadora").val(item.capacidad_lavadora);
+
+                                         $("#cartulinas_la").val(item.cartulinas_la);
+                                         $("#formulas_lav").val(item.formulas_lav);
+                                         $("#clasi_ropa").val(item.clasi_ropa);
+                                         $("#peso_ropa").val(item.peso_ropa);
+                                         $("#cargado_agua").val(item.cargado_agua);
+                                         $("#tiempo_secado").val(item.tiempo_secado);
+                                         $("#filtro_secadora").val(item.filtro_secadora);
+                                         $("#mangles").val(item.manglesitem);
+                                         $("#others").val(item.othersitem);
+                                        
+                                        $("#manual_auto option[value="+ item.manual_auto +"]").attr("selected",true);
+                                        $("input[name=pregunta1][value=" + item.pregunta1 + "]").prop("checked", true);                                        
+                                        $("input[name=pregunta2][value=" + item.pregunta2 + "]").prop("checked", true);
+                                        $("input[name=pregunta3][value=" + item.pregunta3 + "]").prop("checked", true);
+                                        AplicaDL(item.pregunta1,'Fisico')
+                                        AplicaDL(item.pregunta2,'reactivos')
+                                        AplicaDL(item.pregunta3,'Metodos')
+                                        
+
+                                    }
+                                    },
+                                        function(tx, error){
+                                            console.log("Error: " + error.message);
+                                            app.preloader.hide();  
+                                        }
+                        );  
+                    },
+                    function(error){},
+                    function(){}
+                );
             }
           }
     }

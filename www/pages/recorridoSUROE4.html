@@ -21,18 +21,18 @@
                 </div>
                     <div class="buttons-container" style="display: flex;">
                         <a href="/datosgeneralesSUROE1/" class="fwm-button-recorrido">
-                            <img src="img/iconsMenu/persona2.svg" width="90px" height="90px" id="img1"/>
+                            <img src="" width="90px" height="90px" id="img1"/>
                             <span class="fwm-text-recorrido">Datos Generales</span>
                         </a> 
                         <a href="/formSUROE9/" class="fwm-button-recorrido">
-                            <img src="img/iconsMenu/encuesta.svg" width="90px" height="90px" id="img1"/>
+                            <img src="" width="90px" height="90px" id="img2"/>
                             <span class="fwm-text-recorrido">Entrega de Turno</span>
                         </a> 
                     </div>
                     <br>
                     <div class="buttons-container" style="display: flex;">
                         <a href="/cierreSUROE1/" class="fwm-button-recorrido">
-                            <img src="img/iconsMenu/estrellas.svg" width="90px" height="90px" id="img2"/>
+                            <img src="img/iconsMenu/estrellas.svg" width="90px" height="90px" id="img3"/>
                             <span class="fwm-text-recorrido">Cierre</span>
                         </a>
                     </div>
@@ -50,6 +50,48 @@
                 var id_cedula = localStorage.getItem("IdCedula");
                 var proceso= 5;
                 var recorrido = 1;
+
+                databaseHandler.db.transaction(
+                    function(tx){
+                        tx.executeSql("Select * from datos_maquinaria where id_cedula = ? ",
+                        [id_cedula],
+                            function(tx, results){
+                                var item = results.rows.item(0);
+                                if(item){
+                                    $("#img1").attr("src","img/iconsMenu/persona.svg");
+                                }else{
+                                    $("#img1").attr("src","img/iconsMenu/persona2.svg");
+                                }
+                            },
+                            function(tx, error){
+                                console.log("Error al guardar cedula: " + error.message);
+                            }
+                        );
+                    },
+                    function(error){},
+                    function(){}
+                );
+
+                databaseHandler.db.transaction(
+                        function(tx){
+                            tx.executeSql("Select * from entrega_turno where id_cedula = ?",
+                            [id_cedula],
+                                function(tx, results){
+                                    var item = results.rows.item(0);
+                                    if(item){
+                                        $("#img2").attr("src","img/iconsMenu/encuesta2.svg");
+                                    }else{
+                                        $("#img2").attr("src","img/iconsMenu/encuesta.svg");
+                                    }
+                                },
+                                function(tx, error){
+                                    console.log("Error al guardar cedula: " + error.message);
+                                }
+                            );
+                        },
+                        function(error){},
+                        function(){}
+                    );
             }
         }
     }

@@ -37,7 +37,7 @@
                 <div class="page-content">
 
                     <div style="text-align: center; justify-content:center; margin-right:auto; margin-left:auto; width: 99%;margin-top: 30px;">
-                        <h2 class="FWN-titulo-2">Corrección</h2>
+                        <h2 class="FWN-titulo-2">Reporte de Mantenimiento</h2>
     
                     <div style="text-align: left;">     
                         <div class="list FWM-fixing-form">
@@ -45,10 +45,17 @@
                             <input type="text" name="" id="accion" class="FWM-input" onchange="inputLleno(this.id,this.value)">
     
                             <span class="span FWM-span-form">Estatus:</span>
-                            <input type="text" name="" id="estatus" class="FWM-input" onchange="inputLleno(this.id,this.value)">
+                            <select id="estatus" style="width: 100%; padding-left: 3px; font-size: 15px; height: 37px; font-family: 'ITC Avant Garde Gothic', sans-serif; background-color: white; border-radius: 8px; border: 1px solid gray;" onchange="">
+                                <option value="0">Selecciona un opción</option>
+                                <option value="Reparado">Reparado</option>
+                                <option value="Pendiente">Pendiente</option>
+                                <option value="Sustituir máquina">Sustituir máquina</option>
+                                <option value="En reparación">En reparación</option>
+                            </select>
+                            <!--<input type="text" name="" id="estatus" class="FWM-input" onchange="inputLleno(this.id,this.value)">-->
 
-                            <span class="span FWM-span-form">ID de ticket:</span>
-                            <input type="text" name="" id="id_ticket" class="FWM-input" onchange="inputLleno(this.id,this.value)">
+                            <!--<span class="span FWM-span-form">ID de ticket:</span>-->
+                            <input type="text" name="" id="id_ticket" style="display: none;" class="FWM-input" onchange="inputLleno(this.id,this.value)">
 
                             <span class="span FWM-span-form">Fecha:</span>
                             <input type="text" name="" id="fecha" class="FWM-input" onchange="inputLleno(this.id,this.value)" readonly>
@@ -59,8 +66,14 @@
                             <span class="span FWM-span-form">Nombre de quien entrega:</span>
                             <input type="text" name="" id="nombre_entrega" class="FWM-input" onchange="inputLleno(this.id,this.value)">
 
-                            <span class="span FWM-span-form">Consumibles:</span>
-                            <input type="text" name="" id="consumibles" class="FWM-input" onchange="inputLleno(this.id,this.value)">
+                            <span class="span FWM-span-form">Consumibles utilizados:</span>
+                            <select id="consumibles" style="width: 100%; padding-left: 3px; font-size: 15px; height: 37px; font-family: 'ITC Avant Garde Gothic', sans-serif; background-color: white; border-radius: 8px; border: 1px solid gray;" onchange="">
+                                <option value="0">Selecciona un opción</option>
+                                <option value="Gasolina">Gasolina</option>
+                                <option value="Diesel">Diesel</option>
+                                <option value="Gas">Gas</option>
+                            </select>
+                            <!--<input type="text" name="" id="consumibles" class="FWM-input" onchange="inputLleno(this.id,this.value)">-->
 
                             <span class="span FWM-span-form">Costo de la reparación:</span>
                             <input type="number" name="" id="costo_reparacion" class="FWM-input" onchange="inputLleno(this.id,this.value)">

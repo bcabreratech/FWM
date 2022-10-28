@@ -41,13 +41,13 @@
     
                     <div style="text-align: left;">     
                         <div class="list FWM-fixing-form">
-                            <span class="span FWM-span-form">ID usuario:</span>
-                            <input type="text" name="" id="id_usuario" class="FWM-input" onchange="inputLleno(this.id,this.value)">
+                            <!--<span class="span FWM-span-form">ID usuario:</span>-->
+                            <input type="text" name="" id="id_usuario" class="FWM-input" style="display:none;" onchange="inputLleno(this.id,this.value)">
     
-                            <span class="span FWM-span-form">Nombre de la maquinaria:</span>
+                            <span class="span FWM-span-form">Tipo de máquina:</span>
                             <input type="text" name="" id="nombre_maquina" class="FWM-input" onchange="inputLleno(this.id,this.value)">
 
-                            <span class="span FWM-span-form">N° de serie Maquinaria:</span>
+                            <span class="span FWM-span-form">N° de serie:</span>
                             <input type="text" name="" id="no_serie" class="FWM-input" onchange="inputLleno(this.id,this.value)">
 
                             <span class="span FWM-span-form">Falla detectada:</span>
@@ -59,12 +59,12 @@
                             <span class="span FWM-span-form">Tipo de ticket:</span>
                             <select id="tipo_ticket" style="width: 100%; padding-left: 3px; font-size: 15px; height: 37px; font-family: 'ITC Avant Garde Gothic', sans-serif; background-color: white; border-radius: 8px; border: 1px solid gray;" onchange="">
                                 <option value="0">Selecciona un opción</option>
-                                <option value="1">Mtto. Correctivo</option>
-                                <option value="2">Mtto. Preventivo</option>
+                                <option value="Correctivo">Mtto. Correctivo</option>
+                                <option value="Preventivo">Mtto. Preventivo</option>
                             </select>
 
-                            <span class="span FWM-span-form">ID de ticket:</span>
-                            <input type="text" name="" id="id_ticket" class="FWM-input" onchange="inputLleno(this.id,this.value)">
+                            <span class="span FWM-span-form" style="display: none;" >ID de ticket:</span>
+                            <input type="text" name="" id="id_ticket"  style="display: none;" class="FWM-input" onchange="inputLleno(this.id,this.value)">
 
                             <span class="span FWM-span-form">Foto:</span>
                             <div class="FWM-photo-container">
@@ -94,7 +94,6 @@
                                             <tr>                                                
                                                 <th class="numeric-cell" style="text-align: center;background-color: #063E7F;color: white;">Accion</th>
                                                 <th class="numeric-cell" style="text-align: center;background-color: #063E7F;color: white;">Foto</th>
-                                                <th class="numeric-cell" style="text-align: center;background-color: #063E7F;color: white;">ID usuario</th>
                                                 <th class="numeric-cell" style="text-align: center;background-color: #063E7F;color: white;">Nombre maquina</th>
                                                 <th class="numeric-cell" style="text-align: center;background-color: #063E7F;color: white;">No Serie</th>
                                                 <th class="numeric-cell" style="text-align: center;background-color: #063E7F;color: white;">Falla detectada</th>
@@ -143,11 +142,11 @@
                                             $("#tabla_registros").append("<tr id='fila"+ 
                                                 item.id_tickets +"'><td class='FWM-table-options'><a href='#' onclick='eliminarFilaSURO2("+ 
                                                 item.id_tickets +",3);' style='border: none; outline:none;'><img src='img/borrar.png' width='30px' style='margin-top:10%' /></a></td><td><img src='"+
-                                                item.foto_ticket+"' width='60px' style='margin-top: 4px;'/></td><td>"+
-                                                item.id_usuario+"</td><td style='text-align: center;'>" +unescape(item.nombre_maquina) + "</td><td style='text-align: center;'>" + 
+                                                item.foto_ticket+"' width='60px' style='margin-top: 4px;'/></td>+<td style='text-align: center;'>"
+                                                +unescape(item.nombre_maquina) + "</td><td style='text-align: center;'>" + 
                                                 unescape(item.no_serie) + "</td><td style='text-align: center;'>" + item.folio + "</td><td style='text-align: center;'>" + 
                                                 item.comentarios + "</td><td style='text-align: center;'>" + item.tipo_ticket + "</td><td style='text-align: center;'>" + 
-                                                item.id_ticket + "</td><td style='text-align: center;'>" + item.fecha_registro + "</td></tr>"
+                                                item.id_tickets + "</td><td style='text-align: center;'>" + item.fecha_registro + "</td></tr>"
                                             );
                                         }
                                     }
@@ -160,6 +159,65 @@
                         function(error){},
                         function(){}
                     );
+
+                    var self = this;
+                    var app = self.$app; 
+                    var rol = localStorage.getItem("rol");
+                    var roles = rol.split("-");
+                    var empresa=roles[1];
+
+                    
+                    var NomJson = 'Maquinaria_SUROE';
+                    var NomDescCli = 'Maquinaria_SUROE';
+                    self.autocompleteDropdownAjax = app.autocomplete.create({
+                        inputEl: '#nombre_maquina',
+                        openIn: 'dropdown',
+                        preloader: true, //enable preloader
+                        valueProperty: 'nombre', //object's "value" property name
+                        textProperty:  'nombre', //object's "text" property name
+                        limit: 10, //limit to 20 results
+                        dropdownPlaceholderText: 'Seleccionar Maquina...',
+                        source: function (query, render) {
+                            var autocomplete = this;
+                            var results = [];
+                            if (query.length === 0) {
+                                render(results);
+                                return;
+                            }
+                            // Show Preloader
+                            autocomplete.preloaderShow();
+                            // Do Ajax request to Autocomplete data
+                            app.request({
+                                url: cordova.file.dataDirectory + "jsons/"+NomJson+".json", // y por cual era? XD perate culo dale shift+f6 si le distre? xd
+                                method: 'GET',
+                                dataType: 'json',
+                                //send "query" to server. Useful in case you generate response dynamically, deja inento en el mio para acordarme xd
+                                data: {
+                                    query: query,
+                                },success: function (data) {
+                                    data;
+                                    for (var i = 0; i < data.length; i++) {
+                                        if (data[i].nombre.toLowerCase().indexOf(query.toLowerCase()) >= 0) results.push(data[i]);
+                                    }
+                                    render(results); 
+                                }
+                            }); 
+                        }
+                    });
+
+                    $('#nombre_maquina').change(function () {
+                        var nombre_maquina = $("#nombre_maquina").val();
+                        app.request.get(cordova.file.dataDirectory + "jsons/"+NomDescCli+".json", function (data) {
+                            var content2 = JSON.parse(data);
+                            for(var x = 0; x < content2.length; x++) {
+                                if(content2[x].nombre == nombre_maquina){
+                                    $("#nombre_maquina").val(content2[x].nombre);
+                                    $("#no_serie").val(content2[x].no_serie);
+                                   
+                                }         
+                            }
+                        });
+                    });  
                 }
             }  
         }

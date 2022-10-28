@@ -332,7 +332,6 @@ var productHandler={
         );
     },
     //FIELD FIN
-    //Inicio diprec
     addReporteTecnico: function(id_cedula,foto_entrada,nombre_cliente,direccion,telefono,atencion,correo){
         databaseHandler.db.transaction(
             function(tx){
@@ -397,29 +396,7 @@ var productHandler={
                         // console.log("Registro la minuta del coordinador exitosamente");
                     },
                     function(tx, error){
-                        console.error("Error al registrar la minuta:" + error.message);
-                    }
-                );
-            },
-            function(error){},
-            function(){}
-        );
-    },    
-    //fin diprec
-
-    //Inicio LIC
-    
-    addLimpiezaLIC: function(id_cedula,foto_entrada,nombre_cliente,direccion,telefono,atencion,correo){
-        databaseHandler.db.transaction(
-            function(tx){
-                tx.executeSql(
-                    "insert into servicio_tecnico(id_cedula,foto_entrada,nombre_cliente,direccion,telefono,atencion,email) values(?,?,?,?,?,?,?)",
-                    [id_cedula,foto_entrada,nombre_cliente,direccion,telefono,atencion,correo],
-                    function(tx, results){
-                        // console.log("Registro de Reporte Tecnico creado exitosamente");
-                    },
-                    function(tx, error){
-                        console.error("Error al registrar el Reporte del Tecnico:" + error.message);
+                        console.error("Error al insertar en la tabla datos generales diprec:" + error.message);
                     }
                 );
             },
@@ -427,8 +404,25 @@ var productHandler={
             function(){}
         );
     },
-    
-    //Fin LIC
+    addSeguridadHigiene: function(id_cedula,foto_entrada){
+        databaseHandler.db.transaction(
+            function(tx){
+                tx.executeSql(
+                    "insert into datos_generales_hse(id_cedula,foto_entrada) values(?,?)",
+                    [id_cedula,foto_entrada],
+                    function(tx, results){
+                        // console.log("Registro la minuta del coordinador exitosamente");
+                    },
+                    function(tx, error){
+                        console.error("Error al insertar en la tabla datos generales hse addSeguridadHigiene:" + error.message);
+                    }
+                );
+            },
+            function(error){},
+            function(){}
+        );
+    },  
+    //fin diprec
     addBennetts: function (id_usuario, nombre_usuario, fecha_llegada, geolocation, horario_programado, estatus) {
         databaseHandler.db.transaction(
           function (tx) {
@@ -1247,6 +1241,27 @@ var productHandler={
             function(){}
         );
     },
+    addControl: function (id_cedula,cantidad,tipo,tipo2) {
+        databaseHandler.db.transaction(
+          function (tx) {
+            tx.executeSql(//equipo,cantidad,reporte,equipo
+              "insert into equipo_comision(id_cedula, cantidad, reporte, equipo) values(?,?,?,?)",
+              [id_cedula, cantidad,tipo,tipo2],
+              function (tx, results) {
+                // console.log("Registro de datos producto creado exitosamente");
+              },
+              function (tx, error) {
+                console.error("Error registrar:" + error.message);
+              }
+            );
+          },
+          function (error) {
+              console.log(error)
+          },
+    
+          function () {}
+        );
+    },
     addVisitaDL: function (id_cedula,foto,id_cliente,nombre_cliente,nombre_contacto,correo,telefono,id_visita) {
         databaseHandler.db.transaction(
           function (tx) {
@@ -1315,6 +1330,48 @@ var productHandler={
           function (tx) {
             tx.executeSql(
               "insert into DatoscobranzasDL(id_cedula, foto_inicio, id_cliente, nombre_cliente, nombre_contacto, correo,telefono,id_visita) values(?,?,?,?,?,?,?,?)",
+              [id_cedula, foto, id_cliente, nombre_cliente, nombre_contacto, correo, telefono,id_visita],
+              function (tx, results) {
+                // console.log("Registro de datos producto creado exitosamente");
+              },
+              function (tx, error) {
+                console.error("Error registrar:" + error.message);
+              }
+            );
+          },
+          function (error) {
+              console.log(error)
+          },
+    
+          function () {}
+        );
+    },
+    addinstalacionDL: function (id_cedula,foto,id_cliente,nombre_cliente,nombre_contacto,correo,telefono,id_visita) {
+        databaseHandler.db.transaction(
+          function (tx) {
+            tx.executeSql(
+              "insert into instalacionDL(id_cedula, foto_inicio, id_cliente, nombre_cliente, nombre_contacto, correo,telefono,id_visita) values(?,?,?,?,?,?,?,?)",
+              [id_cedula, foto, id_cliente, nombre_cliente, nombre_contacto, correo, telefono,id_visita],
+              function (tx, results) {
+                // console.log("Registro de datos producto creado exitosamente");
+              },
+              function (tx, error) {
+                console.error("Error registrar:" + error.message);
+              }
+            );
+          },
+          function (error) {
+              console.log(error)
+          },
+    
+          function () {}
+        );
+    },
+        adddagenControlOloresDL: function (id_cedula,foto,id_cliente,nombre_cliente,nombre_contacto,correo,telefono,id_visita) {
+        databaseHandler.db.transaction(
+          function (tx) {
+            tx.executeSql(
+              "insert into datosgencontrolDL(id_cedula, foto_inicio, id_cliente, nombre_cliente, nombre_contacto, correo,telefono,id_visita) values(?,?,?,?,?,?,?,?)",
               [id_cedula, foto, id_cliente, nombre_cliente, nombre_contacto, correo, telefono,id_visita],
               function (tx, results) {
                 // console.log("Registro de datos producto creado exitosamente");

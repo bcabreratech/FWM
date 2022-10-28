@@ -21,22 +21,22 @@
                 </div>
                     <div class="buttons-container" style="display: flex;">
                         <a href="/datosgeneralesDIPREC5/" class="fwm-button-recorrido">
-                            <img src="img/iconsMenu/persona2.svg" width="90px" height="90px" id="img1"/>
+                            <img src="img/iconsMenu/persona2.svg" width="90px" height="90px" id="img1" alt=""/>
                             <span class="fwm-text-recorrido">Datos Generales</span>
                         </a>
                         <a href="/formDIPREC16/" class="fwm-button-recorrido">
-                            <img src="img/iconsMenu/herramientas.svg" width="90px" height="90px" id="img2"/>
+                            <img src="img/iconsMenu/herramientas.svg" width="90px" height="90px" id="img2" alt=""/>
                             <span class="fwm-text-recorrido">Condiciones Generales</span>
                         </a>
                     </div>
                     
                     <div class="buttons-container" style="display: flex;margin-top: 5%;">
                         <a href="/formDIPREC17/" class="fwm-button-recorrido">
-                            <img src="img/iconsMenu/herramientas.svg" width="90px" height="90px" id="img2"/>
+                            <img src="img/iconsMenu/revision_equipo.svg" width="90px" height="90px" id="img3" alt=""/>
                             <span class="fwm-text-recorrido">Mantenimiento</span>
                         </a>
-                        <a href="/cierreDIPREC1/" class="fwm-button-recorrido">
-                            <img src="img/iconsMenu/estrellas.svg" width="90px" height="90px" id="img6"/>
+                        <a href="/cierreDIPREC5/" class="fwm-button-recorrido">
+                            <img src="img/iconsMenu/estrellas.svg" width="90px" height="90px" id="img4" alt=""/>
                             <span class="fwm-text-recorrido">Evaluación y cierre</span>
                         </a>
                     </div>
@@ -54,9 +54,10 @@
         on: {      
             pageInit: function () {
                 var id_cedula = localStorage.getItem("IdCedula");
+                // Consulta para marcar el modulo de datos generales cuando se encuentra completamente lleno
                 databaseHandler.db.transaction(
                     function(tx){
-                        tx.executeSql("SELECT * from servicio_tecnico WHERE id_cedula = ? AND (atencion IS NOT NULL AND direccion IS NOT NULL AND telefono IS NOT NULL AND email IS NOT NULL AND tipo_servicio IS NOT NULL AND nombre_cliente IS NOT NULL)",
+                        tx.executeSql("SELECT * from datos_generales_hse WHERE id_cedula = ? AND (nombre_inspecciona IS NOT NULL AND tipo_inspeccion IS NOT NULL AND codigo IS NOT NULL AND ubicacion IS NOT NULL AND responsable_equipo IS NOT NULL)",
                             [id_cedula],
                             function(tx, results){
                                 var item = results.rows.item(0);
@@ -71,9 +72,10 @@
                     function(error){},
                     function(){}
                 );
+                // Consulta para marcar el modulo de condiciones generales cuando se encuentra completamente lleno
                 databaseHandler.db.transaction(
                     function(tx){
-                        tx.executeSql("Select * FROM datos_equipo WHERE id_cedula = ? AND (equipo IS NOT NULL AND marca IS NOT NULL AND modelo IS NOT NULL AND no_serie IS NOT NULL AND fecha_registro IS NOT NULL)",
+                        tx.executeSql("SELECT * from checklist_seguridad_higiene WHERE id_cedula = ? AND (valor IS NOT NULL AND pregunta IS NOT NULL)",
                             [id_cedula],
                             function(tx, results){
                                 var item = results.rows.item(0);
@@ -88,65 +90,15 @@
                     function(error){},
                     function(){}
                 );
+                // Consulta para marcar el modulo de mantenimiento cuando se encuentra completamente lleno
                 databaseHandler.db.transaction(
                     function(tx){
-                        tx.executeSql("SELECT * from datos_equipo_antes WHERE id_cedula = ? AND (equipo IS NOT NULL)",
+                        tx.executeSql("SELECT * from checklist_seguridad_higiene WHERE id_cedula = ? AND fase = 10  AND valor IS NOT NULL",
                             [id_cedula],
                             function(tx, results){
                                 var item = results.rows.item(0);
                                 if(item.id_cedula > 0){
                                     document.getElementById("img3").src="img/iconsMenu/revision_equipo2.svg";
-                                }
-                            },
-                            function(tx, error){
-                            }
-                        );
-                    },
-                    function(error){},
-                    function(){}
-                );
-                databaseHandler.db.transaction(
-                    function(tx){
-                        tx.executeSql("SELECT * from check_list WHERE id_cedula = ? AND (equipo IS NOT NULL)",
-                            [id_cedula],
-                            function(tx, results){
-                                var item = results.rows.item(0);
-                                if(item.id_cedula > 0){
-                                    document.getElementById("img4").src="img/iconsMenu/checklist2.svg";
-                                }
-                            },
-                            function(tx, error){
-                            }
-                        );
-                    },
-                    function(error){},
-                    function(){}
-                );
-                databaseHandler.db.transaction(
-                    function(tx){
-                        tx.executeSql("SELECT * from check_list2 WHERE id_cedula = ? AND (equipo IS NOT NULL)",
-                            [id_cedula],
-                            function(tx, results){
-                                var item = results.rows.item(0);
-                                if(item.id_cedula > 0){
-                                    document.getElementById("img4").src="img/iconsMenu/checklist2.svg";
-                                }
-                            },
-                            function(tx, error){
-                            }
-                        );
-                    },
-                    function(error){},
-                    function(){}
-                );
-                databaseHandler.db.transaction(
-                    function(tx){
-                        tx.executeSql("SELECT * from datos_equipo_despues WHERE id_cedula = ? AND (equipo IS NOT NULL)",
-                            [id_cedula],
-                            function(tx, results){
-                                var item = results.rows.item(0);
-                                if(item.id_cedula > 0){
-                                    document.getElementById("img5").src="img/iconsMenu/equifina2.svg";
                                 }
                             },
                             function(tx, error){

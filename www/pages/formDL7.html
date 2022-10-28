@@ -1,0 +1,139 @@
+<style>
+ .span{
+            margin-top: 10px;
+            height: auto;
+            line-height: 22px;
+            margin-bottom: 3px;
+            margin-left: 0;
+    }
+      body {
+            background: #F5F5F5;
+    }
+    .page {
+        background: #F5F5F5;
+    }
+</style>
+<template>
+        <div class="page" id="FWM-1">
+            <!-- Navbar -->
+            <div class="navbar" style="background-color: #063E7F;height: 52px;">
+                <div style="text-align: center;"><img src="img/logo-FWM.png" style="margin-top: 5px;" height="41.38px" alt="Logo Field"></div>
+                <div class="navbar-inner sliding" style="height: 52px;">
+                    <div class="left">
+                        <a href="#" onclick="regresarmenucontrolOlor();">
+                            <span class="nav-text-regresar" id="nav-text-regresar-function">Regresar</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        <!-- Contenido Formulario -->
+            <div class="page-content">
+
+                <div style="text-align: center; justify-content:center; margin-right:auto; margin-left:auto; width: 99%;margin-top: 30px;">
+                    <h2 class="FWN-titulo-2">Baños</h2>
+                    <div style="text-align: left;">     
+                        <div class="list FWM-fixing-form"> 
+                             <!--Seleccionar opcion --> 
+                             <span class="span FWM-span-form">Baños:</span>
+                             <span id="text2"  style="margin-bottom: 20px;">
+                                 <select id="banio" name="banio" style="background-color: white; padding-left: 10px;font-size: 16px;font-family: 'ITC Avant Garde Gothic', sans-serif; background-color: white;border: 1px solid gray;border-radius: 8px;">
+                                     <option value="0">Seleccione una opción</option>
+                                     <option value="1">Damas</option>
+                                     <option value="2">Caballeros</option>
+                                 </select>
+                             </span>
+                             <span class="span FWM-span-form">Cantidad:</span>
+                                <input type='number' id="cantidad" class="FWM-input" style="background-color: white; font-family: 'ITC Avant Garde Gothic', sans-serif;" onchange="inputLleno(this.id,this.value)"/>
+                            
+                            <span class="span FWM-span-form">Foto:</span>
+                            <div class="FWM-photo-container" style="margin-bottom: 20px;">
+                                <div class="border-capture">
+                                    <a onclick="capturePhoto();">
+                                        <img class="FWM-photo" src="img/camera.svg" id="photoIcon" width="45px" style="margin-left: 50px;"/>
+                                    </a>
+                                </div>
+                                <img class="FWM-photo-hide" id="smallImage" src=""/>
+                                <input type="hidden" id="imagenC" name="imagenC"/>
+                            </div>
+                            <span class="span FWM-span-form">Comentarios:</span>
+                                <textarea class="FWM-input" style="background-color: white; font-family: 'ITC Avant Garde Gothic', sans-serif;" name="" id="comentarios" cols="30" rows="10" onchange="inputLleno(this.id,this.value)"></textarea>
+                        </div>
+
+                        <div class="block grid-resizable-demo" style="margin-top: 50px;">
+                            <div class="row align-items-stretch" style="text-align: center;">
+                                <div class="col-100 medium-50" style="min-width: 50px; border-style: none;">
+                                    <span class="resize-handler"></span>
+                                    <a href="#" onclick="guardarOloresDL2();" style="background-color: #063E7F;" class="boton-equipo">Guardar Datos</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="block-title FWM-subtitulo" style="margin-top: 80px;">Registros Guardados:</div>  
+                        
+                            <div class="card data-table" style="margin-bottom: 140px;">
+                                <div class="infinite-scroll-content">
+                                    <table>
+                                        <thead>
+                                            <tr>
+                                                <th class="numeric-cell" style="text-align: center;background-color: #063E7F;color: white;">Accion</th>
+                                                <th class="numeric-cell" style="text-align: center;background-color: #063E7F;color: white;">Foto</th>
+                                                <th class="numeric-cell" style="text-align: center;background-color: #063E7F;color: white;">Baño</th>
+                                                <th class="numeric-cell" style="text-align: center;background-color: #063E7F;color: white;">Comentarios</th>
+                                                <th class="numeric-cell" style="text-align: center;background-color: #063E7F;color: white;">Fecha</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="tabla_entregas"></tbody>
+                                    </table>
+                                    <div class="sentencia preloader color-grey infinite-scroll-preloader"></div>
+                                    <div id="message-nr" style="width: 100%;text-align: center;font-family: 'ITC Avant Garde Gothic', sans-serif;font-size: 16px;" style="display: none;">
+                                        <p>Sin registros</p>
+                                    </div>
+                                </div>
+                            </div>
+                    </div>
+                </div>
+                <!-- Fin contenido formulario -->
+                <fwm></fwm>
+            </div>
+        </div>
+</template>
+<script>
+return {
+        on: {      
+            pageInit: function () {
+                $('.preloader').remove();
+                $('.infinite-scroll-preloader').remove();
+                var id_usuario = localStorage.getItem("id_usuario");
+                var id_cedula = localStorage.getItem("IdCedula");
+                databaseHandler.db.transaction(
+                    function(tx){
+                        tx.executeSql(
+                            "Select * from evidencias_equipo_comision where id_cedula = ? AND fase = 2",
+                                [id_cedula],
+                                function(tx, results){
+                                    let length = results.rows.length;
+                                    for(var i = 0; i< length; i++){
+                                        var item = results.rows.item(i);
+                                        $("#tabla_entregas").append("<tr id='fila"+ item.id_evidencia +"'><td><a href='#' onclick='eliminarFilaDL("+ item.id_evidencia +",9);' style='border: none; outline:none;'><img src='img/borrar.png' width='30px' /></a></td><td><img src='"+
+                                        item.foto+"' width='60px' style='margin-top: 4px;'/></td><td style='text-align: center;'>" + item.equipo + "</td><td style='text-align: center;'>" + item.comentarios + "</td><td style='text-align: center;'>" + item.fecha + "</td></tr>");
+                                        $("#message-nr").css("display", "none");
+                                        $('.preloader').remove();
+                                        $('.infinite-scroll-preloader').remove();
+                                    }
+                                },
+                                    function(tx, error){
+                                        console.log("Error: " + error.message);
+                                        app.preloader.hide();  
+                                        $('.preloader').remove();
+                                        $('.infinite-scroll-preloader').remove();
+                                    }
+                        );  
+                    },
+                        function(error){},
+                        function(){}
+                ); 
+            }
+        }
+    }
+
+</script>

@@ -1,0 +1,146 @@
+<style>
+    .span {
+        margin-top: 10px;
+        height: auto;
+        line-height: 22px;
+        margin-bottom: 3px;
+        margin-left: 0;
+    }
+
+    input[type="text"] {
+        margin-top: auto;
+        margin-bottom: auto;
+    }
+
+    .FWM-fixing-form div {
+        margin-bottom: 10px;
+    }
+</style><template>
+    <div class="page" style="background-color: rgb(245, 245, 245);">
+        <div class="navbar" style="background-color: #063E7F;height: 52px;">
+            <div style="text-align: center;"><img src="img/logo-FWM.png" style="margin-top: 5px;" height="41.38px"
+                    alt="Logo Field"></div>
+            <div class="navbar-inner sliding" style="height: 52px;">
+                <div class="left">
+                    <a href="#" onclick="regresarRecorridobtns();">
+                        <span class="nav-text-regresar" id="nav-text-regresar-function">Regresar</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <!-- Contenido Formulario -->
+        <div class="page-content">
+            <div
+                style="text-align: center; justify-content:center; margin-right:auto; margin-left:auto; width: 99%;margin-top: 30px;">
+                <h2 class="FWN-titulo-2">Inventario de productos</h2>
+                <div style="text-align: left;">
+                    <div class="list FWM-fixing-form" id="datos_form">
+                        <span class="span FWM-span-form" style="font-family: 'ITC Avant Garde Gothic', sans-serif;">Nombre producto: *</span>
+                        <input type="text" class="FWM-input obligatorio" id="nombre_producto" name="nombre_producto"
+                            style="background-color: white;" onchange="inputLleno(this.id,this.value)" />
+                        <span class="span FWM-span-form" style="font-family: 'ITC Avant Garde Gothic', sans-serif;">Presentación: *</span>
+                        <input type="text" class="FWM-input obligatorio" id="presentacion" name="presentacion"
+                            style="background-color: white;" onchange="inputLleno(this.id,this.value)" />
+                        <span class="span FWM-span-form" style="font-family: 'ITC Avant Garde Gothic', sans-serif;">Existencia en dosificador:
+                            *</span>
+                        <input type="text" class="FWM-input obligatorio" id="existencia_dosi" name="existencia_dosi"
+                            style="background-color: white;" onchange="inputLleno(this.id,this.value)" />
+                        <span class="span FWM-span-form" style="font-family: 'ITC Avant Garde Gothic', sans-serif;">Existencia en almacen:
+                            *</span>
+                        <input type="text" class="FWM-input obligatorio" id="existencia_alm" name="existencia_alm"
+                            style="background-color: white;" onchange="inputLleno(this.id,this.value)" />
+                        <span class="span FWM-span-form">Comentarios:</span>
+                        <textarea class="FWM-input obligatorio" style="background-color: white; font-family: 'ITC Avant Garde Gothic', sans-serif;" name="comentarios"
+                            id="comentarios"
+                            cols="30" rows="10" onchange="inputLleno(this.id,this.value)"></textarea>
+                       
+                        <div class="block grid-resizable-demo" style="margin-bottom: 70px;">
+                            <div class="row align-items-stretch" style="text-align: center;">
+                                <div class="col-100 medium-50" style="min-width: 50px; border-style: none;">
+                                    <span class="resize-handler"></span>
+                                    <a href="#" onclick="guardarDLinventariopro();" class="boton-equipo">Agregar equipo</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <span class="span FWM-span-form">Registros:</span>
+                        <div class="card data-table">
+                            <div class="infinite-scroll-content">
+                                <table id="tabla_productosdl">
+                                    <thead>
+                                        <tr>
+                                            <th class="numeric-cell"
+                                                style="text-align: center;background-color: #063E7F;color: white;">
+                                                Acción</th>
+                                            <th class="numeric-cell"
+                                                style="text-align: center;background-color: #063E7F;color: white;">Nombre del producto
+                                            </th>
+                                            <th class="numeric-cell"
+                                                style="text-align: center;background-color: #063E7F;color: white;">
+                                                Presentación</th>
+                                            <th class="numeric-cell"
+                                                style="text-align: center;background-color: #063E7F;color: white;">Existencia en dosificador 
+                                            </th>
+                                            <th class="numeric-cell"
+                                                style="text-align: center;background-color: #063E7F;color: white;">Existencia en almacen
+                                            </th>
+                                            <th class="numeric-cell" style="text-align: center;background-color: #063E7F;color: white;">Comentarios
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody></tbody>
+                                </table>
+                                <!-- <div class="sentencia preloader color-grey infinite-scroll-preloader"></div> -->
+                                <div id="message-nr"
+                                    style="width: 100%;text-align: center;font-family: 'ITC Avant Garde Gothic', sans-serif;font-size: 16px;"
+                                    style="display: none;">
+                                    <p>Sin registros</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+</template>
+<script>
+    return {
+        on: {
+            pageInit: function () {
+                $('.preloader').remove();
+                $('.infinite-scroll-preloader').remove();
+                var id_usuario = localStorage.getItem("id_usuario");
+                var id_cedula = localStorage.getItem("IdCedula");
+                databaseHandler.db.transaction(
+                    function (tx) {
+                        tx.executeSql(
+                            "Select * from inventario_productos where id_cedula = ?",
+                            [id_cedula],
+                            function (tx, results) {
+                                let length = results.rows.length;
+                                for (var i = 0; i < length; i++) {
+                                    var item = results.rows.item(i);
+                                    $("#tabla_productosdl").append("<tr id='fila" + item.id_producto + "'><td><a href='#' onclick='eliminarFilaDL(" + item.id_producto + ",12);' style='border: none; outline:none;'><img src='img/borrar.png' width='30px' /></a></td><td style='text-align: center;'>" + item.nombre_producto + "</td><td style='text-align: center;'>" + item.presentacion + "</td><td style='text-align: center;'>" + item.existencia_dos + "</td><td style='text-align: center;'>" + item.existencia_alm + "</td><td style='text-align: center;'>" + item.comentarios + "</td></tr>");
+                                    $("#message-nr").css("display", "none");
+                                    $('.preloader').remove();
+                                    $('.infinite-scroll-preloader').remove();
+                                }
+                            },
+                            function (tx, error) {
+                                console.log("Error: " + error.message);
+                                app.preloader.hide();
+                                $('.preloader').remove();
+                                $('.infinite-scroll-preloader').remove();
+                            }
+                        );
+                    },
+                    function (error) { },
+                    function () { }
+                );
+            }
+        }
+    }
+
+</script>
