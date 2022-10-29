@@ -37,7 +37,7 @@ p {
                                 height: 1.3em;
                             }
                         </style>
-                        <a href="#" onclick="regresar_Aliatonic(1);">
+                        <a href="#" onclick="regresarRecorridoLIC2();">
                             <span class="nav-text-regresar" id="nav-text-regresar-function">Regresar</span>
                         </a>
                     </div>
@@ -71,7 +71,7 @@ p {
                                     <tbody id="table-general-conten">
                                         <tr>
                                             <th style="color: #505759;font-size: 11px;font-size: 14px;font-family: 'ITC Avant Garde Gothic', sans-serif;">Nombre del Cliente:</th>
-                                            <td><span id="nombre_comercial" style="color: #063E7F;font-size: 11px;font-size: 14px;font-family: 'ITC Avant Garde Gothic', sans-serif;">Cable</span></td>
+                                            <td><span id="nombre_comercial" style="color: #063E7F;font-size: 11px;font-size: 14px;font-family: 'ITC Avant Garde Gothic', sans-serif;">LIC 2</span></td>
                                         </tr>
                                         <tr>
                                             <th style="color: #505759;font-size: 11px;font-size: 14px;font-family: 'ITC Avant Garde Gothic', sans-serif;">Telefono:</th>
@@ -99,25 +99,25 @@ p {
                                 </div>
                                 
                                 <div id="firmaElectronica2" style="text-align: center;margin-top: 35px;">
-                                    <div style="color: gray;"><b>Cierre</b></div>
+                                    <div style="color: gray;"><b>Firma Electronica</b></div>
                                     <div id="firmaElectro2"></div>
                                 </div>
                                 <div style="width: 100%" id="mapa"></div>
-                                <!-- <p>
+                                <p>
                                     <label style="font-size: 20px;color:#063E7F;font-family: 'ITC Avant Garde Gothic', sans-serif;font-size: 20px;"><strong>Nombre y firma de quién recibe el servicio</strong></label>
-                                </p> -->
-                                <!-- <center><input style="display: block;margin: 0 auto;width: 100%;border: 0;border-bottom: 1px solid rgba(0,0,0,.2);height: 35px;line-height: 45px;  margin-bottom: 10px;font-size: 1em;" class="spanBlanco" type="text" name="NombreFirma" id="NombreFirma" placeholder="Nombre de quién recibió el servicio:"></center><br/> -->
+                                </p>
+                                <center><input style="display: block;margin: 0 auto;width: 100%;border: 0;border-bottom: 1px solid rgba(0,0,0,.2);height: 35px;line-height: 45px;  margin-bottom: 10px;font-size: 1em;" class="spanBlanco" type="text" name="NombreFirma" id="NombreFirma" placeholder="Nombre de quién recibió el servicio:"></center><br/>
                                 <!-- Contenedor de botones -->
-                                <!-- <div class="BotonesCierreContainer text-center" style="display: flex; flex-direction: row;justify-content: center;">
+                                <div class="BotonesCierreContainer text-center" style="display: flex; flex-direction: row;justify-content: center;">
                                     <a class="link popup-open" href="#" onclick="vertical();" data-popup=".popup-photo"><img src="img/iconsMenu/firmardigital.svg" width="80px" /></a>
                                     <input type="hidden" name="signate" id="signate" placeholder="sfirmc"/>
                                     <center><img id="ImagenFirmaView" src="" width="70%"><br>
                                         <span id="VolverFirmar"></span>
                                         <input type="button" value="Volver a Firmar" style="position:absolute;display:none;margin:0 !important;color:white;background-color: #019cdc;top:40px;margin-left:160px !important" /></center>
                                     <a class="link popup-open" href="#" onclick="createFirma()" data-popup=".popup-services"><img src="img/iconsMenu/firmar.svg" width="80px" /></a><br /><br />
-                                </div> -->
+                                </div>
 
-                                <!-- <div class="popup popup-photo" style="text-align: center;">
+                                <div class="popup popup-photo" style="text-align: center;">
                                     <br/>
                                     <div class="headerPopupPhoto" style="width: 90%;display: flex;justify-content: space-between;padding-left: 20px;margin-bottom: 50px;">
                                         <a class="link popup-close" onclick="gFotoFirma();" href="#">Guardar Fotografia</a>
@@ -142,8 +142,8 @@ p {
                                         <input type="image" name="smallImage" style="margin: 0px auto; width: 147.76px; height: 147.76px; border-radius: 17px; display: none; margin-top: -150.65px;" id="smallImage" src="" /><br>
                                         <input type="hidden" name="imgSigPhoto" id="imgSigPhoto">
                                     </div>    
-                                </div> -->
-                                <!-- <div class="popup popup-services">
+                                </div>
+                                <div class="popup popup-services">
                                     <br>
                                     <div class="popup-container" style="height: 300px;">
                                          <div class="headerPopupPhoto" style="width: 90%;display: flex;justify-content: space-between;padding-left: 20px;margin-bottom: 30px;">
@@ -162,7 +162,7 @@ p {
                                             <div id="firmaElectro"></div>
                                         </div>
                                     </div>
-                                </div> -->
+                                </div>
 
                                 <div class="popup popup-calificacion">
                                     <div class="headerPopupPhoto" style="width: 90%;display: flex;justify-content: space-between;padding-left: 20px;margin-top: 15px;">
@@ -267,7 +267,7 @@ p {
                                                     <div class="row align-items-stretch" style="text-align: center;">
                                                         <div class="col-100 medium-50" style="min-width: 50px; border-style: none;">
                                                             <span class="resize-handler"></span>
-                                                            <button class="send" id="btnEncuesta" onclick="guardaEncuestaAliatonic()">Guardar</button>
+                                                            <button class="send" id="btnEncuesta" onclick="">Guardar</button> <!--  guardaEncuestaAliatonic() -->
                                                         </div>
                                                     </div>
                                                 </div>
@@ -295,7 +295,7 @@ p {
                                     <div class="row align-items-stretch" style="text-align: center;">
                                         <div class="col-100 medium-50" style="min-width: 50px; border-style: none;">
                                             <span class="resize-handler"></span>
-                                            <a href="#" onclick="guardarReporteGeneralAliat();" class="boton-personalizado-4 link"> Terminar servicio</a>
+                                            <a href="#" onclick="" class="boton-personalizado-4 link"> Terminar servicio</a> <!--  guardarReporteGeneralAliat(); -->
                                         </div>
                                     </div>
                                 </div>
@@ -312,198 +312,199 @@ p {
 <script>
     return {
         on: {
-            pageInit: function (e, page) {
+            // pageInit: function (e, page) {
 
-                var id_cedula = localStorage.getItem("IdCedula");
+            //     var id_cedula = localStorage.getItem("IdCedula");
 
-                databaseHandler.db.transaction(
-                    function(tx){
-                        tx.executeSql(
-                            "Select * from encuesta_Aliationic WHERE id_cedula = ?",
-                            [id_cedula],
-                            function(tx, results){
-                                let length = results.rows.length;
-                                var item = results.rows.item(0);
-                                if (item.rapidez == undefined){
-                                    $("#encuesta").css("display", "block");
-                                    $("#realizada").css("display", "none");
-                                }else{
-                                    $("#encuesta").css("display", "none");
-                                    $("#realizada").css("display", "block");
-                                    $("#btnEncuesta").css("display", "none");
-                                    $("#btnQR").css("display", "none");
-                                }
-                            },
-                            function(tx, error){
-                                console.log("Error al guardar cedula: " + error.message);
-                                app.preloader.hide();  
-                            }
-                        );  
-                    },
-                    function(error){},
-                    function(){}
-                );
+            //     databaseHandler.db.transaction(
+            //         function(tx){
+            //             tx.executeSql(
+            //                 "Select * from encuesta_Aliationic WHERE id_cedula = ?",
+            //                 [id_cedula],
+            //                 function(tx, results){
+            //                     let length = results.rows.length;
+            //                     var item = results.rows.item(0);
+            //                     if (item.rapidez == undefined){
+            //                         $("#encuesta").css("display", "block");
+            //                         $("#realizada").css("display", "none");
+            //                     }else{
+            //                         $("#encuesta").css("display", "none");
+            //                         $("#realizada").css("display", "block");
+            //                         $("#btnEncuesta").css("display", "none");
+            //                         $("#btnQR").css("display", "none");
+            //                     }
+            //                 },
+            //                 function(tx, error){
+            //                     console.log("Error al guardar cedula: " + error.message);
+            //                     app.preloader.hide();  
+            //                 }
+            //             );  
+            //         },
+            //         function(error){},
+            //         function(){}
+            //     );
 
-                document.addEventListener("deviceready", onDeviceReady, false);
-                function onDeviceReady() {
-                    navigator.geolocation.getCurrentPosition(onSuccess, onError);
-                }
-                function onSuccess(position) {
-                    var element = document.getElementById('geolocation');
-                    $('#geolocation').val(position.coords.latitude+','+position.coords.longitude);
-                    var geo = $('#geolocation').val();
-                    $("#mapa").append(`<iframe  style="pointer-events:none" width="100%" height="200" frameborder="0" marginheight="0" marginwidth="0" loading="lazy" src="https://maps.google.com/maps?width=100%25&amp;height=300&amp;hl=es&amp;q=${geo}+(Visita%20Field)&amp;t=&amp;z=14&amp;ie=UTF8&amp;iwloc=B&amp;output=embed"></iframe>`);
-                    var fecha = new Date();
-                    var fecha_firma = fecha.getFullYear()+"-"+(fecha.getMonth()+1)+"-"+fecha.getDate();
-                    var hora_firma = fecha.getHours()+":"+fecha.getMinutes()+":"+fecha.getSeconds();
-                    var geo = $("#geolocation").val();
-                    var myVar = setInterval(myTimer, 5000);
-                    function myTimer() {
-                        var fecha = new Date();
-                        var fecha_firma = fecha.getFullYear()+"-"+(fecha.getMonth()+1)+"-"+fecha.getDate();
-                        var hora_firma = fecha.getHours()+":"+fecha.getMinutes()+":"+fecha.getSeconds();
-                        var firma = geo + "|" + fecha_firma + "|" +hora_firma
-                        const firmaEn = window.btoa(geo + "|" + fecha_firma + "|" +hora_firma)
-                        $("#firmaElectro").html(`<span style="color: gray;font-style: italic;">|${firma}|f-${firmaEn}-</span>`)
-                    }
-                }
-                function onError(error) {
-                    alert('Error en la Localización');
-                    var myVar = setInterval(myTimer, 5000);
-                    function myTimer() {
-                        var fecha = new Date();
-                        var fecha_firma = fecha.getFullYear()+"-"+(fecha.getMonth()+1)+"-"+fecha.getDate();
-                        var hora_firma = fecha.getHours()+":"+fecha.getMinutes()+":"+fecha.getSeconds();
-                        var firma =  fecha_firma + "|" +hora_firma
-                        $("#firmaElectro").html(`<span style="color: gray;font-style: italic;">|${firma}|f-${MD5(firma)}-</span>`)
-                    }
-                }
-                databaseHandler.db.transaction(
-                    function(tx){
-                        tx.executeSql(
-                            "Select fecha_entrada from cedulas_general WHERE id_cedula = ?",
-                            [id_cedula],
-                            function(tx, results){
-                                let length = results.rows.length;
-                                for(var i = 0; i< length; i++){
-                                    var item = results.rows.item(i);
-                                    var cliente = $("#nombre_comercial").val(item.nombre_cliente);
-                                    $("#fecha_entrada").html(item.fecha_entrada);
-                                    let date = new Date(item.fecha_entrada);
-                                    var month = date.getMonth() + 1;
-                                    $("#fecha_parse").val(date.getFullYear() + "-" + month + "-"+date.getDate())
-                                } 
-                            },
-                            function(tx, error){
-                                console.log("Error al guardar cedula: " + error.message);
-                                app.preloader.hide();  
-                            }
-                        );  
-                    },
-                    function(error){},
-                    function(){}
-                );
+            //     document.addEventListener("deviceready", onDeviceReady, false);
+            //     function onDeviceReady() {
+            //         navigator.geolocation.getCurrentPosition(onSuccess, onError);
+            //     }
+            //     function onSuccess(position) {
+            //         var element = document.getElementById('geolocation');
+            //         $('#geolocation').val(position.coords.latitude+','+position.coords.longitude);
+            //         var geo = $('#geolocation').val();
+            //         $("#mapa").append(`<iframe  style="pointer-events:none" width="100%" height="200" frameborder="0" marginheight="0" marginwidth="0" loading="lazy" src="https://maps.google.com/maps?width=100%25&amp;height=300&amp;hl=es&amp;q=${geo}+(Visita%20Field)&amp;t=&amp;z=14&amp;ie=UTF8&amp;iwloc=B&amp;output=embed"></iframe>`);
+            //         var fecha = new Date();
+            //         var fecha_firma = fecha.getFullYear()+"-"+(fecha.getMonth()+1)+"-"+fecha.getDate();
+            //         var hora_firma = fecha.getHours()+":"+fecha.getMinutes()+":"+fecha.getSeconds();
+            //         var geo = $("#geolocation").val();
+            //         var myVar = setInterval(myTimer, 5000);
+            //         function myTimer() {
+            //             var fecha = new Date();
+            //             var fecha_firma = fecha.getFullYear()+"-"+(fecha.getMonth()+1)+"-"+fecha.getDate();
+            //             var hora_firma = fecha.getHours()+":"+fecha.getMinutes()+":"+fecha.getSeconds();
+            //             var firma = geo + "|" + fecha_firma + "|" +hora_firma
+            //             const firmaEn = window.btoa(geo + "|" + fecha_firma + "|" +hora_firma)
+            //             $("#firmaElectro").html(`<span style="color: gray;font-style: italic;">|${firma}|f-${firmaEn}-</span>`)
+            //         }
+            //     }
+            //     function onError(error) {
+            //         alert('Error en la Localización');
+            //         var myVar = setInterval(myTimer, 5000);
+            //         function myTimer() {
+            //             var fecha = new Date();
+            //             var fecha_firma = fecha.getFullYear()+"-"+(fecha.getMonth()+1)+"-"+fecha.getDate();
+            //             var hora_firma = fecha.getHours()+":"+fecha.getMinutes()+":"+fecha.getSeconds();
+            //             var firma =  fecha_firma + "|" +hora_firma
+            //             $("#firmaElectro").html(`<span style="color: gray;font-style: italic;">|${firma}|f-${MD5(firma)}-</span>`)
+            //         }
+            //     }
+            //     databaseHandler.db.transaction(
+            //         function(tx){
+            //             tx.executeSql(
+            //                 "Select fecha_entrada from cedulas_general WHERE id_cedula = ?",
+            //                 [id_cedula],
+            //                 function(tx, results){
+            //                     let length = results.rows.length;
+            //                     for(var i = 0; i< length; i++){
+            //                         var item = results.rows.item(i);
+            //                         var cliente = $("#nombre_comercial").val(item.nombre_cliente);
+            //                         $("#fecha_entrada").html(item.fecha_entrada);
+            //                         let date = new Date(item.fecha_entrada);
+            //                         var month = date.getMonth() + 1;
+            //                         $("#fecha_parse").val(date.getFullYear() + "-" + month + "-"+date.getDate())
+            //                     } 
+            //                 },
+            //                 function(tx, error){
+            //                     console.log("Error al guardar cedula: " + error.message);
+            //                     app.preloader.hide();  
+            //                 }
+            //             );  
+            //         },
+            //         function(error){},
+            //         function(){}
+            //     );
 
-                 databaseHandler.db.transaction(
-                    function(tx){
-                        tx.executeSql(
-                            "Select * from datos_gene_aliatonic WHERE id_cedula = ?",
-                            [id_cedula],
-                            function(tx, results){
-                                console.log(results.rows)
-                                let length = results.rows.length;
-                                var item = results.rows.item(0);
-                                var equipo='';
-                                var modelo='';
-                                $('#NombreFirma').val(item.cliente);
+            //      databaseHandler.db.transaction(
+            //         function(tx){
+            //             tx.executeSql(
+            //                 "Select * from datos_gene_aliatonic WHERE id_cedula = ?",
+            //                 [id_cedula],
+            //                 function(tx, results){
+            //                     console.log(results.rows)
+            //                     let length = results.rows.length;
+            //                     var item = results.rows.item(0);
+            //                     var equipo='';
+            //                     var modelo='';
+            //                     $('#NombreFirma').val(item.cliente);
                                 
-                                if (item.foto_sello == undefined){
-                                }else{
-                                $("#imagenC").val(item.foto_sello);
-                                $("#smallImage").attr("src", item.foto_sello);
-                                $("#smallImage").css("display","block")
-                                $("#photoIcon").attr("src","img/reload.svg");
-                                }
+            //                     if (item.foto_sello == undefined){
+            //                     }else{
+            //                     $("#imagenC").val(item.foto_sello);
+            //                     $("#smallImage").attr("src", item.foto_sello);
+            //                     $("#smallImage").css("display","block")
+            //                     $("#photoIcon").attr("src","img/reload.svg");
+            //                     }
 
-                                var id_visita = id_cedula;
-                                var cliente = $("#nombre_comercial").text();
-                                var fechaf = $("#fecha_parse").val();
-                                var fecha = new Date();
-                                var hora_firma = fecha.getHours()+":"+fecha.getMinutes()+":"+fecha.getSeconds();
-                                var geolocalizacion = $("#geolocation").val()
-                                const encode = window.btoa(id_visita + "#-" + cliente + "#-" + fechaf + "#-" + geolocalizacion + "#-" + hora_firma)
-                                //console.log(encode);
-                                new QRCode(document.getElementById("qrcode"), "https://www.fwm.com.mx/pages_servind/encuesta/index.php?id="+encode);
+            //                     var id_visita = id_cedula;
+            //                     var cliente = $("#nombre_comercial").text();
+            //                     var fechaf = $("#fecha_parse").val();
+            //                     var fecha = new Date();
+            //                     var hora_firma = fecha.getHours()+":"+fecha.getMinutes()+":"+fecha.getSeconds();
+            //                     var geolocalizacion = $("#geolocation").val()
+            //                     const encode = window.btoa(id_visita + "#-" + cliente + "#-" + fechaf + "#-" + geolocalizacion + "#-" + hora_firma)
+            //                     //console.log(encode);
+            //                     new QRCode(document.getElementById("qrcode"), "https://www.fwm.com.mx/pages_servind/encuesta/index.php?id="+encode);
                                 
-                            },
-                            function(tx, error){
-                                console.log("Error: " + error.message);
-                                app.preloader.hide();  
-                            }
-                        );  
-                    },
-                    function(error){
-                        console.log("Error: " + error.message);
-                    },
-                    function(){}
-                );
+            //                 },
+            //                 function(tx, error){
+            //                     console.log("Error: " + error.message);
+            //                     app.preloader.hide();  
+            //                 }
+            //             );  
+            //         },
+            //         function(error){
+            //             console.log("Error: " + error.message);
+            //         },
+            //         function(){}
+            //     );
 
-                databaseHandler.db.transaction(
-                    function(tx){
-                        tx.executeSql(
-                            "Select * from datos_gene_aliatonic WHERE id_cedula = ?",
-                            [id_cedula],
-                            function(tx, results){
-                                var length = results.rows.length;
-                                var encontro='';
-                                    $('.preloader').remove();
-                                    $('.infinite-scroll-preloader').remove();
-                                    app.preloader.hide();
-                                if (length==0){
-                                }else{
-                                    var item = results.rows.item(0);
-                                    //console.log(length);
-                                    //console.log(item.como_entrego);
-                                    if (item.como_entrego==undefined){
-                                    }else{
-                                        $("#message-nr2").css("display", "none");
-                                        $('.preloader').remove();
-                                        $('.infinite-scroll-preloader').remove();
-                                        app.preloader.hide();
-                                        for(var i = 0; i< length; i++){
-                                        var item = results.rows.item(i);
-                                        if (item.como_entrego==1){
-                                            encontro='En funcionamiento';
-                                        }else if (item.como_entrego==2){
-                                            encontro='Sin funcionar';
-                                        }else if (item.como_entrego==3){
-                                            encontro='En otras condiciones';
-                                        }
-                                        $("#entrega").
-                                            append("<div class='card demo-facebook-card'><div class='card-header'><div class='demo-facebook-name' id='demo' style='margin-left:0px;'>¿El diágnostico fue correcto?:" +
-                                                unescape(item.diagnotico_corecto) +"</div></div><div class='card demo-facebook-card'><div class='demo-facebook-date'></div>   <div class='card-content card-content-padding' style='text-align: center;'></div> <div class='card-footer'><a href='#' id='fa' >Comentarios: "+
-                                                        item.comentarios_entrega +"</a></div> <div class='card-footer'><a href='#' id='fa' >Trabajo realizado: "+
-                                                        item.trabajo_realizado +"</a></div> <div class='card-footer'><a href='#' id='fa' >Se entregó: "+
-                                                        encontro+"</a> </div> </div> <br>");
-                                        }
-                                    }
-                                }
-                            },
-                            function(tx, error){
-                                console.log("Error: " + error.message);
-                                app.preloader.hide();  
-                            }
-                        );  
-                    },
-                    function(error){
-                        console.log("Error: " + error.message);
-                    },
-                    function(){}
-                );
+            //     databaseHandler.db.transaction(
+            //         function(tx){
+            //             tx.executeSql(
+            //                 "Select * from datos_gene_aliatonic WHERE id_cedula = ?",
+            //                 [id_cedula],
+            //                 function(tx, results){
+            //                     var length = results.rows.length;
+            //                     var encontro='';
+            //                         $('.preloader').remove();
+            //                         $('.infinite-scroll-preloader').remove();
+            //                         app.preloader.hide();
+            //                     if (length==0){
+            //                     }else{
+            //                         var item = results.rows.item(0);
+            //                         //console.log(length);
+            //                         //console.log(item.como_entrego);
+            //                         if (item.como_entrego==undefined){
+            //                         }else{
+            //                             $("#message-nr2").css("display", "none");
+            //                             $('.preloader').remove();
+            //                             $('.infinite-scroll-preloader').remove();
+            //                             app.preloader.hide();
+            //                             for(var i = 0; i< length; i++){
+            //                             var item = results.rows.item(i);
+            //                             if (item.como_entrego==1){
+            //                                 encontro='En funcionamiento';
+            //                             }else if (item.como_entrego==2){
+            //                                 encontro='Sin funcionar';
+            //                             }else if (item.como_entrego==3){
+            //                                 encontro='En otras condiciones';
+            //                             }
+            //                             $("#entrega").
+            //                                 append("<div class='card demo-facebook-card'><div class='card-header'><div class='demo-facebook-name' id='demo' style='margin-left:0px;'>¿El diágnostico fue correcto?:" +
+            //                                     unescape(item.diagnotico_corecto) +"</div></div><div class='card demo-facebook-card'><div class='demo-facebook-date'></div>   <div class='card-content card-content-padding' style='text-align: center;'></div> <div class='card-footer'><a href='#' id='fa' >Comentarios: "+
+            //                                             item.comentarios_entrega +"</a></div> <div class='card-footer'><a href='#' id='fa' >Trabajo realizado: "+
+            //                                             item.trabajo_realizado +"</a></div> <div class='card-footer'><a href='#' id='fa' >Se entregó: "+
+            //                                             encontro+"</a> </div> </div> <br>");
+            //                             }
+            //                         }
+            //                     }
+            //                 },
+            //                 function(tx, error){
+            //                     console.log("Error: " + error.message);
+            //                     app.preloader.hide();  
+            //                 }
+            //             );  
+            //         },
+            //         function(error){
+            //             console.log("Error: " + error.message);
+            //         },
+            //         function(){}
+            //     );
 
 
                    
-            }
+            // }
+        
         }
     }
 </script>

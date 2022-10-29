@@ -423,6 +423,28 @@ var productHandler={
         );
     },  
     //fin diprec
+    //Inicio lic
+    
+    addLimpiezaLIC: function(id_cedula,foto_entrada,nombre_cliente,direccion,telefono,atencion,correo){
+        databaseHandler.db.transaction(
+            function(tx){
+                tx.executeSql(
+                    "insert into servicio_tecnico(id_cedula,foto_entrada,nombre_cliente,direccion,telefono,atencion,email) values(?,?,?,?,?,?,?)",
+                    [id_cedula,foto_entrada,nombre_cliente,direccion,telefono,atencion,correo],
+                    function(tx, results){
+                        // console.log("Registro de Reporte Tecnico creado exitosamente");
+                    },
+                    function(tx, error){
+                        console.error("Error al registrar el Reporte del Tecnico:" + error.message);
+                    }
+                );
+            },
+            function(error){},
+            function(){}
+        );
+    },
+    
+    //Fin LIC
     addBennetts: function (id_usuario, nombre_usuario, fecha_llegada, geolocation, horario_programado, estatus) {
         databaseHandler.db.transaction(
           function (tx) {

@@ -820,6 +820,407 @@
         );
     }
     //Bennetts Fin
+     //LIC Inicio
+     function buscarClienteLICD(){
+        app.preloader.show('blue');
+        var id_usuario = localStorage.getItem("id_usuario");
+        var nombre_usuario = localStorage.getItem("nombre") + " " + localStorage.getItem("apellido_paterno");
+        var fecha = new Date();
+        var fecha_llegada = fecha.getFullYear()+"-"+(fecha.getMonth()+1)+"-"+fecha.getDate()+" "+fecha.getHours()+":"+fecha.getMinutes()+":"+fecha.getSeconds();
+        var geolocation = $("#geolocation").val();
+        var id_cliente = $('#id_cliente').val();
+        var nombre_cliente = $("#nombre_cliente").val();
+        var hora_programada = $("#horario_programado").val();
+        var atencion = $("#persona_recibe").val();
+        var direccion = $("#direccion").val();
+        var telefono = $("#telefono").val();
+        var correo = $("#correo").val();
+        var foto_llegada = $("#imagenC").val();
+        var documentoIngresar = $("#documento_ingresar").val();
+        var telefono = $("#telefono").val();
+        var correo = $("#correo").val();
+        var estatus = 0;
+        if(localStorage.getItem("IdCedula"))
+        {
+            app.preloader.hide();
+            var cedula = localStorage.getItem("IdCedula");
+            databaseHandler.db.transaction(
+                function(tx){
+                    tx.executeSql("SELECT * FROM cedulas_general WHERE id_cedula = ?",
+                        [cedula],
+                        function(tx5, results){
+                            var item = results.rows.item(0);
+                            if(nombre_cliente != item.nombre_cliente || foto_llegada != localStorage.getItem("foto_llegada")){
+                                databaseHandler.db.transaction(
+                                    function(tx){
+                                        tx.executeSql("UPDATE cedulas_general SET id_usuario = ?,nombre_usuario = ?,fecha_entrada = ?,geolocalizacion_entrada = ?,id_cliente = ?,nombre_cliente = ?,horario_programado = ? WHERE id_cedula = ?",
+                                            [id_usuario,nombre_usuario,fecha_llegada,geolocation,id_cliente,nombre_cliente,hora_programada,cedula],
+                                            function(tx, results){
+                                                app.views.main.router.navigate({name: 'recorrido1'});
+                                            },
+                                            function(tx, error){
+                                                console.log("Error al guardar cedula: " + error.message);
+                                                app.preloader.hide();
+                                            }
+                                        );
+                                    },
+                                    function(error){},
+                                    function(){}
+                                );
+                            } else {
+                                app.views.main.router.navigate({name: 'recorrido1'});
+                            }
+                        },
+                        function(tx5, error){
+                            console.error("Error al consultar bandeja de salida: " + error.message);
+                        }
+                    );
+                },
+            function(error){},
+            function(){}
+            );
+        } else {
+            var NomDescCli = "Clientes_DIPREC";
+            if(foto_llegada != ''){
+                app.request.get(cordova.file.dataDirectory + "jsons/"+NomDescCli+".json", { IdCed: id_usuario}, function (data) {
+                    var content = JSON.parse(data);
+                    var aux = 0;
+                    for(var i=0; i < content.length; i++){
+                        for (var i = 0; i < content.length; i++) {
+                            if(content[i].IdCte == id_cliente){
+                                aux = 1;
+                                productHandler.addCedulayb(id_usuario,nombre_usuario,fecha_llegada,geolocation,id_cliente,nombre_cliente,hora_programada,estatus);
+                                databaseHandler.db.transaction(
+                                    function(tx){
+                                        tx.executeSql("Select MAX(id_cedula) as Id from cedulas_general",
+                                            [],
+                                            function(tx, results){
+                                                var item = results.rows.item(0);
+                                                localStorage.setItem("IdCedula", item.Id);
+                                                localStorage.setItem("nombreCliente", nombre_cliente);
+                                                localStorage.setItem("IdCte", id_cliente);
+                                                localStorage.setItem("foto_llegada", foto_llegada);
+                                                localStorage.setItem("atencion", atencion);
+                                                localStorage.setItem("direccion", direccion);
+                                                localStorage.setItem("documentoIngresar", documentoIngresar);
+                                                localStorage.setItem("telefono", telefono);
+                                                localStorage.setItem("correo", correo);
+                                                app.views.main.router.navigate({name: 'menuLIC'});
+                                                app.preloader.hide();
+                                            },
+                                            function(tx, error){
+                                                console.log("Error al guardar cedula: " + error.message);
+                                                app.preloader.hide();
+                                            }
+                                        );
+                                    },
+                                    function(error){},
+                                    function(){}
+                                );
+                            }
+                        }
+                    }
+                    if(aux == 0){
+                        app.preloader.hide();
+                        swal("Cliente no encontrado", "No se tiene registro de ese cliente, Por favor sincroniza tus datos!" ,"error");
+                    }
+                });
+            } else {
+                swal("Falta un campo", "La fotografía es requerida para este proceso" ,"warning");
+                app.preloader.hide();
+            }
+        }
+    }
+
+    function buscarClienteLIC(){
+        app.preloader.show('blue');
+        var id_usuario = localStorage.getItem("id_usuario");
+        var nombre_usuario = localStorage.getItem("nombre") + " " + localStorage.getItem("apellido_paterno");
+        var fecha = new Date();
+        var fecha_llegada = fecha.getFullYear()+"-"+(fecha.getMonth()+1)+"-"+fecha.getDate()+" "+fecha.getHours()+":"+fecha.getMinutes()+":"+fecha.getSeconds();
+        var geolocation = $("#geolocation").val();
+        var id_cliente = 2;  //  $('#id_cliente').val();
+        var nombre_cliente = "ClientepruebaLIC1";  // $("#nombre_cliente").val()
+        var hora_programada = $("#horario_programado").val();
+        // var atencion = $("#persona_recibe").val();
+        // var direccion = $("#direccion").val();
+        // var telefono = $("#telefono").val();
+        // var correo = $("#correo").val();
+        var foto_llegada = $("#imagenC").val();
+        // var documentoIngresar = $("#documento_ingresar").val();
+        // var telefono = $("#telefono").val();
+        // var correo = $("#correo").val();
+        var estatus = 0;
+        if(localStorage.getItem("IdCedula"))
+        {
+            app.preloader.hide();
+            var cedula = localStorage.getItem("IdCedula");
+            databaseHandler.db.transaction(
+                function(tx){
+                    tx.executeSql("SELECT * FROM cedulas_general WHERE id_cedula = ?",
+                        [cedula],
+                        function(tx5, results){
+                            var item = results.rows.item(0);
+                            if(nombre_cliente != item.nombre_cliente || foto_llegada != localStorage.getItem("foto_llegada")){
+                                databaseHandler.db.transaction(
+                                    function(tx){
+                                        tx.executeSql("UPDATE cedulas_general SET id_usuario = ?,nombre_usuario = ?,fecha_entrada = ?,geolocalizacion_entrada = ?,id_cliente = ?,nombre_cliente = ?,horario_programado = ? WHERE id_cedula = ?",
+                                            [id_usuario,nombre_usuario,fecha_llegada,geolocation,id_cliente,nombre_cliente,hora_programada,cedula],
+                                            function(tx, results){
+                                                app.views.main.router.navigate({name: 'recorrido1'});
+                                            },
+                                            function(tx, error){
+                                                console.log("Error al guardar cedula: " + error.message);
+                                                app.preloader.hide();
+                                            }
+                                        );
+                                    },
+                                    function(error){},
+                                    function(){}
+                                );
+                            } else {
+                                app.views.main.router.navigate({name: 'recorrido1'});
+                            }
+                        },
+                        function(tx5, error){
+                            console.error("Error al consultar bandeja de salida: " + error.message);
+                        }
+                    );
+                },
+            function(error){},
+            function(){}
+            );
+        } else {
+            //var NomDescCli = "Clientes_LIC"; //Cambiar a Clientes_LIC
+            if(foto_llegada != ''){
+                /*app.request.get(cordova.file.dataDirectory + "jsons/"+NomDescCli+".json", { IdCed: id_usuario}, function (data) {
+                    var content = JSON.parse(data);
+                    var aux = 0;
+                    for(var i=0; i < content.length; i++){
+                        for (var i = 0; i < content.length; i++) {
+                            if(content[i].IdCte == id_cliente){
+                                aux = 1;
+                                productHandler.addCedulayb(id_usuario,nombre_usuario,fecha_llegada,geolocation,id_cliente,nombre_cliente,hora_programada,estatus);
+                                databaseHandler.db.transaction(
+                                    function(tx){
+                                        tx.executeSql("Select MAX(id_cedula) as Id from cedulas_general",
+                                            [],
+                                            function(tx, results){
+                                                var item = results.rows.item(0);
+                                                localStorage.setItem("IdCedula", item.Id);
+                                                localStorage.setItem("nombreCliente", nombre_cliente);
+                                                localStorage.setItem("IdCte", id_cliente);
+                                                localStorage.setItem("foto_llegada", foto_llegada);
+                                                localStorage.setItem("atencion", atencion);
+                                                localStorage.setItem("direccion", direccion);
+                                                localStorage.setItem("documentoIngresar", documentoIngresar);
+                                                localStorage.setItem("telefono", telefono);
+                                                localStorage.setItem("correo", correo);
+                                                app.views.main.router.navigate({name: 'menuLIC'});
+                                                app.preloader.hide();
+                                            },
+                                            function(tx, error){
+                                                console.log("Error al guardar cedula: " + error.message);
+                                                app.preloader.hide();
+                                            }
+                                        );
+                                    },
+                                    function(error){},
+                                    function(){}
+                                );
+                            }
+                        }
+                    }
+                    if(aux == 0){
+                        app.preloader.hide();
+                        swal("Cliente no encontrado", "No se tiene registro de ese cliente, Por favor sincroniza tus datos!" ,"error");
+                    }
+                });*/
+                //productHandler.addCedulaCompleta(id_usuario,nombre_usuario,fecha_llegada,geolocation,id_cliente,nombre_cliente,hora_programada,estatus);
+                productHandler.addCedulayb(id_usuario,nombre_usuario,fecha_llegada,geolocation,id_cliente,nombre_cliente,hora_programada,estatus);
+                databaseHandler.db.transaction(
+                    function(tx){
+                        tx.executeSql("Select MAX(id_cedula) as Id from cedulas_general",
+                            [],
+                            function(tx, results){
+                                //console.log(result.rows.item(0));
+                                var item = results.rows.item(0);
+                                console.log(result.rows.item(0));
+                                localStorage.setItem("IdCedula", item.Id);
+                                localStorage.setItem("nombreCliente", nombre_cliente);
+                                localStorage.setItem("IdCte", id_cliente);
+                                localStorage.setItem("foto_llegada", foto_llegada);
+                    
+                                app.views.main.router.navigate({name: 'menuLIC'});
+                                app.preloader.hide();
+                            },
+                            function(tx, error){
+                                console.log("Error al guardar cedula: " + error.message);
+                                app.preloader.hide();
+                            }
+                        );
+                    },
+                    function(error){},
+                    function(){}
+                );
+            } else {
+                swal("Falta un campo", "La fotografía es requerida para este proceso" ,"warning");
+                app.preloader.hide();
+            }
+        }
+    }
+    function irLevantamientoLIC(){
+        
+    }
+
+    function continuarCedLIC(id_cedula,tipo){
+        localStorage.setItem("IdCedula",id_cedula);
+        localStorage.setItem("tipoServicio", tipo);
+        localStorage.setItem("Opcion", '1');
+        if(tipo == 1){
+            app.views.main.router.navigate({ name: 'recorridoLIC1'});
+        }else if(tipo == 2){
+            app.views.main.router.navigate({ name: 'recorridoLIC2'});
+        }
+    }
+    function generarLimpiezaLIC(){
+        let id_cedula = localStorage.getItem("IdCedula");
+        let foto_llegada = localStorage.getItem("foto_llegada");
+        let tipoCedula = "limpiezaLIC";
+        databaseHandler.db.transaction(
+            function(tx){
+                 tx.executeSql("UPDATE cedulas_general SET tipo_cedula = ? WHERE id_cedula = ?",
+                     [tipoCedula,id_cedula],
+                     function(tx, results){
+                         localStorage.setItem("TipoVisita", tipoCedula);
+                         //productHandler.addCedulaCompleta:(id_cedula,foto_llegada);
+                         app.views.main.router.navigate({name: 'recorridoLIC1'});
+                     },
+                     function(tx, error){
+                         console.error("Error al actualizar el tipo de cedula: " + error.message);
+                     }
+                 );
+            },
+            function(error){},
+            function(){}
+        );
+    }
+    function generarLevantamientoLIC(){
+        let id_cedula = localStorage.getItem("IdCedula");
+        let foto_llegada = localStorage.getItem("foto_llegada");
+        let tipoCedula = "levantamientoLIC";
+        databaseHandler.db.transaction(
+            function(tx){
+                 tx.executeSql("UPDATE cedulas_general SET tipo_cedula = ? WHERE id_cedula = ?",
+                     [tipoCedula,id_cedula],
+                     function(tx, results){
+                         localStorage.setItem("TipoVisita", tipoCedula);
+                         //productHandler.addLevantamientoDiprec(id_cedula,foto_llegada);
+                         app.views.main.router.navigate({name: 'recorridoLIC2'});
+                     },
+                     function(tx, error){
+                         console.error("Error al actualizar el tipo de cedula: " + error.message);
+                     }
+                 );
+            },
+            function(error){},
+            function(){}
+        );
+    }
+    function regresarRecorridoLIC1(){
+        app.views.main.router.back('/recorridoLIC1/', {force: true, ignoreCache: true, reload: true});
+    }
+    function regresarRecorridoLIC2(){
+        app.views.main.router.back('/recorridoLIC2/', {force: true, ignoreCache: true, reload: true});
+    }
+    //Para hacer lo de las fotos
+    function guardarValidLIC(){
+        let id_cedula = localStorage.getItem("IdCedula");
+        var tipo_inmueble = $("#tipo_inmueble").val();
+        var ubicacion = $("#ubicacion").val();
+        var observaciones_text = $("#observaciones_text").val();
+        var fecha = new Date();
+        var fecha_registro = fecha.getFullYear()+"-"+(fecha.getMonth()+1)+"-"+fecha.getDate()+" "+fecha.getHours()+":"+fecha.getMinutes()+":"+fecha.getSeconds();
+        var foto = $("#imagenC").val();
+        var page = 1;
+        if (foto){
+            if(observaciones_text){}else{comentario='Sin Observaciones'}
+            databaseHandler.db.transaction(
+                function(tx){//id_cedula text,comentario text,foto blob,fecha text
+                    tx.executeSql("INSERT INTO validaLIC(id_cedula, observaciones, foto, fecha,tipo_tarima,no_tarimas,page) VALUES (?,?,?,?,?,?,?)",  //validaAntesServ
+                        [id_cedula,observaciones_text, foto, fecha_registro,tipo_inmueble, ubicacion,page],
+                        function(tx, results){
+                        swal("","Se guardaron los datos correctamente", "success");
+                            databaseHandler.db.transaction(
+                                function(tx){
+                                    tx.executeSql( 
+                                        "Select * from validaLIC where id_cedula = ? AND page=? ORDER BY id_evidencia DESC",  //validaAntesServ
+                                            [id_cedula,page],
+                                            function(tx, results){ 
+                                                var item = results.rows.item(0);
+                                                $("#tabla_evidenciasLIC").append("<tr id='fila"+ item.id_evidencia +"'><td><a href='#' onclick='eliminarFilaLIC("+item.id_evidencia +",1,`validaLIC`);' style='border: none; outline:none;'><img src='img/borrar.png' width='30px' /></a></td><td><img src='"+item.foto+
+                                                "' width='60px' style='margin-top: 4px;'/></td><td style='text-align: center;'>" + item.observaciones
+                                                + "</td><td style='text-align: center;'>" + item.fecha + "</td></tr>");
+                                                //#tabla_evidenciasAliatonic        onclick='eliminarFilaaliatonic        `validaAntesServ`
+                                                $("#tipo_inmueble").val('');
+                                                $("#tipo_inmueble").val();
+                                                $("#observaciones_text").css("background-color", "#FFFFFF");
+                                                $("#smallImage").attr("src","img/blank.png");
+                                                $("#photoIcon").attr("src","img/camera.svg");
+                                                $("#imagenC").val('');
+                                                    $("#message-nr").css("display", "none");
+                                                    $('.preloader').remove();
+                                                    $('.infinite-scroll-preloader').remove();
+                                            },
+                                            function(tx, error){
+                                                console.log("Error: " + error.message);
+                                                app.preloader.hide();  
+                                            }
+                                    );  
+                                },
+                                    function(error){
+                                        console.log("Error: " + error.message);
+                                    },
+                                    function(){}
+                            );                
+                        },
+                        function(tx, error){
+                            console.error("Error al actualizar: " + error.message);
+                        }
+                    );
+                },
+                function(error){
+                    console.error("Error: " + error.message);
+                },
+                function(){}
+            );
+        }else{
+            swal("", "La fotografía es requerida" ,"warning");
+        }
+    }
+
+    function eliminarFilaLIC(index, opc,tabla){
+        if(opc == 1) {
+            databaseHandler.db.transaction(
+                function(tx){
+                    tx.executeSql(
+                        "DELETE FROM "+ tabla +" WHERE id_evidencia = ?",
+                        [index],
+                        function(tx, results){
+                             swal("","El registro se elimino satisfactoriamente","success");
+                             $("#fila" + index).remove();
+                        },
+                        function(tx, error){
+                            swal("Error al eliminar registro",error.message,"error");
+                        }
+                    );
+                },
+                function(error){},
+                function(){}
+            );
+        }
+    }
+    //LIC Fin
     //DIPREC Inicio
     function buscarClienteDIPREC(){
         app.preloader.show('blue');
@@ -31214,6 +31615,41 @@ function ShowReglas(cliente,cardname,FirstName,MiddleName, LastName, Position, E
                             function(){}
                         );
                     }
+                } else if(empresa == "LIC") {
+                    //console.log(empresa,id_cedula,tipo_cedula);
+                    if(tipo_cedula == "limpiezaLIC"){
+                        databaseHandler.db.transaction(
+                            function(tx){
+                                tx.executeSql("DELETE FROM cedulas_general WHERE id_cedula = ?",
+                                    [id_cedula],
+                                    function(tx, results){
+                                        $("#conc" + id_cedula).remove();   //Esto borrara la cedula de tipo limpiezaLIC
+                                    },
+                                    function(tx, error){
+                                        swal("Error al eliminar cedula de LimpiezaLIC",error.message,"error");
+                                    }
+                                );
+                            },
+                            function(error){},
+                            function(){} 
+                        ); 
+                    }else if(tipo_cedula == "levantamientoLIC"){
+                        databaseHandler.db.transaction(
+                            function(tx){
+                                tx.executeSql("DELETE FROM cedulas_general WHERE id_cedula = ?",
+                                    [id_cedula],
+                                    function(tx, results){
+                                        $("#conc" + id_cedula).remove();   //Esto borrara la cedula de tipo levantamientoLIC
+                                    },
+                                    function(tx, error){
+                                        swal("Error al eliminar cedula de LevantamientoLIC",error.message,"error");
+                                    }
+                                );
+                            },
+                            function(error){},
+                            function(){} 
+                        ); 
+                    }
                 } else {
                     if(tipo_cedula == "levantamiento"){
                         databaseHandler.db.transaction(
@@ -56742,6 +57178,7 @@ function terminar_instalacion_post(){
         }
     }
     function capturePhoto() {
+        //localStorage.setItem("camera");
         var camera = localStorage.getItem("camera");
         if(camera == 0){
             var camera = app.popup.create({
@@ -56868,6 +57305,8 @@ function terminar_instalacion_post(){
         var empresa = localStorage.getItem("nombre_empresa");
         if(empresa == "SMC"){
             app.views.main.router.navigate({ name: 'yallegueSMC'});
+        } else if(empresa == "LIC"){
+            app.views.main.router.navigate({ name: 'yallegueLIC'});
         } else if(empresa == "DIPREC"){
             app.views.main.router.navigate({ name: 'yallegueDIPREC'});
         } else if(empresa == "Bennetts"){
